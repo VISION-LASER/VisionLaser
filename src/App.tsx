@@ -3,9 +3,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster as Sonner } from "./components/ui/sonner";
 import { Toaster } from "./components/ui/toaster";
-import HomePage from "./pages/user/HomePage";
-import ProtectedRoute from "./components/layout/ProtectedRoute";
+
+// Autres Pages
 import NotFound from "./components/layout/NotFound";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
+
+// Public Pages
+import HomePage from "./pages/user/HomePage";
+
+// Admin Pages
 import AdminLayout from "./components/layout/AdminLayout";
 import DashboardAdminPage from "./pages/admin/DashboardAdminPage";
 
@@ -38,7 +44,7 @@ function App() {
                 }
               >
                 <Route path="/" element={<DashboardAdminPage />} />
-                
+
               </Route>
 
               {/*******************************
