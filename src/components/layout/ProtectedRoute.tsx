@@ -3,7 +3,7 @@ interface ProtectedRouteProps {
   requiredRole?: string | string[];
 }
 
-const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   
   return <>{children}</>;
 };
