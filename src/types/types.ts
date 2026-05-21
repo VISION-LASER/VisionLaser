@@ -13,6 +13,7 @@ export interface Testimonial {
   name: string;
   age: string;
   text: string;
+  videoUrl?: string;
 }
 
 export interface Pillar {
