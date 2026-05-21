@@ -20,6 +20,7 @@ import EquipementsPage from "./pages/user/EquipementsPage";
 import FemtoLasikPage from "./pages/user/FemtoLasikPage";
 import TarifsPage from "./pages/user/TarifsPage";
 import TprkPage from "./pages/user/TprkPage";
+import NousTrouver from "./pages/user/NousTrouverPage";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ function App() {
               <Route path="/femtolasik" element={<FemtoLasikPage />} />
               <Route path="/tarifs" element={<TarifsPage />} />
               <Route path="/tprk" element={<TprkPage />} />
+              <Route path="/nous-trouver" element={<NousTrouver />} />
               {/*******************************
               *         Admin routes         *
               ********************************/}

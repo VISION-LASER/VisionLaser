@@ -75,16 +75,20 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "Sophie L.",
     age: "28 ans",
     text: "Une équipe à l'écoute, pédagogue, qui a pris le temps de tout m'expliquer avant l'intervention.",
+    videoUrl: "https://www.tiktok.com/@centre.vision.las/video/7433439898901761313?is_from_webapp=1&sender_device=pc"
   },
   {
     name: "Marc D.",
     age: "42 ans",
     text: "Bilan rigoureux, ambiance médicale rassurante. J'ai eu réponse à toutes mes questions, sans pression commerciale.",
+    videoUrl: "https://www.tiktok.com/@centre.vision.las/video/7632356756890357025?is_from_webapp=1&sender_device=pc"
   },
   {
     name: "Emma T.",
     age: "24 ans",
     text: "Je recommande pour la clarté des explications. On comprend exactement comment ça marche et ce qui est possible.",
+    videoUrl: "https://www.tiktok.com/@centre.vision.las/video/7567424386215513376?is_from_webapp=1&sender_device=pc"
+
   },
 ];
 
