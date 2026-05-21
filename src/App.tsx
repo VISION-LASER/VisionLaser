@@ -43,7 +43,7 @@ function App() {
                   </ProtectedRoute>
                 }
               >
-                <Route path="/" element={<DashboardAdminPage />} />
+                <Route path="" element={<DashboardAdminPage />} />
 
               </Route>
 
