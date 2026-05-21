@@ -8,6 +8,7 @@ import DoctorSection from "../../components/user/Accueil/DoctorSection";
 import TestimonialsSection from "../../components/user/Accueil/TestimonialsSection";
 import FaqSection from "../../components/user/Accueil/FaqSection";
 import CtaSection from "../../components/user/Accueil/CtaSection";
+import DifferentesEtapes from "../../components/user/DifferentesEtapes/DifferentesEtapesSection";
 import { Header } from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import TprkEligibilitySection from "../../components/user/Tprk/TprkEligibilitySection";
@@ -33,7 +34,9 @@ const HomePage: React.FC = () => {
       <TestimonialsSection />
       <TprkEligibilitySection />
       <FaqSection />
+      <DifferentesEtapes/>
       <CtaSection />
+      
       <Footer />
     </>
   );
