@@ -1,20 +1,40 @@
-import Footer from "../../components/layout/Footer";
+import React from "react";
+import { Helmet } from "react-helmet-async";
+import HeroSection from "../../components/user/Accueil/HeroSection";
+import PillarsSection from "../../components/user/Accueil/PillarsSection";
+import ProcessSection from "../../components/user/Accueil/ProcessSection";
+import TechniquesSection from "../../components/user/Accueil/TechniquesSection";
+import DoctorSection from "../../components/user/Accueil/DoctorSection";
+import TestimonialsSection from "../../components/user/Accueil/TestimonialsSection";
+import FaqSection from "../../components/user/Accueil/FaqSection";
+import CtaSection from "../../components/user/Accueil/CtaSection";
 import { Header } from "../../components/layout/Header";
+import Footer from "../../components/layout/Footer";
 
-function HomePage() {
-
+const HomePage: React.FC = () => {
   return (
     <>
-        <Header />
-        <main className="container-page mt-10">
-          <h1 className="text-3xl font-bold text-navy">Bienvenue sur le site de Vision Laser Hauts-de-France</h1>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Nous sommes spécialisés dans la correction de la vision au laser, offrant des solutions personnalisées pour améliorer votre qualité de vie. Découvrez nos services et prenez rendez-vous pour un bilan visuel gratuit.
-          </p>
-        </main>
-        <Footer />
+      <Helmet>
+        <title>
+          Vision Laser Hauts-de-France · Chirurgie réfractive au laser
+        </title>
+        <meta
+          name="description"
+          content="Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser (FemtoLASIK, TPRK). Bilan visuel gratuit dans les Hauts-de-France."
+        />
+      </Helmet>
+      <Header />
+      <HeroSection />
+      <PillarsSection />
+      <ProcessSection />
+      <TechniquesSection />
+      <DoctorSection />
+      <TestimonialsSection />
+      <FaqSection />
+      <CtaSection />
+      <Footer />
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

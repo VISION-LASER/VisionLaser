@@ -14,6 +14,12 @@ import HomePage from "./pages/user/HomePage";
 // Admin Pages
 import AdminLayout from "./components/layout/AdminLayout";
 import DashboardAdminPage from "./pages/admin/DashboardAdminPage";
+import ContactPage from "./pages/user/ContactPage";
+import DefautsVisuelsPage from "./pages/user/DefautsVisuelsPage";
+import EquipementsPage from "./pages/user/EquipementsPage";
+import FemtoLasikPage from "./pages/user/FemtoLasikPage";
+import TarifsPage from "./pages/user/TarifsPage";
+import TprkPage from "./pages/user/TprkPage";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +37,12 @@ function App() {
               *         Public routes         *
               ********************************/}
               <Route path="/" element={<HomePage />} />
-
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/defauts-visuels" element={<DefautsVisuelsPage />} />
+              <Route path="/equipements" element={<EquipementsPage />} />
+              <Route path="/femtolasik" element={<FemtoLasikPage />} />
+              <Route path="/tarifs" element={<TarifsPage />} />
+              <Route path="/tprk" element={<TprkPage />} />
               {/*******************************
               *         Admin routes         *
               ********************************/}
