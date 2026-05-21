@@ -10,6 +10,7 @@ import FaqSection from "../../components/user/Accueil/FaqSection";
 import CtaSection from "../../components/user/Accueil/CtaSection";
 import { Header } from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
+import TprkEligibilitySection from "../../components/user/Tprk/TprkEligibilitySection";
 
 const HomePage: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const HomePage: React.FC = () => {
       <TechniquesSection />
       <DoctorSection />
       <TestimonialsSection />
+      <TprkEligibilitySection />
       <FaqSection />
       <CtaSection />
       <Footer />

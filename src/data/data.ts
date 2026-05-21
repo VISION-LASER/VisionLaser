@@ -7,8 +7,18 @@ import {
   Stethoscope,
   Sparkles,
   HeartHandshake,
+  Zap,
+  Eye,
+  MapPin,
+  Clock,
+  Mail,
 } from "lucide-react";
-import type { Step, FaqItem, Testimonial, Pillar } from "../types/types";
+
+import type { Step, FaqItem, Testimonial, Pillar, EquipmentItem, PriceRow, TrustBadge, VisualDefect, ContactInfo } from "../types/types";
+
+import laser from "../assets/laser-equipment.jpg";
+import clinic from "../assets/clinic-interior.jpg";
+import surgeon from "../assets/surgeon.jpg";
 
 export const STEPS: Step[] = [
   {
@@ -113,4 +123,135 @@ export const MARQUEE_ITEMS = [
   "Bilan gratuit",
   "Suivi post-opératoire",
   "Hauts-de-France",
+];
+
+export const FEMTO_BENEFITS: string[] = [
+  "Indolore, sous gouttes anesthésiantes",
+  "Récupération visuelle généralement en 24 à 48 h",
+  "Précision micrométrique du laser femtoseconde",
+  "Suivi post-opératoire programmé",
+];
+
+export const TPRK_BENEFITS: string[] = [
+  "Sans découpe cornéenne",
+  "Adaptée à certaines cornées fines",
+  "Récupération visuelle progressive sur quelques jours",
+  "Suivi rapproché post-opératoire",
+];
+
+export const EQUIPMENT_ITEMS: EquipmentItem[] = [
+  {
+    name: "Laser femtoseconde",
+    description:
+      "Précision micrométrique pour la création des volets cornéens en FemtoLASIK.",
+    image: laser,
+    imageAlt: "Laser femtoseconde",
+  },
+  {
+    name: "Laser excimer",
+    description:
+      "Remodelage de la cornée guidé par cartographie, sur les deux techniques chirurgicales.",
+    image: clinic,
+    imageAlt: "Laser excimer",
+  },
+  {
+    name: "Plateau diagnostique",
+    description:
+      "Topographie cornéenne, pachymétrie, aberrométrie et examens complets avant toute décision.",
+    image: surgeon,
+    imageAlt: "Plateau diagnostique",
+  },
+];
+
+export const PRICES: PriceRow[] = [
+  {
+    name: "Bilan visuel pré-opératoire",
+    price: "Gratuit",
+    note: "Sur rendez-vous, sans engagement",
+  },
+  {
+    name: "FemtoLASIK",
+    price: "Sur devis",
+    note: "Tarif communiqué après bilan médical complet",
+  },
+  {
+    name: "TPRK",
+    price: "Sur devis",
+    note: "Tarif communiqué après bilan médical complet",
+  },
+  {
+    name: "Consultation de contrôle",
+    price: "Incluse",
+    note: "Suivi post-opératoire programmé",
+  },
+];
+
+export const FEMTO_STEPS: Step[] = [
+  {
+    icon: ScanEye,
+    title: "Préparation",
+    description: "Examen, anesthésie par gouttes.",
+  },
+  {
+    icon: Zap,
+    title: "Femtolaser",
+    description: "Création d'un volet cornéen ultra-fin.",
+  },
+  {
+    icon: Eye,
+    title: "Laser excimer",
+    description: "Remodelage de la cornée selon ta correction.",
+  },
+  {
+    icon: Sun,
+    title: "Récupération",
+    description: "Vision qui s'éclaircit en quelques heures.",
+  },
+];
+
+export const TRUST_BADGES: TrustBadge[] = [
+  { title: "Médical", subtitle: "Pas de vente" },
+  { title: "Mini-invasif", subtitle: "Sans contact" },
+  { title: "Personnalisé", subtitle: "Bilan adapté" },
+];
+
+export const DEFECTS: VisualDefect[] = [
+  {
+    name: "Myopie",
+    description:
+      "Vision floue de loin. La cornée focalise les images en avant de la rétine.",
+  },
+  {
+    name: "Hypermétropie",
+    description:
+      "Vision floue de près. Les images se forment en arrière de la rétine.",
+  },
+  {
+    name: "Astigmatisme",
+    description:
+      "Vision déformée à toutes les distances, liée à une courbure cornéenne irrégulière.",
+  },
+  {
+    name: "Presbytie",
+    description:
+      "Difficulté progressive de mise au point de près, liée à l'âge.",
+  },
+];
+
+export const CONTACT_INFOS: ContactInfo[] = [
+  {
+    icon: MapPin,
+    title: "Centre Vision Laser",
+    lines: ["Hauts-de-France"],
+  },
+  {
+    icon: Clock,
+    title: "Horaires",
+    lines: ["Lundi – Vendredi", "9h00 – 18h00"],
+  },
+  {
+    icon: Mail,
+    title: "Email",
+    lines: ["contact@vision-laser.fr"],
+  },
 ];

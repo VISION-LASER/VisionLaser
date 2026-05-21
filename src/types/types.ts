@@ -21,4 +21,33 @@ export interface Pillar {
   description: string;
 }
 
+export interface EquipmentItem {
+  name: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+}
+
+export interface PriceRow {
+  name: string;
+  price: string;
+  note: string;
+}
+
+export interface TrustBadge {
+  title: string;
+  subtitle: string;
+}
+
+export interface VisualDefect {
+  name: string;
+  description: string;
+}
+
+export interface ContactInfo {
+  icon: React.ElementType;
+  title: string;
+  lines: string[];
+}
+
 export type TechKey = "femto" | "tprk";
