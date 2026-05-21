@@ -1,0 +1,479 @@
+@import "tailwindcss";
+@import "swiper/css/pagination";
+@import "swiper/css/scrollbar";
+@import "swiper/css";
+@import "swiper/css/effect-coverflow";
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@theme {
+  /* ===============================
+     MEDICAL PREMIUM – THEME COLORS
+     =============================== */
+
+  /* 🔵 PRIMARY – Bleu marine (Navigation & Structure) */
+  --color-primary-50: #e8edf2;
+  --color-primary-100: #d1dbe6;
+  --color-primary-200: #a3b7cd;
+  --color-primary-300: #7593b4;
+  --color-primary-400: #476f9b;
+  --color-primary-500: #0C2340;
+  --color-primary-600: #0a1c33;
+  --color-primary-700: #071526;
+  --color-primary-800: #050e1a;
+  --color-primary-900: #02070d;
+
+  /* 🟡 SECONDARY – Or (Détails & Accents) */
+  --color-secondary-50: #faf8f2;
+  --color-secondary-100: #f5f0e5;
+  --color-secondary-200: #ebe1cb;
+  --color-secondary-300: #e1d2b1;
+  --color-secondary-400: #d7c397;
+  --color-secondary-500: #C9A84C;
+  --color-secondary-600: #b8973d;
+  --color-secondary-700: #96782f;
+  --color-secondary-800: #745a23;
+  --color-secondary-900: #523d17;
+
+  /* ⚪ NEUTRAL – Fond & Texte */
+  --color-background: #FFFFFF;
+  --color-surface: #F8F9FA;
+  --color-text: #1A1A1A;
+  --color-text-muted: #6B7280;
+
+  /* 🏥 MEDICAL – Calme & Professionnel */
+  --color-medical-teal: #1E5F6B;
+  --color-medical-sage: #7B8E6B;
+  --color-medical-stone: #9CA3AF;
+  --color-medical-white: #FFFFFF;
+
+  /* ===============================
+     ESPACEMENT & STRUCTURE
+     =============================== */
+  --spacing-section: 80px;
+  --spacing-card: 32px;
+  --spacing-element: 24px;
+  --spacing-tight: 16px;
+
+  /* ===============================
+     ANIMATIONS
+     =============================== */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes gold-line {
+    from {
+      width: 0%;
+      opacity: 0;
+    }
+    to {
+      width: 100%;
+      opacity: 1;
+    }
+  }
+
+  /* ===============================
+     VARIABLES HSL
+     =============================== */
+  --hsl-background: 0 0% 100%;
+  --hsl-foreground: 0 0% 10%;
+  --hsl-card: 0 0% 100%;
+  --hsl-card-foreground: 0 0% 10%;
+  --hsl-popover: 0 0% 100%;
+  --hsl-popover-foreground: 0 0% 10%;
+  --hsl-primary: 212 60% 15%;
+  --hsl-primary-foreground: 0 0% 100%;
+  --hsl-primary-light: 212 40% 35%;
+  --hsl-primary-dark: 212 70% 10%;
+  --hsl-secondary: 45 54% 54%;
+  --hsl-secondary-foreground: 0 0% 100%;
+  --hsl-muted: 0 0% 96%;
+  --hsl-muted-foreground: 0 0% 45%;
+  --hsl-accent: 45 54% 54%;
+  --hsl-accent-foreground: 0 0% 10%;
+  --hsl-destructive: 0 70% 50%;
+  --hsl-destructive-foreground: 0 0% 100%;
+  --hsl-border: 0 0% 90%;
+  --hsl-input: 0 0% 83%;
+  --hsl-ring: 212 60% 15%;
+}
+
+/* ===============================
+   MODE SOMBRE (Optionnel)
+   =============================== */
+
+.dark {
+  --color-background: #111827;
+  --color-surface: #1F2937;
+  --color-text: #F9FAFB;
+  --color-text-muted: #9CA3AF;
+
+  scrollbar-color: var(--color-secondary-500) #1F2937;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1F2937;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-secondary-500);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary-600);
+}
+
+/* ===============================
+   SCROLLBAR – MODE CLAIR
+   =============================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary-400);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary-600);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary-400) var(--color-surface);
+  scroll-behavior: smooth;
+}
+
+/* ===============================
+   CLASSES UTILITAIRES HSL
+   =============================== */
+
+.bg-background { background-color: hsl(var(--hsl-background)); }
+.text-foreground { color: hsl(var(--hsl-foreground)); }
+.bg-card { background-color: hsl(var(--hsl-card)); }
+.text-card-foreground { color: hsl(var(--hsl-card-foreground)); }
+.bg-popover { background-color: hsl(var(--hsl-popover)); }
+.text-popover-foreground { color: hsl(var(--hsl-popover-foreground)); }
+.bg-primary { background-color: hsl(var(--hsl-primary)); }
+.text-primary-foreground { color: hsl(var(--hsl-primary-foreground)); }
+.bg-primary-light { background-color: hsl(var(--hsl-primary-light)); }
+.bg-primary-dark { background-color: hsl(var(--hsl-primary-dark)); }
+.bg-secondary { background-color: hsl(var(--hsl-secondary)); }
+.text-secondary-foreground { color: hsl(var(--hsl-secondary-foreground)); }
+.bg-muted { background-color: hsl(var(--hsl-muted)); }
+.text-muted-foreground { color: hsl(var(--hsl-muted-foreground)); }
+.bg-accent { background-color: hsl(var(--hsl-accent)); }
+.text-accent-foreground { color: hsl(var(--hsl-accent-foreground)); }
+.bg-destructive { background-color: hsl(var(--hsl-destructive)); }
+.text-destructive-foreground { color: hsl(var(--hsl-destructive-foreground)); }
+.border-border { border-color: hsl(var(--hsl-border)); }
+.border-input { border-color: hsl(var(--hsl-input)); }
+.ring-ring { ring-color: hsl(var(--hsl-ring)); }
+
+/* ===============================
+   UI ÉLÉMENTS – MEDICAL PREMIUM
+   =============================== */
+
+/* Ligne décorative en or */
+.gold-line {
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-secondary-500), transparent);
+  animation: gold-line 1.5s ease forwards;
+}
+
+.gold-line-center {
+  height: 2px;
+  width: 60px;
+  background: var(--color-secondary-500);
+  margin: 0 auto;
+}
+
+.gold-line-full {
+  height: 1px;
+  background: var(--color-secondary-300);
+}
+
+/* Cartes premium */
+.premium-card {
+  background: var(--color-background);
+  border-radius: 12px;
+  padding: var(--spacing-card);
+  transition: all 0.3s ease;
+  border: 1px solid hsl(var(--hsl-border));
+}
+
+.premium-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  border-color: var(--color-secondary-300);
+}
+
+/* Sections */
+.section {
+  padding: var(--spacing-section) 0;
+}
+
+.section-sm {
+  padding: calc(var(--spacing-section) * 0.75) 0;
+}
+
+.section-lg {
+  padding: calc(var(--spacing-section) * 1.25) 0;
+}
+
+/* Boutons */
+button, .btn {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: var(--color-primary-500);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-600);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border: 1px solid var(--color-primary-500);
+  color: var(--color-primary-500);
+  background: transparent;
+  padding: 12px 24px;
+  border-radius: 8px;
+}
+
+.btn-outline:hover {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-600);
+}
+
+/* ===============================
+   TABLEAUX
+   =============================== */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid hsl(var(--hsl-border));
+}
+
+th, td {
+  border: 1px solid hsl(var(--hsl-border));
+  padding: 1rem;
+}
+
+th {
+  background-color: hsl(var(--hsl-muted));
+  font-weight: 600;
+  text-align: left;
+}
+
+/* ===============================
+   ANIMATIONS MÉDICALES
+   =============================== */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes fade-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in { animation: fade-in 0.6s ease forwards; }
+.animate-slide-in { animation: slide-in 0.5s ease forwards; }
+.animate-slide-up { animation: slide-up 0.6s ease forwards; }
+.animate-fade-scale { animation: fade-scale 0.4s ease forwards; }
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+/* ===============================
+   TYPOGRAPHIE – INTER
+   =============================== */
+
+.text-body {
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.text-body-large {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.text-title {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .text-title {
+    font-size: 2.5rem;
+  }
+}
+
+.text-title-large {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .text-title-large {
+    font-size: 3rem;
+  }
+}
+
+.text-subtitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ===============================
+   ESPACEMENTS UTILITAIRES
+   =============================== */
+
+.section-spacing {
+  padding: var(--spacing-section) 0;
+}
+
+.card-spacing {
+  padding: var(--spacing-card);
+}
+
+.element-spacing {
+  margin-bottom: var(--spacing-element);
+}
+
+.element-spacing:last-child {
+  margin-bottom: 0;
+}
+
+/* ===============================
+   GRILLE & LAYOUT
+   =============================== */
+
+.container-premium {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 640px) {
+  .container-premium {
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-premium {
+    padding: 0 48px;
+  }
+}
+
+/* ===============================
+   BASE STYLES
+   =============================== */
+
+* {
+  border-color: hsl(var(--hsl-border));
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Liens */
+a {
+  color: var(--color-primary-500);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-primary-600);
+}
+
+/* Focus accessible */
+:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Sélection de texte */
+::selection {
+  background: var(--color-secondary-200);
+  color: var(--color-primary-500);
+}
