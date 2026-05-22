@@ -33,8 +33,8 @@ const HomePage: React.FC = () => {
       <DoctorSection />
       <TestimonialsSection />
       <TprkEligibilitySection />
-      <FaqSection />
       <DifferentesEtapes/>
+      <FaqSection />
       <CtaSection />
       
       <Footer />
