@@ -13,7 +13,6 @@ import HomePage from "./pages/user/HomePage";
 
 // Admin Pages
 import AdminLayout from "./components/layout/AdminLayout";
-import DashboardAdminPage from "./pages/admin/DashboardAdminPage";
 import ContactPage from "./pages/user/ContactPage";
 import DefautsVisuelsPage from "./pages/user/DefautsVisuelsPage";
 import EquipementsPage from "./pages/user/EquipementsPage";
@@ -23,6 +22,12 @@ import TprkPage from "./pages/user/TprkPage";
 import NousTrouver from "./pages/user/NousTrouverPage";
 import ActualitesPage from "./pages/user/ActualitésPage";
 import CookieBanner from "./components/layout/CookieBanner";
+
+// IMPORTANT : Importer votre page LoginAdmin
+import LoginAdmin from "./pages/user/LoginAdmin";
+import DashboardAdminPage from "./pages/admin/DashboardAdminPage";
+import DashboardComponents from "./components/admin/DashboardComponents";
+
 
 const queryClient = new QueryClient();
 
@@ -48,10 +53,11 @@ function App() {
               <Route path="/tarifs" element={<TarifsPage />} />
               <Route path="/tprk" element={<TprkPage />} />
               <Route path="/nous-trouver" element={<NousTrouver />} />
+              <Route path="/admin" element={<LoginAdmin />} />
               {/*******************************
               *         Admin routes         *
               ********************************/}
-              <Route
+              {/* <Route
                 path="/admin/*"
                 element={
                   <ProtectedRoute requiredRole="ADMIN">
@@ -60,12 +66,13 @@ function App() {
                 }
               >
                 <Route path="" element={<DashboardAdminPage />} />
-
-              </Route>
+ 
+              </Route> */}
 
               {/*******************************
               *           404 routes         *
               ********************************/}
+              <Route path="/admin/dashboard" element={<DashboardAdminPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <CookieBanner />
