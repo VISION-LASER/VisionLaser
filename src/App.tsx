@@ -21,6 +21,8 @@ import FemtoLasikPage from "./pages/user/FemtoLasikPage";
 import TarifsPage from "./pages/user/TarifsPage";
 import TprkPage from "./pages/user/TprkPage";
 import NousTrouver from "./pages/user/NousTrouverPage";
+import ActualitesPage from "./pages/user/ActualitésPage";
+import CookieBanner from "./components/layout/CookieBanner";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,7 @@ function App() {
               *         Public routes         *
               ********************************/}
               <Route path="/" element={<HomePage />} />
+              <Route path="/actu" element={<ActualitesPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/defauts-visuels" element={<DefautsVisuelsPage />} />
               <Route path="/equipements" element={<EquipementsPage />} />
@@ -65,6 +68,7 @@ function App() {
               ********************************/}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <CookieBanner />
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
