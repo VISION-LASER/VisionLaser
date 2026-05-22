@@ -5,11 +5,12 @@ import logo from "../../assets/vision-laser-logo.jpg";
 import { TopBar } from "./TopBar";
 
 const NAV = [
-  { to: "/femtolasik", label: "FemtoLASIK" },
+  { to: "/actu", label: "ACTUALITÉS" },
+  { to: "/femtolasik", label: "FEMTOLASIK" },
   { to: "/tprk", label: "TPRK" },
-  { to: "/equipements", label: "Équipements" },
-  { to: "/tarifs", label: "Tarifs" },
-  { to: "/defauts-visuels", label: "Défauts visuels" },
+  { to: "/equipements", label: "EQUIPEMENTS" },
+  { to: "/tarifs", label: "TARIFS" },
+  { to: "/defauts-visuels", label: "DEFAUTS VISUELS" },
 ] as const;
 
 export function Header() {
@@ -46,7 +47,7 @@ export function Header() {
               className="h-11 w-11 rounded-full object-cover ring-1 ring-gold/20 transition-all duration-300 group-hover:scale-[1.04] group-hover:ring-gold/50"
             />
             <span className="hidden text-sm font-semibold tracking-tight text-navy sm:block">
-              Vision Laser <span className="font-normal text-muted-foreground">· Hauts-de-France</span>
+              VISION-LASER <br /><span className="font-normal text-muted-foreground">HAUTS-DE-FRANCE</span>
             </span>
           </Link>
           
@@ -69,9 +70,9 @@ export function Header() {
           <div className="hidden md:block">
             <Link 
               to="/contact" 
-              className="btn-gold !py-2.5 !px-6 text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300"
+              className="btn-gold py-2.5 px-6 text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300"
             >
-              Bilan visuel gratuit
+              BILAN VISUEL GRATUIT
             </Link>
           </div>
           
@@ -103,7 +104,7 @@ export function Header() {
                 onClick={() => setOpen(false)} 
                 className="btn-gold mt-4 text-center"
               >
-                Bilan visuel gratuit
+                BILAN VISUEL GRATUIT
               </Link>
             </div>
           </div>
