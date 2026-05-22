@@ -3,16 +3,16 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster as Sonner } from "./components/ui/sonner";
 import { Toaster } from "./components/ui/toaster";
+import { AuthProvider } from "./hooks/useAuth";
 
-// Autres Pages
+// Layout & guards
 import NotFound from "./components/layout/NotFound";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
-
-// Public Pages
-import HomePage from "./pages/user/HomePage";
-
-// Admin Pages
+import CookieBanner from "./components/layout/CookieBanner";
 import AdminLayout from "./components/layout/AdminLayout";
+
+// Public pages
+import HomePage from "./pages/user/HomePage";
 import ContactPage from "./pages/user/ContactPage";
 import DefautsVisuelsPage from "./pages/user/DefautsVisuelsPage";
 import EquipementsPage from "./pages/user/EquipementsPage";
@@ -21,29 +21,30 @@ import TarifsPage from "./pages/user/TarifsPage";
 import TprkPage from "./pages/user/TprkPage";
 import NousTrouver from "./pages/user/NousTrouverPage";
 import ActualitesPage from "./pages/user/ActualitésPage";
-import CookieBanner from "./components/layout/CookieBanner";
-
-// IMPORTANT : Importer votre page LoginAdmin
 import LoginAdmin from "./pages/user/LoginAdmin";
-import DashboardAdminPage from "./pages/admin/DashboardAdminPage";
-import DashboardComponents from "./components/admin/DashboardComponents";
 
+// Admin sections
+import TableauBordSection from "./components/admin/TableauDeBoard/TableauBordSection";
+import DemandesSection from "./components/admin/Demandes/DemandesSection";
+import TarifsSection from "./components/admin/Tarifs/TarifsSection";
+import EquipementsSection from "./components/admin/Equipements/EquipementsSection";
+import ActualiteSection from "./components/admin/Actualite/ActualiteSection";
+import HorairesSection from "./components/admin/Horaires/HorairesSection";
+import FAQSection from "./components/admin/FAQ/FAQSection";
+import AproposSection from "./components/admin/Apropos/AproposSection";
 
 const queryClient = new QueryClient();
 
 function App() {
-
   return (
-    <>
+    <AuthProvider>                        {/* ← englobe tout */}
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
           <Sonner />
           <BrowserRouter>
             <Routes>
-              {/*******************************
-              *         Public routes         *
-              ********************************/}
+              {/* ── Public ─────────────────────────────── */}
               <Route path="/" element={<HomePage />} />
               <Route path="/actu" element={<ActualitesPage />} />
               <Route path="/contact" element={<ContactPage />} />
@@ -53,34 +54,33 @@ function App() {
               <Route path="/tarifs" element={<TarifsPage />} />
               <Route path="/tprk" element={<TprkPage />} />
               <Route path="/nous-trouver" element={<NousTrouver />} />
-              <Route path="/admin" element={<LoginAdmin />} />
-              {/*******************************
-              *         Admin routes         *
-              ********************************/}
-              {/* <Route
-                path="/admin/*"
-                element={
-                  <ProtectedRoute requiredRole="ADMIN">
-                    <AdminLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route path="" element={<DashboardAdminPage />} />
- 
-              </Route> */}
 
-              {/*******************************
-              *           404 routes         *
-              ********************************/}
-              <Route path="/admin/dashboard" element={<DashboardAdminPage />} />
+              {/* ── Login ──────────────────────────────── */}
+              <Route path="/admin" element={<LoginAdmin />} />
+
+              {/* ── Admin (protégé) ─────────────────────── */}
+              <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route path="dashboard"   element={<TableauBordSection />} />
+                  <Route path="demandes"    element={<DemandesSection />} />
+                  <Route path="tarifs"      element={<TarifsSection />} />
+                  <Route path="equipements" element={<EquipementsSection />} />
+                  <Route path="actualite"   element={<ActualiteSection />} />
+                  <Route path="horaires"    element={<HorairesSection />} />
+                  <Route path="faq"         element={<FAQSection />} />
+                  <Route path="apropos"     element={<AproposSection />} />
+                </Route>
+              </Route>
+
+              {/* ── 404 ───────────────────────────────── */}
               <Route path="*" element={<NotFound />} />
             </Routes>
             <CookieBanner />
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
-    </>
-  )
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
