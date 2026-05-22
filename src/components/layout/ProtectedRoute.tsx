@@ -1,11 +1,15 @@
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-  requiredRole?: string | string[];
-}
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth"; 
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  
-  return <>{children}</>;
+interface Props { requiredRole: string; }
+
+const ProtectedRoute = ({ requiredRole }: Props) => {
+  const { isAuthenticated, user } = useAuth();
+
+  if (!isAuthenticated) return <Navigate to="/admin" replace />;
+  if (user?.role !== requiredRole) return <Navigate to="/" replace />;
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
