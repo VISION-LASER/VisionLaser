@@ -100,12 +100,7 @@ const TechniquesSection: React.FC = () => {
                 loading="lazy"
                 className="aspect-[5/4] w-full rounded-3xl object-cover"
               />
-              <div className="absolute bottom-5 left-5 rounded-xl bg-white/95 px-4 py-3 shadow-lg backdrop-blur">
-                <p className="text-xs font-medium uppercase tracking-wider text-[color:var(--gold)]">
-                  Plateau technique
-                </p>
-                <p className="text-sm text-navy">Schwind AMARIS 1050 RS</p>
-              </div>
+              
             </div>
           </Reveal>
         </div>

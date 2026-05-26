@@ -16,7 +16,7 @@ const CtaSection: React.FC = () => {
             <div className="relative grid gap-10 md:grid-cols-2">
               {/* Copy */}
               <div>
-                <p className="eyebrow">Bilan visuel gratuit</p>
+                <p className="eyebrow">Contactez-nous</p>
                 <h2 className="mt-3 text-white">
                   Premier pas vers une vision nette.
                 </h2>

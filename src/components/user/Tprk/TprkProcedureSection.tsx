@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
-import eye from "../../../assets/eye-macro.jpg";
+import eye from "../../../assets/eye.jpg";
 import { TPRK_BENEFITS } from "../../../data/data";
 
 const TprkProcedureSection: React.FC = () => {
@@ -35,7 +35,7 @@ const TprkProcedureSection: React.FC = () => {
 
           <div className="mt-10">
             <Link to="/contact" className="btn-gold">
-              Demander un bilan visuel gratuit
+              Contactez-nous
             </Link>
           </div>
         </div>

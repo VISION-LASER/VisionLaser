@@ -1,5 +1,4 @@
 import React from "react";
-import { Mail, Phone, Calendar, Eye } from "lucide-react";
 
 const DemandesSection: React.FC = () => {
   const demandes = [
@@ -15,7 +14,7 @@ const DemandesSection: React.FC = () => {
           Demandes de bilan
         </h2>
         <div className="w-12 h-0.5 mt-2 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
-        <p className="text-gray-500 mt-2">Consultez les demandes de bilan visuel gratuit</p>
+        <p className="text-gray-500 mt-2">Consultez les demandes de bilan visuel</p>
       </div>
 
       <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Award } from "lucide-react";
 import { MARQUEE_ITEMS } from "../../../data/data";
-import clinic from "../../../assets/clinic-interior.jpg";
+import clinic from "../../../assets/Acceuil-vision-laser.png";
 import { Reveal } from "../../layout/Reveal";
 import { Counter } from "../../layout/Counter";
 
@@ -57,7 +57,7 @@ const HeroSection: React.FC = () => {
           <Reveal delay={220}>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link to="/contact" className="btn-gold">
-                Demander un bilan visuel gratuit
+                Contactez-nous
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
@@ -121,13 +121,6 @@ const HeroSection: React.FC = () => {
                 </p>
               </div>
 
-              {/* Floating badge – top-right */}
-              <div className="absolute -right-4 top-10 hidden rounded-2xl border border-border bg-white/95 p-3 shadow-lg backdrop-blur md:flex md:items-center md:gap-3">
-                <Award className="h-5 w-5 text-[color:var(--gold)]" />
-                <span className="text-xs font-medium text-navy">
-                  Laser AMARIS 1050 RS
-                </span>
-              </div>
             </div>
           </Reveal>
         </div>

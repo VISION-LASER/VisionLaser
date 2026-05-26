@@ -5,12 +5,14 @@ import logo from "../../assets/vision-laser-logo.jpg";
 import { TopBar } from "./TopBar";
 
 const NAV = [
-  { to: "/actu", label: "ACTUALITÉS" },
   { to: "/femtolasik", label: "FEMTOLASIK" },
   { to: "/tprk", label: "TPRK" },
   { to: "/equipements", label: "EQUIPEMENTS" },
   { to: "/tarifs", label: "TARIFS" },
   { to: "/defauts-visuels", label: "DEFAUTS VISUELS" },
+  { to: "/blog", label: "BLOG" },
+  { to: "/actu", label: "ACTUALITÉS" },
+  { to: "/contact", label: "CONTACT" },
 ] as const;
 
 export function Header() {
@@ -69,10 +71,10 @@ export function Header() {
           
           <div className="hidden md:block">
             <Link 
-              to="/contact" 
+              to="https://www.doctolib.fr/centre-d-ophtalmologie/maubeuge/laser-vision/booking/motives?specialityId=4&telehealth=false&placeId=practice-610316&profile_skipped=true&source=external_referral" 
               className="btn-gold py-2.5 px-6 text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300"
             >
-              BILAN VISUEL GRATUIT
+              PRENDRE RENDEZ-VOUS
             </Link>
           </div>
           
@@ -100,11 +102,11 @@ export function Header() {
                 </Link>
               ))}
               <Link 
-                to="/contact" 
+                to="https://www.doctolib.fr/centre-d-ophtalmologie/maubeuge/laser-vision/booking/motives?specialityId=4&telehealth=false&placeId=practice-610316&profile_skipped=true&source=external_referral" 
                 onClick={() => setOpen(false)} 
                 className="btn-gold mt-4 text-center"
               >
-                BILAN VISUEL GRATUIT
+                PRENDRE RENDEZ-VOUS
               </Link>
             </div>
           </div>

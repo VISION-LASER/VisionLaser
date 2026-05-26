@@ -11,14 +11,14 @@ const TarifsPage: React.FC = () => {
         <title>Tarifs · Vision Laser Hauts-de-France</title>
         <meta
           name="description"
-          content="Tarifs transparents pour la chirurgie réfractive au laser. Bilan visuel gratuit, devis personnalisé après examen médical."
+          content="Tarifs transparents pour la chirurgie réfractive au laser. Bilan visuel, devis personnalisé après examen médical."
         />
       </Helmet>
       <Header />
       <PageHero
         eyebrow="Transparence"
         title="Tarifs"
-        intro="Le bilan visuel est gratuit et sans engagement. Le tarif des interventions est communiqué après l'examen médical, en fonction du protocole adapté à votre vision."
+        intro="Le bilan visuel est obligatoire et sans engagement. Le tarif des interventions est communiqué après l'examen médical, en fonction du protocole adapté à votre vision."
       />
 
       <TarifsPricingSection />

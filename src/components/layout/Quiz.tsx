@@ -28,11 +28,11 @@ export function Quiz() {
         <p className="eyebrow">Information pédagogique</p>
         <h3 className="mt-3">Seul un bilan médical peut vous répondre.</h3>
         <p className="mt-3 text-sm text-muted-foreground">
-          Sur la base de vos réponses, une consultation de bilan visuel gratuit vous permettrait
+          Sur la base de vos réponses, une consultation de bilan visuel vous permettrait
           d'obtenir une réponse précise de notre équipe. Aucun diagnostic ne peut être posé en ligne.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link to="/contact" className="btn-gold">Demander un bilan gratuit</Link>
+          <Link to="/contact" className="btn-gold">Contactez-nous</Link>
           <button
             type="button"
             className="btn-ghost"

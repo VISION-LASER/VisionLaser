@@ -12,7 +12,7 @@ const DifferentesEtapesSection: React.FC = () => {
       title: "MEET AND GREET",
       description:
         "You will have measurements taken and you will meet with Dr. Caster, our Lasik/PRK/Smile specialist. He will answer all your questions, address all your concerns, and carefully explain the pros and cons of all your options. You will feel welcomed and valued.",
-      info: "Bilan gratuit • 1h",
+      info: "Bilan • 1h",
       image: img2, // Deuxième image pour la colonne 1
     },
     {
@@ -214,7 +214,7 @@ const DifferentesEtapesSection: React.FC = () => {
                 color: "white",
               }}
             >
-              DEMANDER UN BILAN VISUEL GRATUIT →
+              Contactez-nous →
             </button>
           </Link>
         </div>

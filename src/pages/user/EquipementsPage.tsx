@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { PageHero } from "../../components/layout/PageHero";
-import EquipementsListSection from "../../components/user/Equipements/EquipementsListSection";
+import EquipementsTabsSection from "../../components/user/Equipements/EquipementsTabsSection"; // Changé ici
 import { Header } from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 
@@ -22,7 +22,7 @@ const EquipementsPage: React.FC = () => {
         intro="Le centre s'appuie sur des technologies de référence en chirurgie réfractive et un plateau diagnostique complet, renouvelé régulièrement."
       />
 
-      <EquipementsListSection />
+      <EquipementsTabsSection /> {/* Changé ici */}
       <Footer />
     </>
   );

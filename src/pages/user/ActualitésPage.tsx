@@ -1,9 +1,9 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { PageHero } from "../../components/layout/PageHero";
 import { Header } from "../../components/layout/Header";
+import { PageHero } from "../../components/layout/PageHero";
 import Footer from "../../components/layout/Footer";
-import ActualiteSection from "../../components/user/Actualite/ActualiteSection";
+import VideoSection from "../../components/user/Actualite/VideoSection";
 
 const ActualitesPage: React.FC = () => (
   <>
@@ -11,17 +11,16 @@ const ActualitesPage: React.FC = () => (
       <title>Actualités · Vision Laser Hauts-de-France</title>
       <meta
         name="description"
-        content="Découvrez les dernières actualités de Vision Laser Hauts-de-France."
+        content="Retrouvez nos vidéos TikTok, YouTube et Facebook : interventions, conseils et témoignages."
       />
     </Helmet>
     <Header />
     <PageHero
       eyebrow="Actualités"
-      title="Les dernières nouvelles de Vision Laser"
-      intro="Restez informé des dernières actualités et événements de notre cabinet."
+      title="Nos vidéos"
+      intro="Interventions filmées, conseils du Dr. Anthony Sion et témoignages patients sur TikTok, YouTube et Facebook."
     />
-
-    <ActualiteSection />
+    <VideoSection />
     <Footer />
   </>
 );
