@@ -29,10 +29,10 @@ const DoctorSection: React.FC = () => {
           <div>
             <p className="eyebrow">L'équipe médicale</p>
             <h2 className="mt-3">
-              Une expertise dirigée par le Dr. Chemla.
+              Une expertise dirigée par le Dr. Anthony Sion.
             </h2>
             <p className="mt-5 text-muted-foreground">
-              Ophtalmologue spécialisé en chirurgie réfractive, le Dr. Chemla
+              Ophtalmologue spécialisé en chirurgie réfractive, le Dr. Anthony Sion
               supervise l'ensemble des bilans et des interventions menés au
               centre. Tous les contenus médicaux du site sont validés par ses
               soins.

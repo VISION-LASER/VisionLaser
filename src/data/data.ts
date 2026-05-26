@@ -103,7 +103,7 @@ export const PILLARS: Pillar[] = [
     icon: Stethoscope,
     title: "Suivi personnalisé",
     description:
-      "Le Dr. Chemla et son équipe vous suivent du premier bilan jusqu'aux contrôles post-opératoires.",
+      "Le Dr. Anthony Sion et son équipe vous suivent du premier bilan jusqu'aux contrôles post-opératoires.",
   },
   {
     icon: Sparkles,
@@ -121,7 +121,7 @@ export const CTA_BENEFITS = [
 export const MARQUEE_ITEMS = [
   "AMARIS 1050 RS",
   "Schwind",
-  "Dr. Chemla",
+  "Dr. Anthony Sion",
   "FemtoLASIK",
   "TPRK",
   "Bilan gratuit",
@@ -266,7 +266,7 @@ export const ACTUALITES: ActualitePost[] = [
     id: "blog-1",
     type: "blog",
     platform: "blog",
-    title: "FemtoLASIK ou TPRK : comment le Dr. Chemla choisit la technique adaptée",
+    title: "FemtoLASIK ou TPRK : comment le Dr. Anthony Sion choisit la technique adaptée",
     excerpt:
       "Deux patients, deux profils cornéens différents, deux techniques. Voici comment l'indication est posée sur des critères médicaux objectifs.",
     content: `La question revient souvent en consultation : « Docteur, quelle technique me recommandez-vous ? »
@@ -286,7 +286,7 @@ Aucune décision n'est prise avant d'avoir l'ensemble de ces données.`,
     likes: 24,
     likedByUser: false,
     tags: ["FemtoLASIK", "TPRK", "Conseil médical"],
-    author: { name: "Dr. Chemla", role: "Chirurgien ophtalmologue" },
+    author: { name: "Dr. Anthony Sion", role: "Chirurgien ophtalmologue" },
     comments: [
       {
         id: "c1",
@@ -342,7 +342,7 @@ Aucune décision n'est prise avant d'avoir l'ensemble de ces données.`,
     platform: "youtube",
     title: "Visite du plateau technique — Laser AMARIS 1050 RS",
     description:
-      "Le Dr. Chemla vous présente le laser AMARIS 1050 RS et son plateau technique de chirurgie réfractive.",
+      "Le Dr. Anthony Sion vous présente le laser AMARIS 1050 RS et son plateau technique de chirurgie réfractive.",
     videoId: "dQw4w9WgXcQ",
     videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     date: "2025-05-20T10:00:00Z",
@@ -372,7 +372,7 @@ Aucune décision n'est prise avant d'avoir l'ensemble de ces données.`,
     platform: "blog",
     title: "Presbytie et chirurgie laser : ce qu'il faut savoir avant 50 ans",
     excerpt:
-      "La presbytie est-elle opérable au laser ? Quelles sont les limites réelles ? Le point complet par le Dr. Chemla.",
+      "La presbytie est-elle opérable au laser ? Quelles sont les limites réelles ? Le point complet par le Dr. Anthony Sion.",
     content: `La presbytie touche quasiment tout le monde à partir de 45 ans. Et la question arrive souvent : « Peut-on se faire opérer du laser pour ne plus porter de lunettes de lecture ? »
 
 La réponse est nuancée.
@@ -394,7 +394,7 @@ Un bilan complet reste la seule façon d'évaluer ce qui est réellement envisag
     likes: 31,
     likedByUser: false,
     tags: ["Presbytie", "Conseil médical", "50 ans"],
-    author: { name: "Dr. Chemla", role: "Chirurgien ophtalmologue" },
+    author: { name: "Dr. Anthony Sion", role: "Chirurgien ophtalmologue" },
     comments: [
       {
         id: "c3",

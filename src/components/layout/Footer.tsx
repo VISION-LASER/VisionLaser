@@ -37,7 +37,7 @@ function Footer() {
       <div className="border-t border-border">
         <div className="container-page flex flex-col items-start justify-between gap-3 py-6 text-xs text-muted-foreground md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} Centre Vision Laser des Hauts-de-France. Tous droits réservés.</p>
-          <p>Informations médicales validées par le Dr. Chemla.</p>
+          <p>Informations médicales validées par le Dr. Anthony Sion.</p>
         </div>
       </div>
     </footer>
