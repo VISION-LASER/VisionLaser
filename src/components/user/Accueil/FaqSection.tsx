@@ -17,7 +17,7 @@ const FaqSection: React.FC = () => {
           </h2>
           <p className="mt-5 text-muted-foreground">
             Vous ne trouvez pas votre question&nbsp;? Notre équipe y répond lors
-            du bilan visuel gratuit, sans engagement.
+            du bilan visuel, sans engagement.
           </p>
           <Link
             to="/contact"

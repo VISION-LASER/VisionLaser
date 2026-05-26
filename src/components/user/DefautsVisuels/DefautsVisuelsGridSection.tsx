@@ -1,37 +1,88 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { DEFECTS } from "../../../data/data";
+import React, { useMemo, useState } from "react";
 
-const DefautsVisuelsGridSection: React.FC = () => (
-  <section className="section">
-    <div className="container-page">
-      {/* Defect cards grid */}
-      <div className="grid gap-6 md:grid-cols-2">
-        {DEFECTS.map(({ name, description }, i) => (
-          <article key={name} className="card-soft">
-            <p className="eyebrow">0{i + 1}</p>
-            <h3 className="mt-3">{name}</h3>
-            <p className="mt-3 text-muted-foreground">{description}</p>
-          </article>
-        ))}
-      </div>
+import MyopieSection from "./MyopieSection";
+import AstigmatismeSection from "./AstigmatismeSection";
+import PresbytieSection from "./PresbytieSection";
+import HypermetropieSection from "./HypermetropieSection";
+import TypesLentillesSection from "./TypesLentillesSection";
+import PrescriptionLentillesSection from "./PrescriptionLentillesSection";
+import ManipulationLentillesSection from "./ManipulationLentillesSection";
 
-      {/* Disclaimer banner */}
-      <div className="mt-12 rounded-2xl border border-border bg-[color:var(--cream)] p-8 md:p-10">
-        <p className="eyebrow">À retenir</p>
-        <p className="mt-3 max-w-2xl text-navy">
-          Aucun diagnostic ne peut être posé à distance. Le bilan visuel gratuit
-          est l'étape indispensable pour évaluer votre profil et déterminer si
-          une correction au laser est envisageable.
-        </p>
-        <div className="mt-6">
-          <Link to="/contact" className="btn-gold">
-            Demander un bilan visuel gratuit
-          </Link>
+const TABS = [
+  "Myopie",
+  "Astigmatisme",
+  "Presbytie",
+  "Hypermétropie",
+  "Différents types de lentilles",
+  "Prescription et prise en charge",
+  "Manipulation des lentilles",
+];
+
+const DefautsVisuelsTabsSection: React.FC = () => {
+  const [activeTab, setActiveTab] = useState("Myopie");
+
+  const currentSection = useMemo(() => {
+    switch (activeTab) {
+      case "Myopie":
+        return <MyopieSection />;
+
+      case "Astigmatisme":
+        return <AstigmatismeSection />;
+
+      case "Presbytie":
+        return <PresbytieSection />;
+
+      case "Hypermétropie":
+        return <HypermetropieSection />;
+
+      case "Différents types de lentilles":
+        return <TypesLentillesSection />;
+
+      case "Prescription et prise en charge":
+        return <PrescriptionLentillesSection />;
+
+      case "Manipulation des lentilles":
+        return <ManipulationLentillesSection />;
+
+      default:
+        return <MyopieSection />;
+    }
+  }, [activeTab]);
+
+  return (
+    <section className="section">
+      <div className="container-page">
+
+        {/* Filters */}
+        <div className="mb-12 flex flex-wrap gap-3">
+          {TABS.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`
+                rounded-full border px-5 py-3 text-sm transition-all duration-300
+                ${
+                  activeTab === tab
+                    ? "bg-navy text-white border-navy"
+                    : "border-border hover:border-navy"
+                }
+              `}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* Dynamic content */}
+        <div
+          key={activeTab}
+          className="animate-fade-up rounded-3xl border border-border p-8 md:p-12"
+        >
+          {currentSection}
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
-export default DefautsVisuelsGridSection;
+export default DefautsVisuelsTabsSection;

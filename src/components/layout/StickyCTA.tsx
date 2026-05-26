@@ -26,7 +26,7 @@ export function StickyCTA() {
       }`}
     >
       <Link to="/contact" className="btn-gold w-full">
-        Demander un bilan visuel gratuit
+        Contactez-nous
       </Link>
     </div>
   );

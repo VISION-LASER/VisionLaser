@@ -12,7 +12,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         </div>
         <h3 className="mt-4 text-xl">Demande bien reçue</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Notre équipe vous recontacte sous 48 h ouvrées pour fixer votre bilan visuel gratuit.
+          Notre équipe vous recontacte sous 48 h ouvrées pour fixer votre bilan visuel.
         </p>
       </div>
     );
@@ -28,7 +28,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     >
       {!compact && (
         <div>
-          <h3 className="text-xl">Demander un bilan visuel gratuit</h3>
+          <h3 className="text-xl">Contactez-nous</h3>
           <p className="mt-1 text-sm text-muted-foreground">
             Réponse personnalisée sous 48 h. Aucun engagement.
           </p>

@@ -22,12 +22,6 @@ export interface Pillar {
   description: string;
 }
 
-export interface EquipmentItem {
-  name: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-}
 
 export interface PriceRow {
   name: string;
@@ -85,6 +79,7 @@ export interface BlogPost {
   id: string;
   type: "blog";
   platform: "blog";
+  category: BlogCategory;
   title: string;
   excerpt: string;
   content: string;        // Contenu complet en markdown/texte
@@ -113,3 +108,20 @@ export interface AnalyticsEvent {
 }
 
 export type CookieConsent = "accepted" | "refused" | null;
+
+export type BlogCategory =
+  | "all"
+  | "defauts-visuels"
+  | "maladies-frequentes"
+  | "ressources-patients"
+  | "chirurgie-refractive";
+
+
+  export interface EquipmentItem {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  category: "laser" | "diagnostic";
+}

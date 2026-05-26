@@ -30,7 +30,7 @@ function Footer() {
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
             <li>VISION LASER, Polyclinique du Val de Sambre, Rte de Mons 162, 59600 Maubeuge</li>
             <li>Lun – Ven · 9h – 18h</li>
-            <li><Link to="/contact" className="underline-offset-4 hover:underline">Demander un bilan</Link></li>
+            <li><Link to="/contact" className="underline-offset-4 hover:underline">Contactez-nous</Link></li>
           </ul>
         </div>
       </div>

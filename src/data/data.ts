@@ -14,10 +14,10 @@ import {
   Mail,
 } from "lucide-react";
 
-import type { Step, FaqItem, Testimonial, Pillar, EquipmentItem, PriceRow, TrustBadge, VisualDefect, ContactInfo, ActualitePost } from "../types/types";
+import type { Step, FaqItem, Testimonial, Pillar, EquipmentItem, PriceRow, TrustBadge, ContactInfo, ActualitePost } from "../types/types";
 
 import laser from "../assets/laser-equipment.jpg";
-import clinic from "../assets/clinic-interior.jpg";
+import clinic from "../assets/Acceuil-vision-laser.png";
 import surgeon from "../assets/surgeon.jpg";
 
 export const STEPS: Step[] = [
@@ -124,7 +124,7 @@ export const MARQUEE_ITEMS = [
   "Dr. Anthony Sion",
   "FemtoLASIK",
   "TPRK",
-  "Bilan gratuit",
+  "Bilan",
   "Suivi post-opératoire",
   "Hauts-de-France",
 ];
@@ -145,20 +145,28 @@ export const TPRK_BENEFITS: string[] = [
 
 export const EQUIPMENT_ITEMS: EquipmentItem[] = [
   {
+    id: "laser-femtoseconde",
+    category: "laser",
     name: "Laser femtoseconde",
     description:
       "Précision micrométrique pour la création des volets cornéens en FemtoLASIK.",
     image: laser,
     imageAlt: "Laser femtoseconde",
   },
+
   {
+    id: "laser-excimer",
+    category: "laser",
     name: "Laser excimer",
     description:
       "Remodelage de la cornée guidé par cartographie, sur les deux techniques chirurgicales.",
     image: clinic,
     imageAlt: "Laser excimer",
   },
+
   {
+    id: "plateau-diagnostique",
+    category: "diagnostic",
     name: "Plateau diagnostique",
     description:
       "Topographie cornéenne, pachymétrie, aberrométrie et examens complets avant toute décision.",
@@ -219,29 +227,6 @@ export const TRUST_BADGES: TrustBadge[] = [
   { title: "Personnalisé", subtitle: "Bilan adapté" },
 ];
 
-export const DEFECTS: VisualDefect[] = [
-  {
-    name: "Myopie",
-    description:
-      "Vision floue de loin. La cornée focalise les images en avant de la rétine.",
-  },
-  {
-    name: "Hypermétropie",
-    description:
-      "Vision floue de près. Les images se forment en arrière de la rétine.",
-  },
-  {
-    name: "Astigmatisme",
-    description:
-      "Vision déformée à toutes les distances, liée à une courbure cornéenne irrégulière.",
-  },
-  {
-    name: "Presbytie",
-    description:
-      "Difficulté progressive de mise au point de près, liée à l'âge.",
-  },
-];
-
 export const CONTACT_INFOS: ContactInfo[] = [
   {
     icon: MapPin,
@@ -266,6 +251,7 @@ export const ACTUALITES: ActualitePost[] = [
     id: "blog-1",
     type: "blog",
     platform: "blog",
+    category: "chirurgie-refractive",
     title: "FemtoLASIK ou TPRK : comment le Dr. Anthony Sion choisit la technique adaptée",
     excerpt:
       "Deux patients, deux profils cornéens différents, deux techniques. Voici comment l'indication est posée sur des critères médicaux objectifs.",
@@ -370,6 +356,7 @@ Aucune décision n'est prise avant d'avoir l'ensemble de ces données.`,
     id: "blog-2",
     type: "blog",
     platform: "blog",
+    category: "defauts-visuels",
     title: "Presbytie et chirurgie laser : ce qu'il faut savoir avant 50 ans",
     excerpt:
       "La presbytie est-elle opérable au laser ? Quelles sont les limites réelles ? Le point complet par le Dr. Anthony Sion.",
@@ -422,4 +409,103 @@ Un bilan complet reste la seule façon d'évaluer ce qui est réellement envisag
     tags: ["Pré-opératoire", "Conseils", "Vidéo"],
   },
 
+];
+
+export const DEFECTS = [
+  {
+    id: "myopie",
+    category: "Défauts visuels",
+    name: "Myopie",
+    shortDescription:
+      "Vision floue de loin due à un œil trop long.",
+    content: `
+La myopie est un trouble visuel fréquent provoquant une vision floue de loin.
+Les objets proches restent nets tandis que les objets éloignés deviennent flous.
+
+La chirurgie réfractive au laser permet souvent de corriger efficacement la myopie.
+    `,
+  },
+
+  {
+    id: "astigmatisme",
+    category: "Défauts visuels",
+    name: "Astigmatisme",
+    shortDescription:
+      "Vision déformée causée par une irrégularité de la cornée.",
+    content: `
+L’astigmatisme entraîne une vision floue ou déformée à toutes les distances.
+
+Il est souvent associé à la myopie ou à l’hypermétropie.
+Le traitement laser permet de régulariser la courbure cornéenne.
+    `,
+  },
+
+  {
+    id: "presbytie",
+    category: "Défauts visuels",
+    name: "Presbytie",
+    shortDescription:
+      "Difficulté progressive à voir de près avec l’âge.",
+    content: `
+La presbytie apparaît généralement après 40 ans.
+
+Elle correspond à une perte progressive de la capacité d’accommodation du cristallin.
+    `,
+  },
+
+  {
+    id: "hypermetropie",
+    category: "Défauts visuels",
+    name: "Hypermétropie",
+    shortDescription:
+      "Vision difficile de près liée à un œil trop court.",
+    content: `
+L’hypermétropie provoque une fatigue visuelle importante.
+
+La correction laser peut améliorer la vision de près et de loin.
+    `,
+  },
+
+  {
+    id: "types-lentilles",
+    category: "Lentilles",
+    name: "Différents types de lentilles",
+    shortDescription:
+      "Comprendre les différents types de lentilles de contact.",
+    content: `
+Il existe plusieurs types de lentilles :
+- souples
+- rigides
+- journalières
+- mensuelles
+
+Le choix dépend du profil visuel et du confort recherché.
+    `,
+  },
+
+  {
+    id: "prescription-lentilles",
+    category: "Lentilles",
+    name: "Prescription et prise en charge",
+    shortDescription:
+      "Informations sur l’ordonnance et le remboursement.",
+    content: `
+Les lentilles nécessitent une prescription médicale.
+
+Certaines corrections peuvent être prises en charge selon votre contrat mutuelle.
+    `,
+  },
+
+  {
+    id: "manipulation-lentilles",
+    category: "Lentilles",
+    name: "Manipulation des lentilles",
+    shortDescription:
+      "Conseils pour poser et retirer correctement ses lentilles.",
+    content: `
+Une bonne hygiène est indispensable pour éviter les infections.
+
+Toujours laver les mains avant manipulation.
+    `,
+  },
 ];

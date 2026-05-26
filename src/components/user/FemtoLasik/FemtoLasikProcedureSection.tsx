@@ -35,7 +35,7 @@ const FemtoLasikProcedureSection: React.FC = () => {
 
           <div className="mt-10">
             <Link to="/contact" className="btn-gold">
-              Demander un bilan visuel gratuit
+              Contactez-nous
             </Link>
           </div>
         </div>

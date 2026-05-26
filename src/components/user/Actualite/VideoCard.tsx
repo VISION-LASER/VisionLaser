@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Heart, Eye, ExternalLink, Play, X } from "lucide-react";
-import PlatformBadge from "./PlatformBadge";
+import PlatformBadge from "../Blog/PlatformBadge";
 import type { VideoPost } from "../../../types/types";
-import { buildEmbedUrl, formatCount, relativeDate } from "./PlatformUtils";
-
+import { buildEmbedUrl, formatCount, relativeDate } from "../Blog/PlatformUtils";
+ 
 interface VideoCardProps {
   post: VideoPost;
 }

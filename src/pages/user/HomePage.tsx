@@ -22,12 +22,11 @@ const HomePage: React.FC = () => {
         </title>
         <meta
           name="description"
-          content="Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser (FemtoLASIK, TPRK). Bilan visuel gratuit dans les Hauts-de-France."
+          content="Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser (FemtoLASIK, TPRK). Bilan visuel dans les Hauts-de-France."
         />
       </Helmet>
       <Header />
       <HeroSection />
-      <PillarsSection />
       <ProcessSection />
       <TechniquesSection />
       <DoctorSection />
@@ -36,7 +35,6 @@ const HomePage: React.FC = () => {
       <DifferentesEtapes/>
       <FaqSection />
       <CtaSection />
-      
       <Footer />
     </>
   );

@@ -32,6 +32,7 @@ import ActualiteSection from "./components/admin/Actualite/ActualiteSection";
 import HorairesSection from "./components/admin/Horaires/HorairesSection";
 import FAQSection from "./components/admin/FAQ/FAQSection";
 import AproposSection from "./components/admin/Apropos/AproposSection";
+import BlogPage from "./pages/user/BlogPage";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ function App() {
               {/* ── Public ─────────────────────────────── */}
               <Route path="/" element={<HomePage />} />
               <Route path="/actu" element={<ActualitesPage />} />
+              <Route path="/blog" element={<BlogPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/defauts-visuels" element={<DefautsVisuelsPage />} />
               <Route path="/equipements" element={<EquipementsPage />} />
