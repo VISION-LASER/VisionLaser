@@ -12,6 +12,7 @@ import DifferentesEtapes from "../../components/user/DifferentesEtapes/Different
 import { Header } from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import TprkEligibilitySection from "../../components/user/Tprk/TprkEligibilitySection";
+import StickyContactForm from "../../components/user/Accueil/StickyContactForm"; // ← Ajout
 
 const HomePage: React.FC = () => {
   return (
@@ -36,6 +37,9 @@ const HomePage: React.FC = () => {
       <FaqSection />
       <CtaSection />
       <Footer />
+
+      {/* Formulaire flottant sticky */}
+      <StickyContactForm />
     </>
   );
 };
