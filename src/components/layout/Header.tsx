@@ -54,10 +54,10 @@ export function Header() {
                 height={44}
                 className="h-11 w-11 rounded-full object-cover ring-1 ring-gold/20 transition-all duration-300 group-hover:scale-[1.04] group-hover:ring-gold/50"
               />
-              <span className="hidden text-sm font-semibold tracking-tight text-navy sm:block">
+              <span className="hidden text-xs font-semibold tracking-tight text-navy sm:block">
                 VISION-LASER{" "}
                 <br />
-                <span className="font-normal text-muted-foreground">
+                <span className="font-normal text-muted-foreground text-[11px]">
                   HAUTS-DE-FRANCE
                 </span>
               </span>
@@ -70,7 +70,7 @@ export function Header() {
                   key={n.to}
                   to={n.to}
                   className={({ isActive }) =>
-                    `nav-link relative text-sm font-medium transition-colors duration-200 hover:text-navy ${
+                    `nav-link relative text-xs font-medium transition-colors duration-200 hover:text-navy ${
                       isActive ? "is-active text-navy" : "text-navy/70 hover:text-navy"
                     }`
                   }
@@ -85,7 +85,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setBookingOpen(true)}
-                className="btn-gold py-2.5 px-6 text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300"
+                className="btn-gold py-2.5 px-6 text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-300"
               >
                 PRENDRE RENDEZ-VOUS
               </button>
@@ -110,7 +110,7 @@ export function Header() {
                     key={n.to}
                     to={n.to}
                     onClick={() => setOpen(false)}
-                    className="border-b border-border/50 py-3 text-base font-medium text-navy transition-colors last:border-0 hover:text-gold"
+                    className="border-b border-border/50 py-3 text-sm font-medium text-navy transition-colors last:border-0 hover:text-gold"
                   >
                     {n.label}
                   </Link>
@@ -118,7 +118,7 @@ export function Header() {
                 <button
                   type="button"
                   onClick={() => { setOpen(false); setBookingOpen(true); }}
-                  className="btn-gold mt-4 text-center"
+                  className="btn-gold mt-4 text-center text-sm"
                 >
                   PRENDRE RENDEZ-VOUS
                 </button>
