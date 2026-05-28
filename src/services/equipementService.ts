@@ -1,5 +1,5 @@
 // ✅ Assurez-vous que c'est bien "export" et pas autre chose
-const API_URL = 'http://localhost:3000/api/users';
+import { API_URL } from '../config/api.config';
 
 export interface Equipement {
   id: number;
