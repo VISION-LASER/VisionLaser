@@ -68,20 +68,29 @@ const DemandesSection: React.FC = () => {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   // Charger les données
-  const loadDemandes = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await bilanService.getAll();
-      const demandesList = Array.isArray(data) ? data : (data.data || []);
-      setDemandes(demandesList);
-    } catch (err) {
-      setError("Impossible de charger les demandes de bilan");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const loadDemandes = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await bilanService.getAll();
+        // Défensive : gérer les deux formes possibles de retour (array direct ou { data: [...] })
+        let demandesList: Bilan[] = [];
+        if (Array.isArray(data)) {
+          demandesList = data;
+        } else if (data && typeof data === "object" && Array.isArray((data as any).data)) {
+          demandesList = (data as any).data;
+        } else {
+          // si la forme est inattendue, on essaie de ne rien casser et on garde la liste vide
+          demandesList = [];
+        }
+        setDemandes(demandesList);
+      } catch (err) {
+        setError("Impossible de charger les demandes de bilan");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
   // Charger au montage du composant
   useEffect(() => {
