@@ -63,7 +63,7 @@ const ExitIntentPopup: React.FC<Props> = ({ onOpenBooking }) => {
           <div className="flex items-center gap-2">
             <Gift size={16} style={{ color: "#C9A84C" }} />
             <span className="text-[12px] font-semibold" style={{ color: "#C9A84C" }}>
-              Bilan visuel offert
+              Bilan visuel 
             </span>
           </div>
           <button
@@ -82,7 +82,7 @@ const ExitIntentPopup: React.FC<Props> = ({ onOpenBooking }) => {
           </h2>
           <p className="mt-3 text-[13px] leading-relaxed" style={{ color: "rgba(12,35,64,.6)" }}>
             Un bilan personnalisé vous dira en 48h si la chirurgie laser est
-            adaptée à votre vue. Sans engagement, sans frais.
+            adaptée à votre vue. Sans engagement.
           </p>
 
           {/* Preuves sociales mini */}
@@ -105,7 +105,7 @@ const ExitIntentPopup: React.FC<Props> = ({ onOpenBooking }) => {
             className="mt-6 w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-[14px] font-semibold transition-all hover:scale-[1.02]"
             style={{ background: "#C9A84C", color: "#0C2340" }}
           >
-            Demander mon bilan gratuit
+            Demander mon bilan
             <ArrowRight size={16} />
           </button>
 
