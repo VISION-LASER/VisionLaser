@@ -1,47 +1,187 @@
 import { Link } from "react-router-dom";
+import { MapPin, Phone, Mail, Clock, ArrowRight, Calendar } from "lucide-react";
 import logo from "../../assets/vision-laser-logo.jpg";
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  const quickLinks = [
+    { name: "FemtoLASIK", path: "/femtolasik" },
+    { name: "TPRK", path: "/tprk" },
+    { name: "Équipements", path: "/equipements" },
+    { name: "Tarifs", path: "/tarifs" },
+    { name: "Défauts visuels", path: "/defauts-visuels" },
+    { name: "Actualités", path: "/actu" },
+  ];
+
+  const contactInfo = {
+    address: "Polyclinique du Val de Sambre, Rte de Mons 162, 59600 Maubeuge",
+    phone: "03 27 62 12 34",
+    email: "contact@vision-laser.fr",
+    hours: "Lun – Ven · 9h – 18h",
+  };
 
   return (
-    <footer id="site-footer" className="mt-20 border-t border-border bg-[color:var(--cream)]">
-      <div className="container-page grid gap-10 py-16 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <div className="flex items-center gap-3">
-            <img src={logo} alt="Vision Laser" width={40} height={40} className="h-10 w-10 rounded-full object-cover" />
-            <span className="text-sm font-medium text-navy">Vision Laser · Hauts-de-France</span>
+    <footer className="relative mt-24 bg-gradient-to-b from-white to-gray-50 border-t border-gray-100">
+      {/* Décorations subtiles */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#C9A84C] via-[#D4B86A] to-[#C9A84C]" />
+      
+      <div className="container-page mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        {/* Grille principale */}
+        <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-12">
+          
+          {/* Colonne 1 - Logo & Description - 5 colonnes */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <img 
+                  src={logo} 
+                  alt="Vision Laser" 
+                  width={48} 
+                  height={48} 
+                  className="h-12 w-12 rounded-full object-cover ring-2 ring-[#C9A84C]/20"
+                />
+              </div>
+              <div>
+                <span className="text-lg font-bold block" style={{ color: "#0C2340" }}>
+                  Vision Laser
+                </span>
+                <span className="text-xs" style={{ color: "#C9A84C" }}>
+                  Hauts-de-France
+                </span>
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed" style={{ color: "#0C2340", opacity: 0.7 }}>
+              Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser. 
+              Une approche médicale, sobre et personnalisée pour chaque patient.
+            </p>
+            {/* Badge de confiance */}
+            <div className="flex items-center gap-2 pt-2">
+              <div className="flex items-center gap-1 px-2 py-1 bg-[#C9A84C]/10 rounded-full">
+                <span className="text-xs font-medium" style={{ color: "#C9A84C" }}>✓</span>
+                <span className="text-xs" style={{ color: "#0C2340", opacity: 0.8 }}>Expertise reconnue</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 bg-[#C9A84C]/10 rounded-full">
+                <span className="text-xs font-medium" style={{ color: "#C9A84C" }}>✓</span>
+                <span className="text-xs" style={{ color: "#0C2340", opacity: 0.8 }}>Équipements de pointe</span>
+              </div>
+            </div>
           </div>
-          <p className="mt-4 max-w-md text-sm text-muted-foreground">
-            Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser.
-            Une approche médicale, sobre et personnalisée pour chaque patient.
+
+          {/* Colonne 2 - Liens rapides - 3 colonnes */}
+          <div className="lg:col-span-3">
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 flex items-center gap-2" style={{ color: "#0C2340" }}>
+              <span className="w-1 h-4 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
+              Liens rapides
+            </h3>
+            <ul className="space-y-2.5">
+              {quickLinks.map((link, index) => (
+                <li key={index}>
+                  <Link 
+                    to={link.path}
+                    className="group flex items-center gap-2 text-sm transition-all duration-200 hover:translate-x-1"
+                    style={{ color: "#0C2340", opacity: 0.7 }}
+                  >
+                    <ArrowRight size={12} className="transition-all duration-200 group-hover:translate-x-0.5" style={{ color: "#C9A84C" }} />
+                    <span className="group-hover:opacity-100">{link.name}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Colonne 3 - Contact & Horaires - 4 colonnes */}
+          <div className="lg:col-span-4">
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 flex items-center gap-2" style={{ color: "#0C2340" }}>
+              <span className="w-1 h-4 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
+              Contact & Horaires
+            </h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3 group">
+                <MapPin size={16} className="mt-0.5 shrink-0 transition-colors" style={{ color: "#C9A84C" }} />
+                <p className="text-sm leading-relaxed" style={{ color: "#0C2340", opacity: 0.7 }}>
+                  {contactInfo.address}
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
+                <a 
+                  href={`tel:${contactInfo.phone}`}
+                  className="text-sm transition-colors hover:opacity-100"
+                  style={{ color: "#0C2340", opacity: 0.7 }}
+                >
+                  {contactInfo.phone}
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Mail size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
+                <a 
+                  href={`mailto:${contactInfo.email}`}
+                  className="text-sm transition-colors hover:opacity-100"
+                  style={{ color: "#0C2340", opacity: 0.7 }}
+                >
+                  {contactInfo.email}
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Clock size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
+                <p className="text-sm" style={{ color: "#0C2340", opacity: 0.7 }}>
+                  {contactInfo.hours}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA rapide */}
+        <div className="mt-10 pt-8 border-t border-gray-100">
+          <div 
+            className="rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4 transition-all duration-300 hover:shadow-lg"
+            style={{ backgroundColor: "#F9FAFB" }}
+          >
+            <div className="text-center md:text-left">
+              <p className="text-sm font-semibold mb-1" style={{ color: "#0C2340" }}>
+                Prêt à améliorer votre vision ?
+              </p>
+              <p className="text-xs" style={{ color: "#0C2340", opacity: 0.6 }}>
+                Prenez rendez-vous pour un bilan personnalisé
+              </p>
+            </div>
+            <Link
+              to="/contact"
+              className="group flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 hover:scale-105 hover:shadow-md"
+              style={{ backgroundColor: "#C9A84C", color: "#0C2340" }}
+            >
+              <Calendar size={16} />
+              <span>Prendre rendez-vous</span>
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col items-center justify-between gap-3 text-center md:flex-row md:text-left">
+          <p className="text-xs" style={{ color: "#0C2340", opacity: 0.5 }}>
+            © {currentYear} Centre Vision Laser des Hauts-de-France. Tous droits réservés.
           </p>
-        </div>
-        <div>
-          <h4 className="text-sm font-semibold text-navy">Le centre</h4>
-          <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/femtolasik">FemtoLASIK</Link></li>
-            <li><Link to="/tprk">TPRK</Link></li>
-            <li><Link to="/equipements">Équipements</Link></li>
-            <li><Link to="/tarifs">Tarifs</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="text-sm font-semibold text-navy">Contact</h4>
-          <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-            <li>VISION LASER, Polyclinique du Val de Sambre, Rte de Mons 162, 59600 Maubeuge</li>
-            <li>Lun – Ven · 9h – 18h</li>
-            <li><Link to="/contact" className="underline-offset-4 hover:underline">Contactez-nous</Link></li>
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-border">
-        <div className="container-page flex flex-col items-start justify-between gap-3 py-6 text-xs text-muted-foreground md:flex-row md:items-center">
-          <p>© {new Date().getFullYear()} Centre Vision Laser des Hauts-de-France. Tous droits réservés.</p>
-          <p>Informations médicales validées par le Dr. Anthony Sion.</p>
+          <div className="flex gap-6">
+            <Link to="/mentions-legales" className="text-xs transition-colors hover:opacity-100" style={{ color: "#0C2340", opacity: 0.5 }}>
+              Mentions légales
+            </Link>
+            <Link to="/politique-confidentialite" className="text-xs transition-colors hover:opacity-100" style={{ color: "#0C2340", opacity: 0.5 }}>
+              Politique de confidentialité
+            </Link>
+            <Link to="/cgv" className="text-xs transition-colors hover:opacity-100" style={{ color: "#0C2340", opacity: 0.5 }}>
+              CGV
+            </Link>
+          </div>
+          <p className="text-xs" style={{ color: "#0C2340", opacity: 0.4 }}>
+            Informations médicales validées par le Dr. Anthony Sion
+          </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;
