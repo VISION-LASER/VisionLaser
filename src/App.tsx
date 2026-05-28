@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "./components/ui/sonner";
 import { Toaster } from "./components/ui/toaster";
 import { AuthProvider } from "./hooks/useAuth";
 
+
 // Layout & guards
 import NotFound from "./components/layout/NotFound";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
@@ -22,6 +23,7 @@ import TprkPage from "./pages/user/TprkPage";
 import NousTrouver from "./pages/user/NousTrouverPage";
 import ActualitesPage from "./pages/user/ActualitésPage";
 import LoginAdmin from "./pages/user/LoginAdmin";
+import RegisterAdmin from './pages/user/RegisterAdmin';// vao nampidirina
 
 // Admin sections
 import TableauBordSection from "./components/admin/TableauDeBoard/TableauBordSection";
@@ -57,6 +59,7 @@ function App() {
 
               {/* ── Login ──────────────────────────────── */}
               <Route path="/admin" element={<LoginAdmin />} />
+              <Route path="/admin/register" element={<RegisterAdmin />} />
 
               {/* ── Admin (protégé) ─────────────────────── */}
               <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
