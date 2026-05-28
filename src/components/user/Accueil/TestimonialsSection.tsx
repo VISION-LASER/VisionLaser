@@ -9,7 +9,7 @@ const TestimonialsSection: React.FC = () => {
   const [active, setActive] = useState<Testimonial | null>(null);
 
   return (
-    <section className="section">
+    <section id="temoignages" className="section">
       <div className="container-page">
         <Reveal>
           <div className="max-w-2xl">

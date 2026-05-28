@@ -1,5 +1,5 @@
 import React from "react";
-import surgeon from "../../../assets/surgeon.jpg";
+import surgeon from "../../../assets/surgeon.png";
 import { Reveal } from "../../layout/Reveal";
 
 // ---------------------------------------------------------------------------

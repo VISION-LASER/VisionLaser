@@ -18,7 +18,7 @@ import type { Step, FaqItem, Testimonial, Pillar, EquipmentItem, PriceRow, Trust
 
 import laser from "../assets/laser-equipment.jpg";
 import clinic from "../assets/Acceuil-vision-laser.png";
-import surgeon from "../assets/surgeon.jpg";
+import surgeon from "../assets/surgeon.png";
 
 export const STEPS: Step[] = [
   {
