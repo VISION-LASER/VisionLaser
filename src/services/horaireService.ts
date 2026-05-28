@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api/users';
+import { API_URL } from '../config/api.config';
 
 export interface Horaire {
   id: number;
