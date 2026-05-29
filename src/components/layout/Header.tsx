@@ -5,6 +5,10 @@ import logo from "../../assets/vision-laser-logo.jpg";
 import { TopBar } from "./TopBar";
 import BookingModal from "../user/Booking/BookingModal";
 
+// Importer les images des drapeaux
+import spanishFlag from "../../assets/gb.png"; // ou .svg
+import englishFlag from "../../assets/es.png"; // ou .svg
+
 const NAV = [
   { to: "/femtolasik",      label: "FEMTOLASIK" },
   { to: "/tprk",            label: "TPRK" },
@@ -16,10 +20,17 @@ const NAV = [
   // { to: "/contact",         label: "CONTACT" },
 ] as const;
 
+// Langues disponibles avec vraies images de drapeaux
+const LANGUAGES = [
+  { code: "es", label: "ES", flag: spanishFlag, active: false },
+  { code: "en", label: "EN", flag: englishFlag, active: false },
+];
+
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState("fr");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -27,6 +38,11 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleLanguageChange = (langCode: string) => {
+    setCurrentLang(langCode);
+    console.log(`Langue changée vers: ${langCode}`);
+  };
 
   return (
     <>
@@ -41,7 +57,7 @@ export function Header() {
           }`}
         >
           <div className="container-page flex h-20 items-center justify-between">
-            {/* Logo */}
+            {/* Logo - AGGRANDI */}
             <Link
               to="/"
               className="group flex items-center gap-3"
@@ -50,9 +66,9 @@ export function Header() {
               <img
                 src={logo}
                 alt="Vision Laser Hauts-de-France"
-                width={44}
-                height={44}
-                className="h-11 w-11 rounded-full object-cover ring-1 ring-gold/20 transition-all duration-300 group-hover:scale-[1.04] group-hover:ring-gold/50"
+                width={64}
+                height={64}
+                className="h-16 w-16 rounded-full object-cover ring-2 ring-gold/30 transition-all duration-300 group-hover:scale-[1.04] group-hover:ring-gold/50"
               />
               <span className="hidden text-xs font-semibold tracking-tight text-navy sm:block">
                 VISION-LASER{" "}
@@ -78,6 +94,31 @@ export function Header() {
                   {n.label}
                 </NavLink>
               ))}
+              
+              {/* Vrais drapeaux espagnol et anglais */}
+              <div className="flex items-center gap-3 ml-2 border-l border-border/50 pl-4">
+                {LANGUAGES.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => handleLanguageChange(lang.code)}
+                    className={`flex items-center gap-1.5 rounded-md px-1.5 py-1 transition-all duration-200 ${
+                      currentLang === lang.code
+                        ? "bg-gold/10 ring-1 ring-gold/30"
+                        : "hover:bg-navy/5"
+                    }`}
+                    aria-label={`Changer la langue en ${lang.label}`}
+                  >
+                    <img 
+                      src={lang.flag} 
+                      alt={`Drapeau ${lang.label}`}
+                      className="h-5 w-6 object-cover rounded-sm shadow-sm"
+                    />
+                    <span className={`text-xs font-medium ${currentLang === lang.code ? "text-gold" : "text-navy/70"}`}>
+                      {lang.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </nav>
 
             {/* Desktop CTA — ouvre la modale */}
@@ -115,6 +156,33 @@ export function Header() {
                     {n.label}
                   </Link>
                 ))}
+                
+                {/* Vrais drapeaux dans le menu mobile */}
+                <div className="mt-4 flex items-center justify-start gap-3 border-t border-border/50 pt-4">
+                  <span className="text-xs font-medium text-navy/60">Langue :</span>
+                  {LANGUAGES.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        handleLanguageChange(lang.code);
+                        setOpen(false);
+                      }}
+                      className={`flex items-center gap-2 rounded-md px-3 py-2 transition-all ${
+                        currentLang === lang.code
+                          ? "bg-gold text-white"
+                          : "bg-navy/5 text-navy hover:bg-navy/10"
+                      }`}
+                    >
+                      <img 
+                        src={lang.flag} 
+                        alt={`Drapeau ${lang.label}`}
+                        className="h-5 w-6 object-cover rounded-sm"
+                      />
+                      <span className="text-sm font-medium">{lang.label}</span>
+                    </button>
+                  ))}
+                </div>
+                
                 <button
                   type="button"
                   onClick={() => { setOpen(false); setBookingOpen(true); }}

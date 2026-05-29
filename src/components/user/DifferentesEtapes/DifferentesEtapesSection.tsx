@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import img1 from "../../../assets/1.jpg";
 import img2 from "../../../assets/2.jpg";
 import img3 from "../../../assets/3.jpeg";
-import img4 from "../../../assets/4.jpg";
+import img4 from "../../../assets/profit_view.png";
 
 const DifferentesEtapesSection: React.FC = () => {
   const steps = [
