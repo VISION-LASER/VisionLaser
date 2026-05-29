@@ -29,13 +29,12 @@ const DoctorSection: React.FC = () => {
           <div>
             <p className="eyebrow">L'équipe médicale</p>
             <h2 className="mt-3">
-              Une expertise dirigée par le Dr. Anthony Sion.
+              Une expertise dirigée par le Dr. Anthony Sion et son équipe.
             </h2>
-            <p className="mt-5 text-muted-foreground">
-              Ophtalmologue spécialisé en chirurgie réfractive, le Dr. Anthony Sion
-              supervise l'ensemble des bilans et des interventions menés au
-              centre. Tous les contenus médicaux du site sont validés par ses
-              soins.
+            <p className="mt-5 text-muted-foreground text-justify">
+              Le centre s’appuie sur une équipe médicale expérimentée et spécialisée en chirurgie réfractive, coordonnée par le Dr. Anthony Sion. Ensemble, ils assurent un accompagnement personnalisé à chaque étape du parcours patient, du bilan préopératoire jusqu’au suivi post-intervention.
+
+              <br />L’ensemble des consultations, examens et interventions est réalisé selon des protocoles rigoureux afin de garantir sécurité, précision et excellence des soins. Tous les contenus médicaux du site sont validés par le Dr. Anthony Sion.
             </p>
 
             <div className="mt-8 grid grid-cols-2 gap-4 text-sm">
@@ -46,6 +45,26 @@ const DoctorSection: React.FC = () => {
               <Credential
                 title="Chirurgie réfractive"
                 subtitle="Pratique exclusive"
+              />
+              <Credential
+                title="Expertise en chirurgie réfractive"
+                subtitle="Spécialisation et expérience"
+              />
+              <Credential
+                title="Équipe médicale spécialisée"
+                subtitle="Professionnalisme et compétence"
+              />
+              <Credential
+                title="Accompagnement personnalisé"
+                subtitle="Suivi individualisé"
+              />
+              <Credential
+                title="Technologie de pointe"
+                subtitle="Innovations médicales"
+              />
+              <Credential
+                title="Pratique dédiée à la correction visuelle"
+                subtitle="Focus sur les résultats optimaux"
               />
             </div>
           </div>

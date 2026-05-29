@@ -11,9 +11,9 @@ const NAV = [
   { to: "/equipements",     label: "ÉQUIPEMENTS" },
   { to: "/tarifs",          label: "TARIFS" },
   { to: "/defauts-visuels", label: "DÉFAUTS VISUELS" },
-  { to: "/blog",            label: "BLOG" },
+  // { to: "/blog",            label: "BLOG" },
   { to: "/actu",            label: "ACTUALITÉS" },
-  { to: "/contact",         label: "CONTACT" },
+  // { to: "/contact",         label: "CONTACT" },
 ] as const;
 
 export function Header() {
@@ -31,7 +31,7 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-40">
-        <TopBar />
+        {/*<TopBar />*/}
 
         <div
           className={`transition-all duration-300 ${
