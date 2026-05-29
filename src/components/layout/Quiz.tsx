@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 const QUESTIONS = [
@@ -21,6 +21,22 @@ export function Quiz() {
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
   const [answers, setAnswers] = useState<string[]>([]);
+  const navigate = useNavigate();
+
+  const handleContactClick = () => {
+    navigate("/contact");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleWatchAppClick = () => {
+    // Configuration WhatsApp
+    const phoneNumber = "33612345678"; // À MODIFIER : votre numéro (sans le +, sans espaces)
+    const message = "Bonjour, j'ai effectué le quiz d'éligibilité et souhaite discuter avec un conseiller.";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Ouvrir WhatsApp dans un nouvel onglet
+    window.open(whatsappUrl, "_blank");
+  };
 
   if (done) {
     return (
@@ -32,7 +48,20 @@ export function Quiz() {
           d'obtenir une réponse précise de notre équipe. Aucun diagnostic ne peut être posé en ligne.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link to="/contact" className="btn-gold">Contactez-nous</Link>
+          <button
+            type="button"
+            onClick={handleContactClick}
+            className="btn-gold"
+          >
+            Contactez-nous
+          </button>
+          <button
+            type="button"
+            onClick={handleWatchAppClick}
+            className="btn-watchapp"
+          >
+            💬 WhatsApp
+          </button>
           <button
             type="button"
             className="btn-ghost"
