@@ -14,7 +14,7 @@ const TestimonialsSection: React.FC = () => {
         <Reveal>
           <div className="max-w-2xl">
             <p className="eyebrow">Paroles de patients</p>
-            <h2 className="mt-3">Ils ont franchi le pas.</h2>
+            <h2 className="mt-3">Ils nous ont fait confiance</h2>
           </div>
         </Reveal>
 
@@ -22,7 +22,7 @@ const TestimonialsSection: React.FC = () => {
           {TESTIMONIALS.map((t, i) => (
             <Reveal key={t.name} delay={i * 90}>
               <figure className="card-soft flex h-full flex-col">
-                <Quote className="h-5 w-5 text-[color:var(--gold)]" />
+                
 
                 <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-navy">
                   "{t.text}"

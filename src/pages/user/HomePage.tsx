@@ -43,9 +43,9 @@ const HomePage: React.FC = () => {
       <HeroSection />
       <SocialProofBar />
       <ProcessSection />
+      <TestimonialsSection />
       <TechniquesSection />
       <DoctorSection />
-      <TestimonialsSection />
       <TprkEligibilitySection />
       <DifferentesEtapes />
       <FaqSection />

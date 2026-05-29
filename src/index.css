@@ -9,8 +9,8 @@
 @import "swiper/css/scrollbar";
 @import "swiper/css/effect-coverflow";
 
-/* Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+/* Fonts — Lato uniquement : 400 (corps) + 700 (titres) */
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
@@ -19,7 +19,7 @@
 ========================================================= */
 
 @theme inline {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Lato", ui-sans-serif, system-ui, sans-serif;
 
   /* Radius */
   --radius-sm: calc(var(--radius) - 4px);
@@ -146,6 +146,10 @@
   --spacing-card: 32px;
   --spacing-element: 24px;
   --spacing-tight: 16px;
+
+  /* Typographie — 2 styles Lato */
+  --text-heading: "Lato", ui-sans-serif, system-ui, sans-serif; /* weight 700 */
+  --text-body: "Lato", ui-sans-serif, system-ui, sans-serif;    /* weight 400 */
 }
 
 /* =========================================================
@@ -187,30 +191,31 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
 
-    font-family: var(--font-sans);
+    /* Style 1 : corps — Lato 400 */
+    font-family: var(--text-body);
+    font-weight: 400;
     font-size: 16px;
     line-height: 1.65;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    font-feature-settings: "ss01", "cv11";
-
     transition:
       background-color 0.3s ease,
       color 0.3s ease;
   }
 
+  /* Style 2 : titres — Lato 700 */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: var(--font-sans);
-    font-weight: 600;
+    font-family: var(--text-heading);
+    font-weight: 700;
     line-height: 1.15;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em; /* Lato est plus condensé qu'Inter, on réduit */
 
     color: var(--color-navy);
   }
@@ -250,7 +255,9 @@
   }
 
   th {
-    font-weight: 600;
+    /* Style 2 : labels de tableau → Lato 700 */
+    font-family: var(--text-heading);
+    font-weight: 700;
     text-align: left;
     background-color: var(--color-muted);
   }
@@ -311,24 +318,30 @@
     padding: calc(var(--spacing-section) * 1.25) 0;
   }
 
+  /* Style 2 : eyebrow → Lato 700 (uppercase label) */
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em];
+    @apply inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em];
 
+    font-family: var(--text-heading);
+    font-weight: 700;
     color: var(--color-gold);
   }
 
-  /* Buttons */
+  /* Buttons — Style 1 : Lato 400 */
 
   .btn,
   button {
     cursor: pointer;
+    font-family: var(--text-body);
+    font-weight: 400;
     transition: all 0.25s ease;
-    font-weight: 500;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm;
 
+    font-family: var(--text-body);
+    font-weight: 400;
     background: var(--color-navy);
     color: white;
   }
@@ -339,8 +352,10 @@
   }
 
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm;
 
+    font-family: var(--text-body);
+    font-weight: 400;
     background: var(--color-gold);
     color: var(--color-navy);
   }
@@ -352,8 +367,10 @@
 
   .btn-outline,
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border px-7 py-3.5 text-sm;
 
+    font-family: var(--text-body);
+    font-weight: 400;
     border-color: var(--color-border);
     color: var(--color-navy);
     background: transparent;
@@ -420,35 +437,44 @@
     background: var(--color-secondary-300);
   }
 
-  /* Typography */
+  /* Typography utilities — 2 styles uniquement */
 
+  /* Style 1 : corps Lato 400 */
   .text-body {
+    font-family: var(--text-body);
+    font-weight: 400;
     font-size: 16px;
     line-height: 1.65;
   }
 
   .text-body-large {
+    font-family: var(--text-body);
+    font-weight: 400;
     font-size: 18px;
     line-height: 1.6;
   }
 
+  /* Style 2 : titres Lato 700 */
   .text-title {
+    font-family: var(--text-heading);
+    font-weight: 700;
     font-size: 2rem;
-    font-weight: 600;
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
   }
 
   .text-title-large {
+    font-family: var(--text-heading);
+    font-weight: 700;
     font-size: 2.5rem;
-    font-weight: 600;
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
   }
 
   .text-subtitle {
+    font-family: var(--text-heading);
+    font-weight: 700;
     font-size: 1.25rem;
-    font-weight: 500;
     line-height: 1.4;
   }
 
