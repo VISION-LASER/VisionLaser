@@ -47,7 +47,7 @@ const StickyCtaBar: React.FC<Props> = ({ onOpenBooking }) => {
                         style={{ borderColor: "rgba(201,168,76,.3)", color: "#C9A84C" }}
                     >
                         <Phone size={13} />
-                        03 27 62 12 34
+                        +33 3 27 62 12 34
                     </a>
                     <button
                         onClick={onOpenBooking}
