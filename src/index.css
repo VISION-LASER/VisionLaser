@@ -365,6 +365,21 @@
     transform: translateY(-1px);
   }
 
+  .btn-watchapp {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm;
+  
+  font-family: var(--text-body);
+  font-weight: 400;
+  background: #16a34a;
+  color: white;
+}
+
+.btn-watchapp:hover {
+  background: #15803d;
+  transform: translateY(-1px);
+}
+
+
   .btn-outline,
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-full border px-7 py-3.5 text-sm;
@@ -695,4 +710,6 @@
   .text-title-large {
     font-size: 3rem;
   }
+
+  
 }
