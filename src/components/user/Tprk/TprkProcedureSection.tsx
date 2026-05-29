@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
-import eye from "../../../assets/eye.jpg";
+import eye from "../../../assets/image_tprk.png";
 import { TPRK_BENEFITS } from "../../../data/data";
 
 const TprkProcedureSection: React.FC = () => {

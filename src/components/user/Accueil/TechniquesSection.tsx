@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Eye, ArrowRight } from "lucide-react";
-import laser from "../../../assets/laser-equipment.jpg";
+import laser from "../../../assets/Femto.png";
 import type { TechKey } from "../../../types/types";
 import { Reveal } from "../../layout/Reveal";
 
