@@ -60,7 +60,7 @@ export function Quiz() {
             onClick={handleWatchAppClick}
             className="btn-watchapp"
           >
-            💬 WhatsApp
+             WhatsApp
           </button>
           <button
             type="button"
