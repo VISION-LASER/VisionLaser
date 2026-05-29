@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
-import laser from "../../../assets/laser-equipment.jpg";
+import laser from "../../../assets/Femto.png";
 import { FEMTO_BENEFITS } from "../../../data/data";
 
 const FemtoLasikProcedureSection: React.FC = () => {
