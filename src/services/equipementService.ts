@@ -1,4 +1,3 @@
-// ✅ Assurez-vous que c'est bien "export" et pas autre chose
 import { API_URL } from '../config/api.config';
 
 export interface Equipement {
@@ -118,14 +117,14 @@ export const equipementService = {
     }
   },
 
-  // Upload d'image
+  // Upload d'image pour équipement
   uploadImage: async (file: File): Promise<string> => {
     try {
       const token = localStorage.getItem('accessToken');
       const formData = new FormData();
       formData.append('image', file);
       
-      const response = await fetch(`${API_URL}/upload`, {
+      const response = await fetch(`${API_URL}/upload/equipement`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -139,7 +138,6 @@ export const equipementService = {
       }
       
       const result = await response.json();
-      // Retourne l'URL complète
       return `http://localhost:3000${result.imageUrl}`;
     } catch (error) {
       console.error('Erreur upload:', error);
