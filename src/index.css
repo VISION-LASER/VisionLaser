@@ -713,3 +713,31 @@
 
   
 }
+
+
+
+
+/****************************************/
+
+/* Cache la barre Google Translate */
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-tooltip-content {
+  display: none !important;
+}
+
+.goog-te-combo {
+  display: none !important;
+}
+
+/* Évite le décalage du body causé par la barre GT */
+body {
+  top: 0 !important;
+}
+
+.skiptranslate {
+  display: none !important;
+}
