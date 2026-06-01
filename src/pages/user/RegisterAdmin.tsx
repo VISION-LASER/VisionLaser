@@ -48,7 +48,7 @@ const RegisterAdmin: React.FC = () => {
     if (result.success) {
       setSuccess("Inscription réussie ! Redirection...");
       setTimeout(() => {
-        navigate("/admin/login");
+        navigate("/admin");
       }, 2000);
     } else {
       setError(result.error || "Erreur lors de l'inscription");
