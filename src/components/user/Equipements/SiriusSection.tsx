@@ -58,7 +58,7 @@ const SiriusSection: React.FC = () => {
         <img
           src={siriusImage}
           alt="Topographe SIRIUS"
-          className="aspect-[5/4] w-full rounded-3xl object-cover"
+          className="aspect-[5/4] w-full rounded-3xl object-contain"
         />
 
         {/* Content */}
