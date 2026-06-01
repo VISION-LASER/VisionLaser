@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Clock, AlertCircle } from "lucide-react";
 import { getSlotsForDate, isDayFull, isDayUnavailable } from "../../../services/BookingService";
 
@@ -32,16 +32,30 @@ const BookingStep2: React.FC<Step2Props> = ({
   const [viewMonth, setViewMonth] = useState(today.getMonth());
   const [localDate, setLocalDate] = useState<string | null>(selectedDate);
   const [localTime, setLocalTime] = useState<string | null>(selectedTime);
+  const [slots, setSlots] = useState<{ time: string; available: boolean }[]>([]);
+  const [fullDays, setFullDays] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(false);
+
+  // Charger les créneaux quand la date change
+  useEffect(() => {
+    const loadSlots = async () => {
+      if (localDate) {
+        setLoading(true);
+        const slotsData = await getSlotsForDate(localDate);
+        setSlots(slotsData);
+        setLoading(false);
+      }
+    };
+    loadSlots();
+  }, [localDate]);
 
   // Build calendar grid (Mon-first)
   const calDays = useMemo(() => {
     const first = new Date(viewYear, viewMonth, 1);
     const last = new Date(viewYear, viewMonth + 1, 0);
-    // Monday-start offset
     const startOffset = (first.getDay() + 6) % 7;
     const days: (number | null)[] = Array(startOffset).fill(null);
     for (let d = 1; d <= last.getDate(); d++) days.push(d);
-    // Pad to complete last week
     while (days.length % 7 !== 0) days.push(null);
     return days;
   }, [viewYear, viewMonth]);
@@ -55,13 +69,15 @@ const BookingStep2: React.FC<Step2Props> = ({
     else setViewMonth(m => m + 1);
   };
 
-  const slots = localDate ? getSlotsForDate(localDate) : [];
   const available = slots.filter(s => s.available);
 
-  const handleDayClick = (day: number) => {
+  const handleDayClick = async (day: number) => {
     const iso = toIso(viewYear, viewMonth, day);
     const isPast = new Date(iso) < new Date(toIso(today.getFullYear(), today.getMonth(), today.getDate()));
-    if (isPast || isDayUnavailable(iso) || isDayFull(iso)) return;
+    const isWeekend = isDayUnavailable(iso);
+    const isFull = await isDayFull(iso);
+    
+    if (isPast || isWeekend || isFull) return;
     setLocalDate(iso);
     setLocalTime(null);
   };
@@ -84,7 +100,6 @@ const BookingStep2: React.FC<Step2Props> = ({
 
       {/* Calendar */}
       <div className="rounded-2xl border border-border bg-white p-5">
-        {/* Header */}
         <div className="mb-4 flex items-center justify-between">
           <button
             type="button"
@@ -105,7 +120,6 @@ const BookingStep2: React.FC<Step2Props> = ({
           </button>
         </div>
 
-        {/* Day headers */}
         <div className="mb-2 grid grid-cols-7 text-center">
           {DAYS_FR.map(d => (
             <span key={d} className={`text-[11px] font-semibold uppercase tracking-wider ${d === "Sam" || d === "Dim" ? "text-navy/25" : "text-navy/40"}`}>
@@ -114,14 +128,24 @@ const BookingStep2: React.FC<Step2Props> = ({
           ))}
         </div>
 
-        {/* Days grid */}
         <div className="grid grid-cols-7 gap-0.5">
           {calDays.map((day, i) => {
             if (!day) return <div key={`empty-${i}`} />;
             const iso = toIso(viewYear, viewMonth, day);
             const isPast = new Date(iso) < new Date(toIso(today.getFullYear(), today.getMonth(), today.getDate()));
             const isWeekend = isDayUnavailable(iso);
-            const isFull = !isPast && !isWeekend && isDayFull(iso);
+            const [isFull, setIsFull] = React.useState(false);
+            
+            React.useEffect(() => {
+              const checkFull = async () => {
+                const full = await isDayFull(iso);
+                setIsFull(full);
+              };
+              if (!isPast && !isWeekend) {
+                checkFull();
+              }
+            }, [iso, isPast, isWeekend]);
+            
             const isSelected = localDate === iso;
             const isToday = iso === toIso(today.getFullYear(), today.getMonth(), today.getDate());
             const isDisabled = isPast || isWeekend;
@@ -138,23 +162,22 @@ const BookingStep2: React.FC<Step2Props> = ({
                   ${isSelected ? "bg-[color:var(--navy)] font-semibold text-white shadow-sm" : ""}
                   ${!isSelected && !isDisabled && !isFull ? "text-navy hover:bg-[color:var(--cream)]" : ""}
                   ${isDisabled ? "cursor-not-allowed text-navy/20" : ""}
-                  ${isFull && !isSelected ? "cursor-not-allowed text-navy/30" : ""}
+                  ${isFull && !isSelected ? "cursor-not-allowed bg-red-50 text-red-400 line-through" : ""}
                   ${isToday && !isSelected ? "font-semibold underline decoration-[color:var(--gold)] underline-offset-2" : ""}
                 `}
               >
                 {day}
                 {isFull && (
-                  <span className="absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-rose-400" />
+                  <span className="absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-red-500" />
                 )}
               </button>
             );
           })}
         </div>
 
-        {/* Legend */}
         <div className="mt-3 flex flex-wrap gap-3 border-t border-border pt-3 text-[11px] text-muted-foreground">
           <span className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-rose-400" /> Déjà prise / complète
+            <span className="h-2 w-2 rounded-full bg-red-500" /> Déjà prise / complète
           </span>
           <span className="flex items-center gap-1">
             <span className="h-2 w-2 rounded-full border border-navy/30" /> Disponible
@@ -178,7 +201,11 @@ const BookingStep2: React.FC<Step2Props> = ({
             </p>
           </div>
 
-          {available.length === 0 ? (
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-navy border-t-transparent" />
+            </div>
+          ) : available.length === 0 ? (
             <div className="flex items-center gap-2 rounded-xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-rose-600">
               <AlertCircle className="h-4 w-4 shrink-0" />
               Aucun créneau disponible ce jour. Choisissez une autre date.
@@ -195,14 +222,12 @@ const BookingStep2: React.FC<Step2Props> = ({
                     rounded-xl border py-2 text-xs font-medium transition-all
                     ${localTime === time ? "border-navy bg-navy text-white shadow-sm" : ""}
                     ${avail && localTime !== time ? "border-border bg-white text-navy hover:border-navy" : ""}
-                    ${!avail ? "cursor-not-allowed border-transparent bg-rose-50 text-rose-300 line-through" : ""}
+                    ${!avail ? "cursor-not-allowed border-red-200 bg-red-50 text-red-400 line-through" : ""}
                   `}
                 >
-                  {avail ? time : (
-                    <span title="Déjà pris">{time}</span>
-                  )}
+                  {time}
                   {!avail && (
-                    <span className="block text-[9px] font-normal leading-none">Déjà prise</span>
+                    <span className="block text-[9px] font-normal leading-none text-red-400">Déjà prise</span>
                   )}
                 </button>
               ))}
@@ -211,7 +236,6 @@ const BookingStep2: React.FC<Step2Props> = ({
         </div>
       )}
 
-      {/* Navigation */}
       <div className="flex gap-3">
         <button
           type="button"

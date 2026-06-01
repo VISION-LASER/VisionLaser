@@ -3,6 +3,7 @@ import { CheckCircle2, ChevronLeft, User, Mail, Phone, Calendar, Clock, FileText
 import type { PatientInfo } from "../../../types/booking";
 import { MOTIFS } from "../../../types/booking";
 import { submitAppointment } from "../../../services/BookingService";
+import toast from 'react-hot-toast';
 
 interface Step3Props {
   patient: PatientInfo;
@@ -43,8 +44,18 @@ const BookingStep3: React.FC<Step3Props> = ({ patient, date, time, onBack, onDon
     try {
       await submitAppointment(patient, date, time);
       setDone(true);
-    } catch {
+      // TOAST DE SUCCÈS
+      toast.success('Rendez-vous confirmé avec succès !', {
+        position: 'bottom-right',
+        duration: 4000,
+      });
+    } catch (err) {
       setError("Une erreur est survenue. Veuillez réessayer ou nous contacter directement.");
+      // TOAST D'ERREUR
+      toast.error('Erreur lors de la confirmation du rendez-vous', {
+        position: 'bottom-right',
+        duration: 4000,
+      });
     } finally {
       setLoading(false);
     }

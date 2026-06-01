@@ -4,6 +4,7 @@ import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster as Sonner } from "./components/ui/sonner";
 import { Toaster } from "./components/ui/toaster";
 import { AuthProvider } from "./hooks/useAuth";
+import { Toaster as HotToaster } from 'react-hot-toast';
 
 
 // Layout & guards
@@ -45,6 +46,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          <HotToaster position="bottom-right" />
           <BrowserRouter>
             <Routes>
               {/* ── Public ─────────────────────────────── */}
