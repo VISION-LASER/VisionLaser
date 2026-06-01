@@ -4,7 +4,8 @@ import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster as Sonner } from "./components/ui/sonner";
 import { Toaster } from "./components/ui/toaster";
 import { AuthProvider } from "./hooks/useAuth";
-
+import { LanguageProvider } from "./contexts/LanguageContext";
+import { useGoogleTranslate } from "./hooks/useGoogleTranslate";
 
 // Layout & guards
 import NotFound from "./components/layout/NotFound";
@@ -23,7 +24,7 @@ import TprkPage from "./pages/user/TprkPage";
 import NousTrouver from "./pages/user/NousTrouverPage";
 import ActualitesPage from "./pages/user/ActualitésPage";
 import LoginAdmin from "./pages/user/LoginAdmin";
-import RegisterAdmin from './pages/user/RegisterAdmin';// vao nampidirina
+import RegisterAdmin from "./pages/user/RegisterAdmin";
 
 // Admin sections
 import TableauBordSection from "./components/admin/TableauDeBoard/TableauBordSection";
@@ -38,13 +39,21 @@ import BlogPage from "./pages/user/BlogPage";
 
 const queryClient = new QueryClient();
 
-function App() {
+// ✅ Composant séparé — à l'INTÉRIEUR de LanguageProvider
+// pour pouvoir appeler useGoogleTranslate() qui lit le contexte lang
+function AppContent() {
+  useGoogleTranslate(); // ← accès au contexte garanti ici
+
   return (
-    <AuthProvider>                        {/* ← englobe tout */}
+    <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
           <Sonner />
+
+          {/* Conteneur caché requis par Google Translate */}
+          <div id="google-translate-container" style={{ display: "none" }} />
+
           <BrowserRouter>
             <Routes>
               {/* ── Public ─────────────────────────────── */}
@@ -66,14 +75,14 @@ function App() {
               {/* ── Admin (protégé) ─────────────────────── */}
               <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
                 <Route path="/admin" element={<AdminLayout />}>
-                  <Route path="dashboard"   element={<TableauBordSection />} />
-                  <Route path="demandes"    element={<DemandesSection />} />
-                  <Route path="tarifs"      element={<TarifsSection />} />
+                  <Route path="dashboard" element={<TableauBordSection />} />
+                  <Route path="demandes" element={<DemandesSection />} />
+                  <Route path="tarifs" element={<TarifsSection />} />
                   <Route path="equipements" element={<EquipementsSection />} />
-                  <Route path="actualite"   element={<ActualiteSection />} />
-                  <Route path="horaires"    element={<HorairesSection />} />
-                  <Route path="faq"         element={<FAQSection />} />
-                  <Route path="apropos"     element={<AproposSection />} />
+                  <Route path="actualite" element={<ActualiteSection />} />
+                  <Route path="horaires" element={<HorairesSection />} />
+                  <Route path="faq" element={<FAQSection />} />
+                  <Route path="apropos" element={<AproposSection />} />
                 </Route>
               </Route>
 
@@ -85,6 +94,15 @@ function App() {
         </TooltipProvider>
       </QueryClientProvider>
     </AuthProvider>
+  );
+}
+
+// ✅ LanguageProvider englobe AppContent
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
 

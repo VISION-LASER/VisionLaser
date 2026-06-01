@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import logo from "../../assets/vision-laser-logo.jpg";
-import { TopBar } from "./TopBar";
 import BookingModal from "../user/Booking/BookingModal";
 
-// Importer les images des drapeaux
-import spanishFlag from "../../assets/gb.png"; // ou .svg
-import englishFlag from "../../assets/es.png"; // ou .svg
+import spanishFlag from "../../assets/es.png";
+import englishFlag from "../../assets/gb.png";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const NAV = [
   { to: "/femtolasik",      label: "FEMTOLASIK" },
@@ -15,22 +14,21 @@ const NAV = [
   { to: "/equipements",     label: "ÉQUIPEMENTS" },
   { to: "/tarifs",          label: "TARIFS" },
   { to: "/defauts-visuels", label: "DÉFAUTS VISUELS" },
-  // { to: "/blog",            label: "BLOG" },
   { to: "/actu",            label: "ACTUALITÉS" },
-  // { to: "/contact",         label: "CONTACT" },
 ] as const;
 
-// Langues disponibles avec vraies images de drapeaux
 const LANGUAGES = [
-  { code: "es", label: "ES", flag: spanishFlag, active: false },
-  { code: "en", label: "EN", flag: englishFlag, active: false },
+  { code: "es" as const, label: "ES", flag: spanishFlag },
+  { code: "en" as const, label: "EN", flag: englishFlag },
 ];
 
 export function Header() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen]               = useState(false);
+  const [scrolled, setScrolled]       = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("fr");
+
+  // ✅ REMPLACE useState("fr") — connecté au contexte global
+  const { lang: currentLang, setLang } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -39,16 +37,13 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleLanguageChange = (langCode: string) => {
-    setCurrentLang(langCode);
-    console.log(`Langue changée vers: ${langCode}`);
+  const handleLanguageChange = (langCode: "fr" | "en" | "es") => {
+    setLang(langCode); // ✅ déclenche useGoogleTranslate → cookie → reload
   };
 
   return (
     <>
       <header className="sticky top-0 z-40">
-        {/*<TopBar />*/}
-
         <div
           className={`transition-all duration-300 ${
             scrolled
@@ -57,25 +52,18 @@ export function Header() {
           }`}
         >
           <div className="container-page flex h-20 items-center justify-between">
-            {/* Logo - AGGRANDI */}
-            <Link
-              to="/"
-              className="group flex items-center gap-3"
-              onClick={() => setOpen(false)}
-            >
+
+            {/* Logo */}
+            <Link to="/" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
               <img
                 src={logo}
                 alt="Vision Laser Hauts-de-France"
-                width={64}
-                height={64}
+                width={64} height={64}
                 className="h-16 w-16 rounded-full object-cover ring-2 ring-gold/30 transition-all duration-300 group-hover:scale-[1.04] group-hover:ring-gold/50"
               />
               <span className="hidden text-xs font-semibold tracking-tight text-navy sm:block">
-                VISION-LASER{" "}
-                <br />
-                <span className="font-normal text-muted-foreground text-[11px]">
-                  HAUTS-DE-FRANCE
-                </span>
+                VISION-LASER <br />
+                <span className="font-normal text-muted-foreground text-[11px]">HAUTS-DE-FRANCE</span>
               </span>
             </Link>
 
@@ -94,13 +82,13 @@ export function Header() {
                   {n.label}
                 </NavLink>
               ))}
-              
-              {/* Vrais drapeaux espagnol et anglais */}
+
+              {/* Sélecteur de langue */}
               <div className="flex items-center gap-3 ml-2 border-l border-border/50 pl-4">
                 {LANGUAGES.map((lang) => (
                   <button
                     key={lang.code}
-                    onClick={() => handleLanguageChange(lang.code)}
+                    onClick={() => handleLanguageChange(lang.code)} // ✅
                     className={`flex items-center gap-1.5 rounded-md px-1.5 py-1 transition-all duration-200 ${
                       currentLang === lang.code
                         ? "bg-gold/10 ring-1 ring-gold/30"
@@ -108,11 +96,7 @@ export function Header() {
                     }`}
                     aria-label={`Changer la langue en ${lang.label}`}
                   >
-                    <img 
-                      src={lang.flag} 
-                      alt={`Drapeau ${lang.label}`}
-                      className="h-5 w-6 object-cover rounded-sm shadow-sm"
-                    />
+                    <img src={lang.flag} alt={`Drapeau ${lang.label}`} className="h-5 w-6 object-cover rounded-sm shadow-sm" />
                     <span className={`text-xs font-medium ${currentLang === lang.code ? "text-gold" : "text-navy/70"}`}>
                       {lang.label}
                     </span>
@@ -121,7 +105,7 @@ export function Header() {
               </div>
             </nav>
 
-            {/* Desktop CTA — ouvre la modale */}
+            {/* Desktop CTA */}
             <div className="hidden md:block">
               <button
                 type="button"
@@ -148,41 +132,33 @@ export function Header() {
               <div className="container-page flex flex-col py-4">
                 {NAV.map((n) => (
                   <Link
-                    key={n.to}
-                    to={n.to}
+                    key={n.to} to={n.to}
                     onClick={() => setOpen(false)}
                     className="border-b border-border/50 py-3 text-sm font-medium text-navy transition-colors last:border-0 hover:text-gold"
                   >
                     {n.label}
                   </Link>
                 ))}
-                
-                {/* Vrais drapeaux dans le menu mobile */}
+
+                {/* Sélecteur de langue mobile */}
                 <div className="mt-4 flex items-center justify-start gap-3 border-t border-border/50 pt-4">
                   <span className="text-xs font-medium text-navy/60">Langue :</span>
                   {LANGUAGES.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => {
-                        handleLanguageChange(lang.code);
-                        setOpen(false);
-                      }}
+                      onClick={() => { handleLanguageChange(lang.code); setOpen(false); }} // ✅
                       className={`flex items-center gap-2 rounded-md px-3 py-2 transition-all ${
                         currentLang === lang.code
                           ? "bg-gold text-white"
                           : "bg-navy/5 text-navy hover:bg-navy/10"
                       }`}
                     >
-                      <img 
-                        src={lang.flag} 
-                        alt={`Drapeau ${lang.label}`}
-                        className="h-5 w-6 object-cover rounded-sm"
-                      />
+                      <img src={lang.flag} alt={`Drapeau ${lang.label}`} className="h-5 w-6 object-cover rounded-sm" />
                       <span className="text-sm font-medium">{lang.label}</span>
                     </button>
                   ))}
                 </div>
-                
+
                 <button
                   type="button"
                   onClick={() => { setOpen(false); setBookingOpen(true); }}
@@ -196,7 +172,6 @@ export function Header() {
         </div>
       </header>
 
-      {/* Booking modal — monté en dehors du header pour éviter le z-index */}
       <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </>
   );
