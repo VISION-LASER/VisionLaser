@@ -22,7 +22,7 @@ const navGroups = [
     label: "Contenu",
     items: [
       { to: "/admin/tarifs", label: "Tarifs", icon: DollarSign },
-      { to: "/admin/equipements", label: "Équipements", icon: Camera },
+      //{ to: "/admin/equipements", label: "Équipements", icon: Camera },
       { to: "/admin/actualite", label: "Actualité", icon: Newspaper },
     ],
   },
@@ -31,7 +31,7 @@ const navGroups = [
     items: [
       { to: "/admin/horaires", label: "Horaires", icon: Clock },
       { to: "/admin/faq", label: "FAQ", icon: HelpCircle },
-      { to: "/admin/apropos", label: "À propos", icon: Info },
+      //{ to: "/admin/apropos", label: "À propos", icon: Info },
     ],
   },
 ];
