@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { 
-  Plus, Trash2, Edit2, RefreshCw, X, Image as ImageIcon, 
-  Video, Heart, MessageCircle, Calendar, User, ThumbsUp, Play, Upload,
-  PlayCircle
+import {
+  Plus,
+  Trash2,
+  Edit2,
+  RefreshCw,
+  X,
+  Image as ImageIcon,
+  Video,
+  Heart,
+  MessageCircle,
+  Calendar,
+  User,
+  ThumbsUp,
+  Play,
+  Upload,
+  PlayCircle,
 } from "lucide-react";
 import { actualiteService } from "../../../services/actualiteService";
-import type { Actualite, ActualiteFormData, Reaction, Commentaire } from "../../../services/actualiteService";
+import type {
+  Actualite,
+  ActualiteFormData,
+  Reaction,
+  Commentaire,
+} from "../../../services/actualiteService";
 
 // ============================================
 // FONCTION UTILITAIRE (en dehors du composant)
 // ============================================
 const getYouTubeId = (url: string): string | null => {
   if (!url) return null;
-  
+
   const patterns = [
     /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?#]+)/,
     /youtube\.com\/embed\/([^/?]+)/,
     /youtube\.com\/v\/([^/?]+)/,
-    /youtube\.com\/shorts\/([^/?]+)/
+    /youtube\.com\/shorts\/([^/?]+)/,
   ];
-  
+
   for (const pattern of patterns) {
     const match = url.match(pattern);
     if (match) return match[1];
@@ -35,27 +52,37 @@ const ActualiteSection: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingActualite, setEditingActualite] = useState<Actualite | null>(null);
+  const [editingActualite, setEditingActualite] = useState<Actualite | null>(
+    null,
+  );
   const [formData, setFormData] = useState<ActualiteFormData>({
     titre: "",
     description: "",
     image_actualite: null,
-    video_actualite: null
+    video_actualite: null,
   });
-  const [mediaType, setMediaType] = useState<"image" | "video" | "youtube" | "none">("none");
+  const [mediaType, setMediaType] = useState<
+    "image" | "video" | "youtube" | "none"
+  >("none");
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  
-  const [selectedActualite, setSelectedActualite] = useState<Actualite | null>(null);
+
+  const [selectedActualite, setSelectedActualite] = useState<Actualite | null>(
+    null,
+  );
   const [showReactions, setShowReactions] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [reactions, setReactions] = useState<Reaction[]>([]);
   const [commentaires, setCommentaires] = useState<Commentaire[]>([]);
   const [loadingDetails, setLoadingDetails] = useState(false);
 
-  const [reactionsCounts, setReactionsCounts] = useState<{ [key: number]: number }>({});
-  const [commentsCounts, setCommentsCounts] = useState<{ [key: number]: number }>({});
+  const [reactionsCounts, setReactionsCounts] = useState<{
+    [key: number]: number;
+  }>({});
+  const [commentsCounts, setCommentsCounts] = useState<{
+    [key: number]: number;
+  }>({});
 
   // Charger les actualités
   const loadActualites = async () => {
@@ -64,18 +91,22 @@ const ActualiteSection: React.FC = () => {
     try {
       const data = await actualiteService.getAll();
       setActualites(data);
-      
+
       // Mettre à jour les compteurs
       const newReactionsCounts: { [key: number]: number } = {};
       const newCommentsCounts: { [key: number]: number } = {};
-      
+
       for (const actualite of data) {
-        const reactionsCount = await actualiteService.getReactionsCount(actualite.id);
-        const commentsCount = await actualiteService.getCommentairesCount(actualite.id);
+        const reactionsCount = await actualiteService.getReactionsCount(
+          actualite.id,
+        );
+        const commentsCount = await actualiteService.getCommentairesCount(
+          actualite.id,
+        );
         newReactionsCounts[actualite.id] = reactionsCount;
         newCommentsCounts[actualite.id] = commentsCount;
       }
-      
+
       setReactionsCounts(newReactionsCounts);
       setCommentsCounts(newCommentsCounts);
     } catch (err) {
@@ -92,7 +123,12 @@ const ActualiteSection: React.FC = () => {
 
   const handleAdd = () => {
     setEditingActualite(null);
-    setFormData({ titre: "", description: "", image_actualite: null, video_actualite: null });
+    setFormData({
+      titre: "",
+      description: "",
+      image_actualite: null,
+      video_actualite: null,
+    });
     setMediaType("none");
     setYoutubeUrl("");
     setIsModalOpen(true);
@@ -104,10 +140,14 @@ const ActualiteSection: React.FC = () => {
       titre: actualite.titre,
       description: actualite.description,
       image_actualite: actualite.image_actualite,
-      video_actualite: actualite.video_actualite
+      video_actualite: actualite.video_actualite,
     });
-    
-    if (actualite.video_actualite && (actualite.video_actualite.includes('youtube.com') || actualite.video_actualite.includes('youtu.be'))) {
+
+    if (
+      actualite.video_actualite &&
+      (actualite.video_actualite.includes("youtube.com") ||
+        actualite.video_actualite.includes("youtu.be"))
+    ) {
       setMediaType("youtube");
       setYoutubeUrl(actualite.video_actualite);
     } else if (actualite.image_actualite) {
@@ -139,13 +179,21 @@ const ActualiteSection: React.FC = () => {
     }
   };
 
-  const handleMediaUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "image" | "video") => {
+  const handleMediaUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: "image" | "video",
+  ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    const validVideoTypes = ['video/mp4', 'video/webm', 'video/ogg'];
-    
+    const validImageTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp",
+    ];
+    const validVideoTypes = ["video/mp4", "video/webm", "video/ogg"];
+
     if (type === "image" && !validImageTypes.includes(file.type)) {
       setError("Format d'image non supporté (JPG, PNG, GIF, WEBP)");
       return;
@@ -154,7 +202,7 @@ const ActualiteSection: React.FC = () => {
       setError("Format vidéo non supporté (MP4, WEBM, OGG)");
       return;
     }
-    
+
     if (file.size > 50 * 1024 * 1024) {
       setError("Le fichier ne doit pas dépasser 50MB");
       return;
@@ -165,17 +213,17 @@ const ActualiteSection: React.FC = () => {
       let url: string;
       if (type === "image") {
         url = await actualiteService.uploadImage(file);
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           image_actualite: url,
-          video_actualite: null
+          video_actualite: null,
         }));
       } else {
         url = await actualiteService.uploadVideo(file);
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           image_actualite: null,
-          video_actualite: url
+          video_actualite: url,
         }));
       }
       setMediaType(type);
@@ -191,26 +239,26 @@ const ActualiteSection: React.FC = () => {
   const handleYoutubeUrlChange = (url: string) => {
     setYoutubeUrl(url);
     if (url.trim()) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         image_actualite: null,
-        video_actualite: url.trim()
+        video_actualite: url.trim(),
       }));
       setMediaType("youtube");
     } else {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        video_actualite: null
+        video_actualite: null,
       }));
       setMediaType("none");
     }
   };
 
   const removeMedia = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       image_actualite: null,
-      video_actualite: null
+      video_actualite: null,
     }));
     setMediaType("none");
     setYoutubeUrl("");
@@ -218,7 +266,7 @@ const ActualiteSection: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.titre.trim()) {
       setError("Le titre est requis");
       return;
@@ -286,21 +334,25 @@ const ActualiteSection: React.FC = () => {
           alt={actualite.titre}
           className="w-full object-cover max-h-[400px]"
           onError={(e) => {
-            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x400?text=Image+non+disponible';
+            (e.target as HTMLImageElement).src =
+              "https://via.placeholder.com/600x400?text=Image+non+disponible";
           }}
         />
       );
     }
-    
+
     if (actualite.video_actualite) {
       // Vérifier si c'est une URL YouTube
-      if (actualite.video_actualite.includes('youtube.com') || actualite.video_actualite.includes('youtu.be')) {
+      if (
+        actualite.video_actualite.includes("youtube.com") ||
+        actualite.video_actualite.includes("youtu.be")
+      ) {
         let embedUrl = actualite.video_actualite;
         const videoId = getYouTubeId(actualite.video_actualite);
         if (videoId) {
           embedUrl = `https://www.youtube.com/embed/${videoId}`;
         }
-        
+
         return (
           <div className="relative pb-[56.25%] h-0 overflow-hidden">
             <iframe
@@ -314,14 +366,11 @@ const ActualiteSection: React.FC = () => {
           </div>
         );
       }
-      
+
       // Vidéo locale
       return (
         <div className="relative bg-gray-900">
-          <video 
-            className="w-full max-h-[400px] object-cover"
-            controls
-          >
+          <video className="w-full max-h-[400px] object-cover" controls>
             <source src={actualite.video_actualite} type="video/mp4" />
             Votre navigateur ne supporte pas la vidéo.
           </video>
@@ -331,7 +380,7 @@ const ActualiteSection: React.FC = () => {
         </div>
       );
     }
-    
+
     return null;
   };
 
@@ -345,9 +394,15 @@ const ActualiteSection: React.FC = () => {
           <span className="text-white text-sm font-bold">CVL</span>
         </div>
         <div>
-          <h3 className="font-semibold text-sm" style={{ color: "#0C2340" }}>Centre Vision Laser</h3>
+          <h3 className="font-semibold text-sm" style={{ color: "#0C2340" }}>
+            Centre Vision Laser
+          </h3>
           <p className="text-xs text-gray-400">
-            {new Date(actualite.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+            {new Date(actualite.created_at).toLocaleDateString("fr-FR", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
           </p>
         </div>
       </div>
@@ -378,7 +433,10 @@ const ActualiteSection: React.FC = () => {
           </button>
         </div>
 
-        <h3 className="font-semibold text-base mb-1" style={{ color: "#0C2340" }}>
+        <h3
+          className="font-semibold text-base mb-1"
+          style={{ color: "#0C2340" }}
+        >
           {actualite.titre}
         </h3>
         <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
@@ -414,11 +472,17 @@ const ActualiteSection: React.FC = () => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
         <div className="border-b border-gray-100 px-6 py-4 flex justify-between items-center">
-          <h3 className="text-xl font-bold flex items-center gap-2" style={{ color: "#0C2340" }}>
+          <h3
+            className="text-xl font-bold flex items-center gap-2"
+            style={{ color: "#0C2340" }}
+          >
             <Heart size={20} style={{ color: "#C9A84C" }} />
             Réactions ({reactions.length})
           </h3>
-          <button onClick={() => setShowReactions(false)} className="p-1 rounded-lg hover:bg-gray-100">
+          <button
+            onClick={() => setShowReactions(false)}
+            className="p-1 rounded-lg hover:bg-gray-100"
+          >
             <X size={20} />
           </button>
         </div>
@@ -426,26 +490,37 @@ const ActualiteSection: React.FC = () => {
           {loadingDetails ? (
             <div className="text-center py-8">Chargement...</div>
           ) : reactions.length === 0 ? (
-            <div className="text-center py-8 text-gray-400">Aucune réaction pour le moment</div>
+            <div className="text-center py-8 text-gray-400">
+              Aucune réaction pour le moment
+            </div>
           ) : (
             <div className="space-y-3">
               {reactions.map((reaction) => (
-                <div key={reaction.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50">
+                <div
+                  key={reaction.id}
+                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50"
+                >
                   <div className="w-8 h-8 rounded-full bg-[#C9A84C20] flex items-center justify-center">
                     <ThumbsUp size={14} style={{ color: "#C9A84C" }} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium" style={{ color: "#0C2340" }}>
+                    <p
+                      className="text-sm font-medium"
+                      style={{ color: "#0C2340" }}
+                    >
                       {reaction.patient_prenoms} {reaction.patient_nom}
                     </p>
                     <p className="text-xs text-gray-400">
-                      {new Date(reaction.date_reaction).toLocaleDateString('fr-FR', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
+                      {new Date(reaction.date_reaction).toLocaleDateString(
+                        "fr-FR",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        },
+                      )}
                     </p>
                   </div>
                 </div>
@@ -461,11 +536,17 @@ const ActualiteSection: React.FC = () => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[80vh] flex flex-col">
         <div className="border-b border-gray-100 px-6 py-4 flex justify-between items-center">
-          <h3 className="text-xl font-bold flex items-center gap-2" style={{ color: "#0C2340" }}>
+          <h3
+            className="text-xl font-bold flex items-center gap-2"
+            style={{ color: "#0C2340" }}
+          >
             <MessageCircle size={20} style={{ color: "#C9A84C" }} />
             Commentaires ({commentaires.length})
           </h3>
-          <button onClick={() => setShowComments(false)} className="p-1 rounded-lg hover:bg-gray-100">
+          <button
+            onClick={() => setShowComments(false)}
+            className="p-1 rounded-lg hover:bg-gray-100"
+          >
             <X size={20} />
           </button>
         </div>
@@ -473,29 +554,42 @@ const ActualiteSection: React.FC = () => {
           {loadingDetails ? (
             <div className="text-center py-8">Chargement...</div>
           ) : commentaires.length === 0 ? (
-            <div className="text-center py-8 text-gray-400">Aucun commentaire pour le moment</div>
+            <div className="text-center py-8 text-gray-400">
+              Aucun commentaire pour le moment
+            </div>
           ) : (
             <div className="space-y-4">
               {commentaires.map((commentaire) => (
-                <div key={commentaire.id} className="border-b border-gray-100 pb-3">
+                <div
+                  key={commentaire.id}
+                  className="border-b border-gray-100 pb-3"
+                >
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-6 h-6 rounded-full bg-[#C9A84C20] flex items-center justify-center">
                       <User size={12} style={{ color: "#C9A84C" }} />
                     </div>
-                    <span className="text-sm font-medium" style={{ color: "#0C2340" }}>
+                    <span
+                      className="text-sm font-medium"
+                      style={{ color: "#0C2340" }}
+                    >
                       {commentaire.patient_prenoms} {commentaire.patient_nom}
                     </span>
                     <span className="text-xs text-gray-400">
-                      {new Date(commentaire.date_commentaire).toLocaleString('fr-FR', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
+                      {new Date(commentaire.date_commentaire).toLocaleString(
+                        "fr-FR",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        },
+                      )}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 ml-8">{commentaire.commentaire}</p>
+                  <p className="text-sm text-gray-600 ml-8">
+                    {commentaire.commentaire}
+                  </p>
                 </div>
               ))}
             </div>
@@ -512,15 +606,22 @@ const ActualiteSection: React.FC = () => {
     <div className="space-y-6 px-4 sm:px-0">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold" style={{ color: "#0C2340" }}>
+          <h2
+            className="text-xl sm:text-2xl md:text-3xl font-bold"
+            style={{ color: "#0C2340" }}
+          >
             Actualités
           </h2>
-          <div className="w-12 h-0.5 mt-2 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
+          <div
+            className="w-12 h-0.5 mt-2 rounded-full"
+            style={{ backgroundColor: "#C9A84C" }}
+          />
           <p className="text-sm sm:text-base text-gray-500 mt-2">
             Publiez et gérez vos actualités
             {!loading && actualites.length > 0 && (
               <span className="ml-2 text-xs sm:text-sm">
-                ({actualites.length} publication{actualites.length > 1 ? 's' : ''})
+                ({actualites.length} publication
+                {actualites.length > 1 ? "s" : ""})
               </span>
             )}
           </p>
@@ -549,7 +650,10 @@ const ActualiteSection: React.FC = () => {
 
       {loading && (
         <div className="bg-white rounded-xl shadow-md p-8 text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2" style={{ borderColor: "#C9A84C" }} />
+          <div
+            className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2"
+            style={{ borderColor: "#C9A84C" }}
+          />
           <p className="mt-3 text-gray-500">Chargement des actualités...</p>
         </div>
       )}
@@ -557,7 +661,11 @@ const ActualiteSection: React.FC = () => {
       {error && !loading && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4">
           <p className="text-red-600 text-sm">{error}</p>
-          <button onClick={loadActualites} className="mt-2 text-sm underline" style={{ color: "#C9A84C" }}>
+          <button
+            onClick={loadActualites}
+            className="mt-2 text-sm underline"
+            style={{ color: "#C9A84C" }}
+          >
             Réessayer
           </button>
         </div>
@@ -591,9 +699,14 @@ const ActualiteSection: React.FC = () => {
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex justify-between items-center">
               <h3 className="text-xl font-bold" style={{ color: "#0C2340" }}>
-                {editingActualite ? "Modifier la publication" : "Nouvelle publication"}
+                {editingActualite
+                  ? "Modifier la publication"
+                  : "Nouvelle publication"}
               </h3>
-              <button onClick={() => setIsModalOpen(false)} className="p-1 rounded-lg hover:bg-gray-100">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="p-1 rounded-lg hover:bg-gray-100"
+              >
                 <X size={20} />
               </button>
             </div>
@@ -601,13 +714,18 @@ const ActualiteSection: React.FC = () => {
             <form onSubmit={handleSubmit} className="p-6 space-y-5">
               {/* Titre */}
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: "#0C2340" }}>
+                <label
+                  className="block text-sm font-medium mb-2"
+                  style={{ color: "#0C2340" }}
+                >
                   Titre *
                 </label>
                 <input
                   type="text"
                   value={formData.titre}
-                  onChange={(e) => setFormData({ ...formData, titre: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, titre: e.target.value })
+                  }
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-transparent"
                   placeholder="Titre de l'actualité"
                   required
@@ -616,12 +734,17 @@ const ActualiteSection: React.FC = () => {
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: "#0C2340" }}>
+                <label
+                  className="block text-sm font-medium mb-2"
+                  style={{ color: "#0C2340" }}
+                >
                   Description *
                 </label>
                 <textarea
                   value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
                   rows={5}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-transparent resize-none"
                   placeholder="Décrivez votre actualité..."
@@ -631,47 +754,101 @@ const ActualiteSection: React.FC = () => {
 
               {/* Type de média */}
               <div>
-                <label className="block text-sm font-medium mb-3" style={{ color: "#0C2340" }}>
+                <label
+                  className="block text-sm font-medium mb-3"
+                  style={{ color: "#0C2340" }}
+                >
                   Type de média
                 </label>
-                
+
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   <button
                     type="button"
                     onClick={() => {
                       setMediaType("image");
-                      setFormData(prev => ({ ...prev, image_actualite: null, video_actualite: null }));
+                      setFormData((prev) => ({
+                        ...prev,
+                        image_actualite: null,
+                        video_actualite: null,
+                      }));
                       setYoutubeUrl("");
                     }}
                     className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${mediaType === "image" ? "border-[#C9A84C] bg-[#C9A84C]/10" : "border-gray-200"}`}
                   >
-                    <ImageIcon size={18} style={{ color: mediaType === "image" ? "#C9A84C" : "#9CA3AF" }} />
-                    <span className={mediaType === "image" ? "text-[#C9A84C]" : "text-gray-500"}>Image</span>
+                    <ImageIcon
+                      size={18}
+                      style={{
+                        color: mediaType === "image" ? "#C9A84C" : "#9CA3AF",
+                      }}
+                    />
+                    <span
+                      className={
+                        mediaType === "image"
+                          ? "text-[#C9A84C]"
+                          : "text-gray-500"
+                      }
+                    >
+                      Image
+                    </span>
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={() => {
                       setMediaType("video");
-                      setFormData(prev => ({ ...prev, image_actualite: null, video_actualite: null }));
+                      setFormData((prev) => ({
+                        ...prev,
+                        image_actualite: null,
+                        video_actualite: null,
+                      }));
                       setYoutubeUrl("");
                     }}
                     className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${mediaType === "video" ? "border-[#C9A84C] bg-[#C9A84C]/10" : "border-gray-200"}`}
                   >
-                    <Video size={18} style={{ color: mediaType === "video" ? "#C9A84C" : "#9CA3AF" }} />
-                    <span className={mediaType === "video" ? "text-[#C9A84C]" : "text-gray-500"}>Vidéo</span>
+                    <Video
+                      size={18}
+                      style={{
+                        color: mediaType === "video" ? "#C9A84C" : "#9CA3AF",
+                      }}
+                    />
+                    <span
+                      className={
+                        mediaType === "video"
+                          ? "text-[#C9A84C]"
+                          : "text-gray-500"
+                      }
+                    >
+                      Vidéo
+                    </span>
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={() => {
                       setMediaType("youtube");
-                      setFormData(prev => ({ ...prev, image_actualite: null, video_actualite: null }));
+                      setFormData((prev) => ({
+                        ...prev,
+                        image_actualite: null,
+                        video_actualite: null,
+                      }));
                     }}
                     className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${mediaType === "youtube" ? "border-[#C9A84C] bg-[#C9A84C]/10" : "border-gray-200"}`}
                   >
-                    <PlayCircle size={18} style={{ color: mediaType === "youtube" ? "#C9A84C" : "#9CA3AF" }} />
-                    <span className={mediaType === "youtube" ? "text-[#C9A84C]" : "text-gray-500"}>YouTube</span>
+                    <PlayCircle
+                      size={18}
+                      style={{
+                        color: mediaType === "youtube" ? "#C9A84C" : "#9CA3AF",
+                      }}
+                    />
+                    <span
+                      className={
+                        mediaType === "youtube"
+                          ? "text-[#C9A84C]"
+                          : "text-gray-500"
+                      }
+                    >
+                      YouTube
+                    </span>
                   </button>
                 </div>
 
@@ -680,7 +857,11 @@ const ActualiteSection: React.FC = () => {
                   <div>
                     {formData.image_actualite && (
                       <div className="relative mb-3 rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
-                        <img src={formData.image_actualite} alt="Aperçu" className="w-full max-h-64 object-contain" />
+                        <img
+                          src={formData.image_actualite}
+                          alt="Aperçu"
+                          className="w-full max-h-64 object-contain"
+                        />
                         <button
                           type="button"
                           onClick={removeMedia}
@@ -693,9 +874,19 @@ const ActualiteSection: React.FC = () => {
                     <label className="cursor-pointer">
                       <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 border-dashed border-[#C9A84C] text-[#C9A84C] hover:bg-[#C9A84C]/5">
                         <Upload size={18} />
-                        <span>{uploading ? "Upload en cours..." : "Choisir une image"}</span>
+                        <span>
+                          {uploading
+                            ? "Upload en cours..."
+                            : "Choisir une image"}
+                        </span>
                       </div>
-                      <input type="file" accept="image/*" onChange={(e) => handleMediaUpload(e, "image")} disabled={uploading} className="hidden" />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleMediaUpload(e, "image")}
+                        disabled={uploading}
+                        className="hidden"
+                      />
                     </label>
                   </div>
                 )}
@@ -703,26 +894,40 @@ const ActualiteSection: React.FC = () => {
                 {/* Upload vidéo */}
                 {mediaType === "video" && (
                   <div>
-                    {formData.video_actualite && !formData.video_actualite.includes('youtube.com') && (
-                      <div className="relative mb-3 rounded-lg overflow-hidden bg-gray-900">
-                        <video className="w-full max-h-64" controls>
-                          <source src={formData.video_actualite} type="video/mp4" />
-                        </video>
-                        <button
-                          type="button"
-                          onClick={removeMedia}
-                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full"
-                        >
-                          <X size={14} />
-                        </button>
-                      </div>
-                    )}
+                    {formData.video_actualite &&
+                      !formData.video_actualite.includes("youtube.com") && (
+                        <div className="relative mb-3 rounded-lg overflow-hidden bg-gray-900">
+                          <video className="w-full max-h-64" controls>
+                            <source
+                              src={formData.video_actualite}
+                              type="video/mp4"
+                            />
+                          </video>
+                          <button
+                            type="button"
+                            onClick={removeMedia}
+                            className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full"
+                          >
+                            <X size={14} />
+                          </button>
+                        </div>
+                      )}
                     <label className="cursor-pointer">
                       <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 border-dashed border-[#C9A84C] text-[#C9A84C] hover:bg-[#C9A84C]/5">
                         <Upload size={18} />
-                        <span>{uploading ? "Upload en cours..." : "Choisir une vidéo"}</span>
+                        <span>
+                          {uploading
+                            ? "Upload en cours..."
+                            : "Choisir une vidéo"}
+                        </span>
                       </div>
-                      <input type="file" accept="video/*" onChange={(e) => handleMediaUpload(e, "video")} disabled={uploading} className="hidden" />
+                      <input
+                        type="file"
+                        accept="video/*"
+                        onChange={(e) => handleMediaUpload(e, "video")}
+                        disabled={uploading}
+                        className="hidden"
+                      />
                     </label>
                   </div>
                 )}
@@ -742,7 +947,9 @@ const ActualiteSection: React.FC = () => {
                     </p>
                     {youtubeUrl && getYouTubeId(youtubeUrl) && (
                       <div className="mt-3">
-                        <p className="text-xs text-green-600 mb-2">✓ Aperçu :</p>
+                        <p className="text-xs text-green-600 mb-2">
+                          ✓ Aperçu :
+                        </p>
                         <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
                           <iframe
                             className="absolute top-0 left-0 w-full h-full"
@@ -773,7 +980,11 @@ const ActualiteSection: React.FC = () => {
                   className="flex-1 px-4 py-2 rounded-lg font-semibold transition-all hover:scale-[1.02] disabled:opacity-50"
                   style={{ backgroundColor: "#C9A84C", color: "#0C2340" }}
                 >
-                  {submitting ? "Publication..." : (editingActualite ? "Modifier" : "Publier")}
+                  {submitting
+                    ? "Publication..."
+                    : editingActualite
+                      ? "Modifier"
+                      : "Publier"}
                 </button>
               </div>
             </form>
