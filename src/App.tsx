@@ -4,6 +4,8 @@ import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster as Sonner } from "./components/ui/sonner";
 import { Toaster } from "./components/ui/toaster";
 import { AuthProvider } from "./hooks/useAuth";
+import { Toaster as HotToaster } from 'react-hot-toast';
+
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { useGoogleTranslate } from "./hooks/useGoogleTranslate";
 
@@ -50,6 +52,7 @@ function AppContent() {
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          <HotToaster position="bottom-right" />
 
           {/* Conteneur caché requis par Google Translate */}
           <div id="google-translate-container" style={{ display: "none" }} />

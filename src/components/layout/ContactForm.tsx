@@ -1,8 +1,54 @@
 import { useState } from "react";
 import { Check } from "lucide-react";
+import toast from 'react-hot-toast';
 
 export function ContactForm({ compact = false }: { compact?: boolean }) {
   const [sent, setSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setIsLoading(true);
+
+  const formData = new FormData(e.currentTarget);
+  const data = {
+    firstName: formData.get('firstName'),
+    lastName: formData.get('lastName'),
+    phone: formData.get('phone'),
+    email: formData.get('email'),
+    message: formData.get('message'),
+  };
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/contact-patient`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      setSent(true);
+      toast.success('Demande envoyée avec succès !', {
+        position: 'bottom-right',
+        duration: 4000,
+      });
+    } else {
+      throw new Error(result.message || 'Erreur lors de l\'envoi');
+    }
+  } catch (error) {
+    console.error('Erreur:', error);
+    toast.error('Erreur lors de l\'envoi. Veuillez réessayer.', {
+      position: 'bottom-right',
+      duration: 4000,
+    });
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   if (sent) {
     return (
@@ -21,10 +67,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   return (
     <form
       className="card-soft space-y-4"
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSent(true);
-      }}
+      onSubmit={handleSubmit}
     >
       {!compact && (
         <div>
@@ -56,7 +99,9 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
           au RGPD. Aucune donnée n'est transmise à des tiers.
         </span>
       </label>
-      <button type="submit" className="btn-gold w-full">Envoyer ma demande</button>
+      <button type="submit" className="btn-gold w-full" disabled={isLoading}>
+        {isLoading ? "Envoi en cours..." : "Envoyer ma demande"}
+      </button>
     </form>
   );
 }

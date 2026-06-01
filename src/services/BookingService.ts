@@ -1,93 +1,152 @@
 import type { PatientInfo, TimeSlot } from "../types/booking";
 import { DAY_SLOTS } from "../types/booking";
 
-// ── Mock: créneaux déjà pris (à remplacer par un appel API) ────────────────
-const TAKEN_SLOTS: Record<string, string[]> = {
-  "2025-07-01": ["09:00", "10:00", "14:30"],
-  "2025-07-02": ["08:30", "09:30", "11:00", "14:00", "15:00"],
-  "2025-07-03": ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00"], // journée pleine
-  "2025-07-07": ["10:30", "11:00", "15:00"],
-};
+const API_URL = import.meta.env.VITE_API_URL ?? "";
 
-export function getSlotsForDate(dateIso: string): TimeSlot[] {
-  const taken = TAKEN_SLOTS[dateIso] ?? [];
-  return DAY_SLOTS.map((time) => ({
-    time,
-    available: !taken.includes(time),
-  }));
+// Cache des créneaux pris (pour éviter trop d'appels API)
+let takenSlotsCache: Record<string, string[]> = {};
+let lastFetchTime = 0;
+const CACHE_DURATION = 60000; // 1 minute
+
+// Récupérer les créneaux pris depuis la base de données
+export async function fetchTakenSlots(date?: string): Promise<Record<string, string[]>> {
+    const now = Date.now();
+    
+    // Utiliser le cache si encore valide
+    if (now - lastFetchTime < CACHE_DURATION && Object.keys(takenSlotsCache).length > 0) {
+        if (date && takenSlotsCache[date]) {
+            return takenSlotsCache;
+        }
+    }
+    
+    try {
+        const url = date ? `${API_URL}/rendez-vous/taken-slots?date=${date}` : `${API_URL}/rendez-vous/taken-slots`;
+        const response = await fetch(url);
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+            takenSlotsCache = result.data;
+            lastFetchTime = now;
+            return takenSlotsCache;
+        }
+    } catch (error) {
+        console.error('Erreur récupération créneaux pris:', error);
+    }
+    
+    return {};
 }
 
-export function isDayFull(dateIso: string): boolean {
-  return getSlotsForDate(dateIso).every((s) => !s.available);
+// Obtenir les créneaux pour une date spécifique
+export async function getSlotsForDate(dateIso: string): Promise<TimeSlot[]> {
+    // Récupérer les créneaux pris depuis la base de données
+    const takenSlots = await fetchTakenSlots(dateIso);
+    const takenForDate = takenSlots[dateIso] || [];
+    
+    return DAY_SLOTS.map((time) => ({
+        time,
+        available: !takenForDate.includes(time),
+    }));
 }
 
+// Vérifier si un jour est complet
+export async function isDayFull(dateIso: string): Promise<boolean> {
+    const slots = await getSlotsForDate(dateIso);
+    return slots.every((s) => !s.available);
+}
+
+// Vérifier si un jour est indisponible (weekend)
 export function isDayUnavailable(dateIso: string): boolean {
-  // Weekends indisponibles
-  const d = new Date(dateIso);
-  const day = d.getDay();
-  return day === 0 || day === 6;
+    const d = new Date(dateIso);
+    const day = d.getDay();
+    return day === 0 || day === 6; // Dimanche ou Samedi
 }
 
 // ── Google Sheets integration ─────────────────────────────────────────────
-// Remplacer SHEET_WEBHOOK_URL par l'URL de votre Google Apps Script webhook
 const SHEET_WEBHOOK_URL = import.meta.env.VITE_SHEET_WEBHOOK_URL ?? "";
 
 interface AppointmentPayload {
-  patient: PatientInfo;
-  date: string;
-  time: string;
-  bookedAt: string;
+    patient: PatientInfo;
+    date: string;
+    time: string;
+    bookedAt: string;
 }
 
 export async function saveToGoogleSheet(payload: AppointmentPayload): Promise<void> {
-  if (!SHEET_WEBHOOK_URL) {
-    console.warn("[Booking] VITE_SHEET_WEBHOOK_URL non configuré — Google Sheets ignoré.");
-    return;
-  }
+    if (!SHEET_WEBHOOK_URL) {
+        console.warn("[Booking] VITE_SHEET_WEBHOOK_URL non configuré — Google Sheets ignoré.");
+        return;
+    }
 
-  const response = await fetch(SHEET_WEBHOOK_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8",
-    },
-    body: JSON.stringify(payload),
-  });
+    const response = await fetch(SHEET_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify(payload),
+    });
 
-  const result = await response.text();
-
-  console.log("[Google Sheets]", result);
+    const result = await response.text();
+    console.log("[Google Sheets]", result);
 }
 
 // ── Database integration ──────────────────────────────────────────────────
-// Remplacer par votre endpoint API réel
-const API_URL = import.meta.env.VITE_API_URL ?? "";
-
 export async function saveToDatabase(payload: AppointmentPayload): Promise<void> {
-  if (!API_URL) {
-    console.warn("[Booking] VITE_API_URL non configuré — base de données ignorée.");
-    return;
-  }
-  await fetch(`${API_URL}/appointments`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+    if (!API_URL) {
+        console.warn("[Booking] VITE_API_URL non configuré — base de données ignorée.");
+        return;
+    }
+
+    const data = {
+        firstName: payload.patient.firstName,
+        lastName: payload.patient.lastName,
+        email: payload.patient.email,
+        phone: payload.patient.phone,
+        birthDate: payload.patient.birthDate,
+        motif: payload.patient.motif,
+        notes: payload.patient.notes,
+        date: payload.date,
+        time: payload.time
+    };
+
+    console.log("Envoi au backend:", data);
+
+    const response = await fetch(`${API_URL}/rendez-vous`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+        throw new Error(result.message || "Erreur lors de l'enregistrement du rendez-vous");
+    }
+
+    console.log("Rendez-vous enregistré avec succès:", result);
+    
+    // Invalider le cache après un nouvel enregistrement
+    takenSlotsCache = {};
+    lastFetchTime = 0;
 }
 
 // ── Submit both ───────────────────────────────────────────────────────────
 export async function submitAppointment(
-  patient: PatientInfo,
-  date: string,
-  time: string
+    patient: PatientInfo,
+    date: string,
+    time: string
 ): Promise<void> {
-  const payload: AppointmentPayload = {
-    patient,
-    date,
-    time,
-    bookedAt: new Date().toISOString(),
-  };
-  await Promise.all([
-    saveToGoogleSheet(payload),
-    saveToDatabase(payload),
-  ]);
+    const payload: AppointmentPayload = {
+        patient,
+        date,
+        time,
+        bookedAt: new Date().toISOString(),
+    };
+    
+    await saveToDatabase(payload);
+    
+    try {
+        await saveToGoogleSheet(payload);
+    } catch (error) {
+        console.warn("Erreur lors de l'enregistrement dans Google Sheet:", error);
+    }
 }
