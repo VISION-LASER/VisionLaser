@@ -1,104 +1,3 @@
-// import React, { useState } from "react";
-// import { Share2, Video, Camera, Globe } from "lucide-react";
-
-// const ActualiteSection: React.FC = () => {
-//   const [actualite, setActualite] = useState({
-//     titre: "Notre centre vous accompagne",
-//     description: "Découvrez la chirurgie laser pour vous libérer de vos lunettes",
-//     instagram: "@centre.vision.las",
-//     tiktok: "@centre.vision.las",
-//     facebook: "CentreVisionLaser"
-//   });
-
-//   return (
-//     <div className="space-y-6">
-//       <div className="mb-6">
-//         <h2 className="text-2xl md:text-3xl font-bold" style={{ color: "#0C2340" }}>
-//           Gestion des actualités
-//         </h2>
-//         <div className="w-12 h-0.5 mt-2 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
-//         <p className="text-gray-500 mt-2">Modifiez le contenu des réseaux sociaux et la description</p>
-//       </div>
-
-//       <div className="grid grid-cols-1 gap-6">
-//         <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-//           <label className="block text-sm font-medium mb-2" style={{ color: "#0C2340" }}>
-//             Titre
-//           </label>
-//           <input 
-//             type="text" 
-//             value={actualite.titre}
-//             className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-//             style={{ borderColor: "#E2E8F0" }}
-//           />
-//         </div>
-
-//         <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-//           <label className="block text-sm font-medium mb-2" style={{ color: "#0C2340" }}>
-//             Description
-//           </label>
-//           <textarea 
-//             rows={4}
-//             value={actualite.description}
-//             className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-//             style={{ borderColor: "#E2E8F0" }}
-//           />
-//         </div>
-
-//         <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-//           <label className="block text-sm font-medium mb-2 flex items-center gap-2" style={{ color: "#0C2340" }}>
-//             <Camera size={20} style={{ color: "#C9A84C" }} />
-//             Instagram
-//           </label>
-//           <input 
-//             type="text" 
-//             value={actualite.instagram}
-//             className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-//             style={{ borderColor: "#E2E8F0" }}
-//           />
-//         </div>
-
-//         <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-//           <label className="block text-sm font-medium mb-2 flex items-center gap-2" style={{ color: "#0C2340" }}>
-//             <Video size={20} style={{ color: "#C9A84C" }} />
-//             TikTok
-//           </label>
-//           <input 
-//             type="text" 
-//             value={actualite.tiktok}
-//             className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-//             style={{ borderColor: "#E2E8F0" }}
-//           />
-//         </div>
-
-//         <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-//           <label className="block text-sm font-medium mb-2 flex items-center gap-2" style={{ color: "#0C2340" }}>
-//             <Globe size={20} style={{ color: "#C9A84C" }} />
-//             Facebook
-//           </label>
-//           <input 
-//             type="text" 
-//             value={actualite.facebook}
-//             className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-//             style={{ borderColor: "#E2E8F0" }}
-//           />
-//         </div>
-
-//         <div className="flex justify-end">
-//           <button 
-//             className="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-[1.02]"
-//             style={{ backgroundColor: "#C9A84C", color: "#0C2340" }}
-//           >
-//             Enregistrer les modifications
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ActualiteSection;
-
 import React, { useState, useEffect } from "react";
 import { 
   Plus, Trash2, Edit2, RefreshCw, X, Image as ImageIcon, 
@@ -686,10 +585,200 @@ const ActualiteSection: React.FC = () => {
         </div>
       )}
 
-      {/* Modal d'ajout/modification - identique à votre code existant */}
+      {/* Modal d'ajout/modification */}
       {isModalOpen && (
-        // ... votre modal existant
-        <div>...</div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex justify-between items-center">
+              <h3 className="text-xl font-bold" style={{ color: "#0C2340" }}>
+                {editingActualite ? "Modifier la publication" : "Nouvelle publication"}
+              </h3>
+              <button onClick={() => setIsModalOpen(false)} className="p-1 rounded-lg hover:bg-gray-100">
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="p-6 space-y-5">
+              {/* Titre */}
+              <div>
+                <label className="block text-sm font-medium mb-2" style={{ color: "#0C2340" }}>
+                  Titre *
+                </label>
+                <input
+                  type="text"
+                  value={formData.titre}
+                  onChange={(e) => setFormData({ ...formData, titre: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-transparent"
+                  placeholder="Titre de l'actualité"
+                  required
+                />
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="block text-sm font-medium mb-2" style={{ color: "#0C2340" }}>
+                  Description *
+                </label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  rows={5}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-transparent resize-none"
+                  placeholder="Décrivez votre actualité..."
+                  required
+                />
+              </div>
+
+              {/* Type de média */}
+              <div>
+                <label className="block text-sm font-medium mb-3" style={{ color: "#0C2340" }}>
+                  Type de média
+                </label>
+                
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMediaType("image");
+                      setFormData(prev => ({ ...prev, image_actualite: null, video_actualite: null }));
+                      setYoutubeUrl("");
+                    }}
+                    className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${mediaType === "image" ? "border-[#C9A84C] bg-[#C9A84C]/10" : "border-gray-200"}`}
+                  >
+                    <ImageIcon size={18} style={{ color: mediaType === "image" ? "#C9A84C" : "#9CA3AF" }} />
+                    <span className={mediaType === "image" ? "text-[#C9A84C]" : "text-gray-500"}>Image</span>
+                  </button>
+                  
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMediaType("video");
+                      setFormData(prev => ({ ...prev, image_actualite: null, video_actualite: null }));
+                      setYoutubeUrl("");
+                    }}
+                    className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${mediaType === "video" ? "border-[#C9A84C] bg-[#C9A84C]/10" : "border-gray-200"}`}
+                  >
+                    <Video size={18} style={{ color: mediaType === "video" ? "#C9A84C" : "#9CA3AF" }} />
+                    <span className={mediaType === "video" ? "text-[#C9A84C]" : "text-gray-500"}>Vidéo</span>
+                  </button>
+                  
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMediaType("youtube");
+                      setFormData(prev => ({ ...prev, image_actualite: null, video_actualite: null }));
+                    }}
+                    className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${mediaType === "youtube" ? "border-[#C9A84C] bg-[#C9A84C]/10" : "border-gray-200"}`}
+                  >
+                    <PlayCircle size={18} style={{ color: mediaType === "youtube" ? "#C9A84C" : "#9CA3AF" }} />
+                    <span className={mediaType === "youtube" ? "text-[#C9A84C]" : "text-gray-500"}>YouTube</span>
+                  </button>
+                </div>
+
+                {/* Upload image */}
+                {mediaType === "image" && (
+                  <div>
+                    {formData.image_actualite && (
+                      <div className="relative mb-3 rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
+                        <img src={formData.image_actualite} alt="Aperçu" className="w-full max-h-64 object-contain" />
+                        <button
+                          type="button"
+                          onClick={removeMedia}
+                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    )}
+                    <label className="cursor-pointer">
+                      <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 border-dashed border-[#C9A84C] text-[#C9A84C] hover:bg-[#C9A84C]/5">
+                        <Upload size={18} />
+                        <span>{uploading ? "Upload en cours..." : "Choisir une image"}</span>
+                      </div>
+                      <input type="file" accept="image/*" onChange={(e) => handleMediaUpload(e, "image")} disabled={uploading} className="hidden" />
+                    </label>
+                  </div>
+                )}
+
+                {/* Upload vidéo */}
+                {mediaType === "video" && (
+                  <div>
+                    {formData.video_actualite && !formData.video_actualite.includes('youtube.com') && (
+                      <div className="relative mb-3 rounded-lg overflow-hidden bg-gray-900">
+                        <video className="w-full max-h-64" controls>
+                          <source src={formData.video_actualite} type="video/mp4" />
+                        </video>
+                        <button
+                          type="button"
+                          onClick={removeMedia}
+                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    )}
+                    <label className="cursor-pointer">
+                      <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 border-dashed border-[#C9A84C] text-[#C9A84C] hover:bg-[#C9A84C]/5">
+                        <Upload size={18} />
+                        <span>{uploading ? "Upload en cours..." : "Choisir une vidéo"}</span>
+                      </div>
+                      <input type="file" accept="video/*" onChange={(e) => handleMediaUpload(e, "video")} disabled={uploading} className="hidden" />
+                    </label>
+                  </div>
+                )}
+
+                {/* YouTube URL */}
+                {mediaType === "youtube" && (
+                  <div>
+                    <input
+                      type="text"
+                      value={youtubeUrl}
+                      onChange={(e) => handleYoutubeUrlChange(e.target.value)}
+                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
+                      placeholder="https://www.youtube.com/watch?v=... ou https://youtu.be/..."
+                    />
+                    <p className="text-xs text-gray-400 mt-2">
+                      Collez le lien de votre vidéo YouTube (normale ou Shorts)
+                    </p>
+                    {youtubeUrl && getYouTubeId(youtubeUrl) && (
+                      <div className="mt-3">
+                        <p className="text-xs text-green-600 mb-2">✓ Aperçu :</p>
+                        <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
+                          <iframe
+                            className="absolute top-0 left-0 w-full h-full"
+                            src={`https://www.youtube.com/embed/${getYouTubeId(youtubeUrl)}`}
+                            title="YouTube preview"
+                            frameBorder="0"
+                            allowFullScreen
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Boutons */}
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="flex-1 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50"
+                >
+                  Annuler
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting || uploading}
+                  className="flex-1 px-4 py-2 rounded-lg font-semibold transition-all hover:scale-[1.02] disabled:opacity-50"
+                  style={{ backgroundColor: "#C9A84C", color: "#0C2340" }}
+                >
+                  {submitting ? "Publication..." : (editingActualite ? "Modifier" : "Publier")}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
 
       {showReactions && <ReactionsModal />}
