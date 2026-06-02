@@ -65,12 +65,51 @@ export interface Commentaire {
 
 export const actualiteService = {
   // Récupérer toutes les actualités avec leurs compteurs
+// getAll: async (): Promise<Actualite[]> => {
+//   try {
+//     const token = localStorage.getItem('accessToken');
+//     const response = await fetch(`${API_URL}/actualites`, {
+//       headers: {
+//         'Authorization': `Bearer ${token}`,
+//         'Content-Type': 'application/json'
+//       }
+//     });
+    
+//     if (!response.ok) {
+//       throw new Error('Erreur lors de la récupération des actualités');
+//     }
+    
+//     const data = await response.json();
+//     const actualites = data.data || data;
+    
+//     // Pour chaque actualité, récupérer les compteurs
+//     const actualitesWithCounts = await Promise.all(
+//       actualites.map(async (actualite: Actualite) => {
+//         const [reactionsCount, commentsCount] = await Promise.all([
+//           actualiteService.getReactionsCount(actualite.id),
+//           actualiteService.getCommentairesCount(actualite.id)
+//         ]);
+//         return {
+//           ...actualite,
+//           reactions_count: reactionsCount,
+//           commentaires_count: commentsCount
+//         };
+//       })
+//     );
+    
+//     return actualitesWithCounts;
+//   } catch (error) {
+//     console.error('Erreur:', error);
+//     throw error;
+//   }
+// },
+
+// Récupérer toutes les actualités (route publique - pas besoin de token)
 getAll: async (): Promise<Actualite[]> => {
   try {
-    const token = localStorage.getItem('accessToken');
+    // Pas besoin de token pour les routes publiques
     const response = await fetch(`${API_URL}/actualites`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     });
@@ -82,7 +121,7 @@ getAll: async (): Promise<Actualite[]> => {
     const data = await response.json();
     const actualites = data.data || data;
     
-    // Pour chaque actualité, récupérer les compteurs
+    // Pour chaque actualité, récupérer les compteurs (routes publiques aussi)
     const actualitesWithCounts = await Promise.all(
       actualites.map(async (actualite: Actualite) => {
         const [reactionsCount, commentsCount] = await Promise.all([

@@ -4,7 +4,7 @@ import logo from "../../assets/vision-laser-logo.jpg";
 
 import {
   Eye, LayoutDashboard, Inbox, DollarSign,
-  Camera, Newspaper, Clock, HelpCircle, Info, LogOut,
+  Camera, Newspaper, Clock, HelpCircle, Info, LogOut,Calendar
 } from "lucide-react";
 
 const NAVY = "#0C2340";
@@ -16,6 +16,7 @@ const navGroups = [
     items: [
       { to: "/admin/dashboard", label: "Tableau de bord", icon: LayoutDashboard, end: true },
       { to: "/admin/demandes", label: "Demandes de bilan", icon: Inbox, badge: 3 },
+      { to: "/admin/rendez-vous", label: "Rendez-vous", icon: Calendar },
     ],
   },
   {
