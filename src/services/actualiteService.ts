@@ -1,4 +1,4 @@
-import { API_URL } from '../config/api.config';
+import { API_URL, API_URL_ROOT } from '../config/api.config';
 
 export interface Actualite {
   id: number;
@@ -310,7 +310,7 @@ getAll: async (): Promise<Actualite[]> => {
       }
       
       const result = await response.json();
-      return `http://localhost:3000${result.imageUrl}`;
+      return `${API_URL_ROOT}${result.imageUrl}`;
     } catch (error) {
       console.error('Erreur upload image:', error);
       throw error;
@@ -338,7 +338,7 @@ getAll: async (): Promise<Actualite[]> => {
       }
       
       const result = await response.json();
-      return `http://localhost:3000${result.videoUrl}`;
+      return `${API_URL_ROOT}${result.videoUrl}`;
     } catch (error) {
       console.error('Erreur upload vidéo:', error);
       throw error;

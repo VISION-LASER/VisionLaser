@@ -1,5 +1,5 @@
-// Configuration de base pour les appels API
-const API_URL = 'http://localhost:3000/api';
+import { API_BASE_URL } from '../config/api.config';
+
 
 // Fonction pour récupérer le token stocké
 export const getToken = () => {
@@ -28,7 +28,7 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
         ...(token && { 'Authorization': `Bearer ${token}` })
     };
 
-    const response = await fetch(`${API_URL}${url}`, {
+    const response = await fetch(`${API_BASE_URL}${url}`, {
         ...options,
         headers
     });
@@ -42,7 +42,7 @@ export const authFetch = async (url: string, options: RequestInit = {}) => {
                 ...headers,
                 'Authorization': `Bearer ${newToken}`
             };
-            return fetch(`${API_URL}${url}`, {
+            return fetch(`${API_BASE_URL}${url}`, {
                 ...options,
                 headers: newHeaders
             });
@@ -58,7 +58,7 @@ export const refreshAccessToken = async () => {
     if (!refreshToken) return null;
 
     try {
-        const response = await fetch(`${API_URL}/users/refresh`, {
+        const response = await fetch(`${API_BASE_URL}/users/refresh`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refreshToken })

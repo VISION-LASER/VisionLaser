@@ -1,4 +1,4 @@
-import { API_URL } from '../config/api.config';
+import { API_URL, API_URL_ROOT } from '../config/api.config';
 
 export interface Equipement {
   id: number;
@@ -138,7 +138,7 @@ export const equipementService = {
       }
       
       const result = await response.json();
-      return `http://localhost:3000${result.imageUrl}`;
+      return `${API_URL_ROOT}${result.imageUrl}`;
     } catch (error) {
       console.error('Erreur upload:', error);
       throw error;

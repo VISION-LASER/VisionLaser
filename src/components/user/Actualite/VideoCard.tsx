@@ -107,6 +107,7 @@
 import React from "react";
 import { Calendar, ExternalLink, Image as ImageIcon, Video, Heart, MessageCircle } from "lucide-react";
 import type { Actualite } from "../../../services/actualiteService";
+import { API_URL_ROOT } from "../../../config/api.config";
 
 interface VideoCardProps {
   post: Actualite;
@@ -120,7 +121,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ post }) => {
   const getMediaUrl = (path: string) => {
     if (!path) return '';
     if (path.startsWith('http')) return path;
-    if (path.startsWith('/uploads')) return `http://localhost:3000${path}`;
+    if (path.startsWith('/uploads')) return `${API_URL_ROOT}${path}`;
     return path;
   };
   
