@@ -10,7 +10,20 @@ import {
 const NAVY = "#0C2340";
 const GOLD = "#C9A84C";
 
-const navGroups = [
+interface NavItem {
+  to: string;
+  label: string;
+  icon: any;
+  end?: boolean;
+  badge?: number;
+}
+
+interface NavGroup {
+  label: string;
+  items: NavItem[];
+}
+
+const navGroups: NavGroup[] = [
   {
     label: "Principal",
     items: [
