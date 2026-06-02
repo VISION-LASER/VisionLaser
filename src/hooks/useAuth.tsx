@@ -1,59 +1,5 @@
-// import { createContext, useContext, useState, type ReactNode } from "react";
-
-// interface AuthUser {
-//   email: string;
-//   role: "ADMIN";
-// }
-
-// interface AuthContextType {
-//   user: AuthUser | null;
-//   isAuthenticated: boolean;
-//   login: (email: string, password: string) => boolean;
-//   logout: () => void;
-// }
-
-// const ADMIN_EMAIL = "admin@vision-laser.fr";
-// const ADMIN_PASSWORD = "Admin2026!";
-
-// const AuthContext = createContext<AuthContextType | null>(null);
-
-// // Hook séparé — export nommé
-// export const useAuth = () => {
-//   const ctx = useContext(AuthContext);
-//   if (!ctx) throw new Error("useAuth doit être utilisé dans AuthProvider");
-//   return ctx;
-// };
-
-// // Provider — export nommé aussi
-// export const AuthProvider = ({ children }: { children: ReactNode }) => {
-//   const [user, setUser] = useState<AuthUser | null>(() => {
-//     const saved = sessionStorage.getItem("cvl_admin");
-//     return saved ? JSON.parse(saved) : null;
-//   });
-
-//   const login = (email: string, password: string): boolean => {
-//     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-//       const adminUser: AuthUser = { email, role: "ADMIN" };
-//       setUser(adminUser);
-//       sessionStorage.setItem("cvl_admin", JSON.stringify(adminUser));
-//       return true;
-//     }
-//     return false;
-//   };
-
-//   const logout = () => {
-//     setUser(null);
-//     sessionStorage.removeItem("cvl_admin");
-//   };
-
-//   return (
-//     <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config/api.config';
 
 interface User {
     id: number;
@@ -75,7 +21,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // API URLs
-const API_URL = 'http://localhost:3000/api';
+
 
 // Fonctions de gestion des tokens
 const setTokens = (accessToken: string, refreshToken: string) => {
@@ -109,7 +55,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Fonction de connexion
     const login = async (email: string, password: string, role: string = 'admin') => {
         try {
-            const response = await fetch(`${API_URL}/users/login`, {
+            const response = await fetch(`${API_BASE_URL}/users/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password, role })
@@ -134,7 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Fonction d'inscription
     const register = async (userData: any) => {
         try {
-            const response = await fetch(`${API_URL}/users/register`, {
+            const response = await fetch(`${API_BASE_URL}/users/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData)

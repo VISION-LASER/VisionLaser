@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { API_URL } from "../../../config/api.config";
+
 import {
   Calendar as CalendarIcon,
   CheckCircle,
@@ -50,7 +52,7 @@ const RendezvousSection: React.FC = () => {
     setError(null);
     try {
       const token = localStorage.getItem("accessToken");
-      const response = await fetch("http://localhost:3000/api/users/rendez-vous", {
+      const response = await fetch(`${API_URL}/rendez-vous`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -80,7 +82,7 @@ const RendezvousSection: React.FC = () => {
   const updateAppointmentStatus = async (id: number, status: string) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const response = await fetch(`http://localhost:3000/api/users/rendez-vous/${id}/status`, {
+      const response = await fetch(`${API_URL}/rendez-vous/${id}/status`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -113,7 +115,7 @@ const RendezvousSection: React.FC = () => {
     
     try {
       const token = localStorage.getItem("accessToken");
-      const response = await fetch(`http://localhost:3000/api/users/rendez-vous/${id}`, {
+      const response = await fetch(`${API_URL}/rendez-vous/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
