@@ -260,7 +260,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ post }) => {
         </p>
 
         {/* Stats - MODIFICATION ICI : Affichage même si zéro */}
-        <div className="mt-4 flex items-center gap-4 border-t border-border pt-3">
+        {/* <div className="mt-4 flex items-center gap-4 border-t border-border pt-3">
           <span className="flex items-center gap-1 text-xs text-muted-foreground">
             <Heart className="h-3.5 w-3.5 text-red-500" />
             {post.reactions_count !== undefined ? post.reactions_count : 0}
@@ -269,7 +269,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ post }) => {
             <MessageCircle className="h-3.5 w-3.5" />
             {post.commentaires_count !== undefined ? post.commentaires_count : 0}
           </span>
-        </div>
+        </div> */}
 
         {(hasVideo || hasImage) && (
           <div className="mt-3">

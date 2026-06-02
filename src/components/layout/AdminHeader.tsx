@@ -263,13 +263,6 @@ const AdminHeader = ({ onMenuClick }: Props) => {
             )}
           </div>
 
-          {/* Settings */}
-          <button
-            className="w-8 h-8 rounded-lg flex items-center justify-center border transition-colors hover:bg-black/5"
-            style={{ border: "1px solid rgba(12,35,64,.1)", background: "white" }}
-          >
-            <Settings size={15} color="rgba(12,35,64,.6)" />
-          </button>
 
           {/* Date — masquée sur très petit écran */}
           <div

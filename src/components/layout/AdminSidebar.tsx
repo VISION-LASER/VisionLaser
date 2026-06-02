@@ -15,14 +15,14 @@ const navGroups = [
     label: "Principal",
     items: [
       { to: "/admin/dashboard", label: "Tableau de bord", icon: LayoutDashboard, end: true },
-      { to: "/admin/demandes", label: "Demandes de bilan", icon: Inbox, badge: 3 },
+      // { to: "/admin/demandes", label: "Demandes de bilan", icon: Inbox, badge: 3 },
       { to: "/admin/rendez-vous", label: "Rendez-vous", icon: Calendar },
     ],
   },
   {
     label: "Contenu",
     items: [
-      { to: "/admin/tarifs", label: "Tarifs", icon: DollarSign },
+      // { to: "/admin/tarifs", label: "Tarifs", icon: DollarSign },
       //{ to: "/admin/equipements", label: "Équipements", icon: Camera },
       { to: "/admin/actualite", label: "Actualité", icon: Newspaper },
     ],
@@ -30,7 +30,7 @@ const navGroups = [
   {
     label: "Paramètres",
     items: [
-      { to: "/admin/horaires", label: "Horaires", icon: Clock },
+      // { to: "/admin/horaires", label: "Horaires", icon: Clock },
       { to: "/admin/faq", label: "FAQ", icon: HelpCircle },
       //{ to: "/admin/apropos", label: "À propos", icon: Info },
     ],
