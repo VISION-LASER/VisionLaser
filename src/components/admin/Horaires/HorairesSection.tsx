@@ -1,90 +1,7 @@
-// import React, { useState } from "react";
-
-// const HorairesSection: React.FC = () => {
-//   const [horaires, setHoraires] = useState([
-//     { jour: "Lundi", de: "09:00", a: "19:00", ferme: false },
-//     { jour: "Mardi", de: "09:00", a: "19:00", ferme: false },
-//     { jour: "Mercredi", de: "09:00", a: "19:00", ferme: false },
-//     { jour: "Jeudi", de: "09:00", a: "19:00", ferme: false },
-//     { jour: "Vendredi", de: "09:00", a: "19:00", ferme: false },
-//     { jour: "Samedi", de: "09:00", a: "13:00", ferme: false },
-//     { jour: "Dimanche", de: "", a: "", ferme: true },
-//   ]);
-
-//   return (
-//     <div className="space-y-6">
-//       <div className="mb-6">
-//         <h2 className="text-2xl md:text-3xl font-bold" style={{ color: "#0C2340" }}>
-//           Gestion des horaires
-//         </h2>
-//         <div className="w-12 h-0.5 mt-2 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
-//         <p className="text-gray-500 mt-2">Modifiez les horaires d'ouverture du centre</p>
-//       </div>
-
-//       <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
-//         <div className="overflow-x-auto">
-//           <table className="w-full">
-//             <thead style={{ backgroundColor: "#C9A84C20" }}>
-//               <tr>
-//                 <th className="px-6 py-4 text-left font-semibold" style={{ color: "#0C2340" }}>Jour</th>
-//                 <th className="px-6 py-4 text-left font-semibold" style={{ color: "#0C2340" }}>Ouverture</th>
-//                 <th className="px-6 py-4 text-left font-semibold" style={{ color: "#0C2340" }}>Fermeture</th>
-//                 <th className="px-6 py-4 text-left font-semibold" style={{ color: "#0C2340" }}>Fermé</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {horaires.map((horaire, index) => (
-//                 <tr key={index} className="border-b border-gray-100">
-//                   <td className="px-6 py-4 font-medium" style={{ color: "#0C2340" }}>{horaire.jour}</td>
-//                   <td className="px-6 py-4">
-//                     {!horaire.ferme && (
-//                       <input 
-//                         type="time" 
-//                         value={horaire.de} 
-//                         className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-//                         style={{ borderColor: "#E2E8F0" }}
-//                       />
-//                     )}
-//                   </td>
-//                   <td className="px-6 py-4">
-//                     {!horaire.ferme && (
-//                       <input 
-//                         type="time" 
-//                         value={horaire.a} 
-//                         className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-//                         style={{ borderColor: "#E2E8F0" }}
-//                       />
-//                     )}
-//                   </td>
-//                   <td className="px-6 py-4">
-//                     <input type="checkbox" checked={horaire.ferme} className="w-5 h-5 accent-[#C9A84C]" />
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       </div>
-
-//       <div className="flex justify-end">
-//         <button 
-//           className="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-[1.02]"
-//           style={{ backgroundColor: "#C9A84C", color: "#0C2340" }}
-//         >
-//           Enregistrer les modifications
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default HorairesSection;
-
 import React, { useState, useEffect } from "react";
 import { RefreshCw, Save, Clock, AlertCircle } from "lucide-react";
 import { horaireService } from "../../../services/horaireService";
 import type { Horaire } from "../../../services/horaireService";
-import type { Horaire as HoraireType } from "../../../services/horaireService";
 
 // Liste fixe des jours de la semaine
 const JOURS_SEMAINE = [
@@ -98,12 +15,12 @@ const JOURS_SEMAINE = [
 ];
 
 const HorairesSection: React.FC = () => {
-  const [horaires, setHoraires] = useState<HoraireType[]>([]);
+  const [horaires, setHoraires] = useState<Horaire[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [modifiedIds, setModifiedIds] = useState<Set<number>>(new Set());
+  const [modifiedJour, setModifiedJour] = useState<Set<string>>(new Set());
 
   // Charger les horaires
   const loadHoraires = async () => {
@@ -128,10 +45,11 @@ const HorairesSection: React.FC = () => {
           admin_id: null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
-        } as HoraireType;
+        } as Horaire;
       });
       
       setHoraires(completeHoraires);
+      setModifiedJour(new Set());
     } catch (err) {
       setError("Impossible de charger les horaires");
       console.error(err);
@@ -145,10 +63,10 @@ const HorairesSection: React.FC = () => {
   }, []);
 
   // Mettre à jour un champ d'un horaire
-  const updateHoraire = (id: number, field: keyof HoraireType, value: any) => {
+  const updateHoraire = (jour: string, field: keyof Horaire, value: any) => {
     setHoraires(prev => prev.map(h => {
-      if (h.id === id || (id === 0 && h.id === 0)) {
-        setModifiedIds(prevSet => new Set(prevSet).add(id));
+      if (h.jour === jour) {
+        setModifiedJour(prevSet => new Set(prevSet).add(jour));
         return { ...h, [field]: value };
       }
       return h;
@@ -163,21 +81,27 @@ const HorairesSection: React.FC = () => {
     
     try {
       // Filtrer les horaires modifiés
-      const horairesToUpdate = horaires.filter(h => modifiedIds.has(h.id));
+      const horairesToUpdate = horaires.filter(h => modifiedJour.has(h.jour));
       
       for (const horaire of horairesToUpdate) {
-        // Ne sauvegarder que si l'horaire existe en base (id > 0)
-        if (horaire.id > 0) {
-          await horaireService.update(horaire.id, {
-            ouverture: horaire.ouverture,
-            fermeture: horaire.fermeture,
-            ferme: horaire.ferme
-          });
+        const dataToSave = {
+          jour: horaire.jour,
+          ouverture: horaire.ferme ? "09:00" : horaire.ouverture,
+          fermeture: horaire.ferme ? "19:00" : horaire.fermeture,
+          ferme: horaire.ferme ? true : false
+        };
+        
+        if (horaire.id === 0) {
+          // Créer un nouvel enregistrement
+          await horaireService.create(dataToSave);
+        } else {
+          // Mettre à jour l'enregistrement existant
+          await horaireService.update(horaire.id, dataToSave);
         }
       }
       
       setSuccess("Horaires sauvegardés avec succès !");
-      setModifiedIds(new Set());
+      setModifiedJour(new Set());
       
       // Recharger pour avoir les IDs à jour
       setTimeout(() => {
@@ -221,9 +145,9 @@ const HorairesSection: React.FC = () => {
                     <input
                       type="time"
                       value={formatTimeForInput(horaire.ouverture)}
-                      onChange={(e) => updateHoraire(horaire.id, 'ouverture', e.target.value)}
+                      onChange={(e) => updateHoraire(horaire.jour, 'ouverture', e.target.value)}
                       className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C9A84C] transition-all"
-                      style={{ borderColor: "#E2E8F0", backgroundColor: modifiedIds.has(horaire.id) ? "#FEF3C7" : "white" }}
+                      style={{ borderColor: "#E2E8F0", backgroundColor: modifiedJour.has(horaire.jour) ? "#FEF3C7" : "white" }}
                     />
                   ) : (
                     <span className="text-gray-400 text-sm">-</span>
@@ -234,9 +158,9 @@ const HorairesSection: React.FC = () => {
                     <input
                       type="time"
                       value={formatTimeForInput(horaire.fermeture)}
-                      onChange={(e) => updateHoraire(horaire.id, 'fermeture', e.target.value)}
+                      onChange={(e) => updateHoraire(horaire.jour, 'fermeture', e.target.value)}
                       className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C9A84C] transition-all"
-                      style={{ borderColor: "#E2E8F0", backgroundColor: modifiedIds.has(horaire.id) ? "#FEF3C7" : "white" }}
+                      style={{ borderColor: "#E2E8F0", backgroundColor: modifiedJour.has(horaire.jour) ? "#FEF3C7" : "white" }}
                     />
                   ) : (
                     <span className="text-gray-400 text-sm">-</span>
@@ -245,15 +169,12 @@ const HorairesSection: React.FC = () => {
                 <td className="px-6 py-4">
                   <input
                     type="checkbox"
-                    checked={horaire.ferme}
+                    checked={horaire.ferme === true}
                     onChange={(e) => {
-                      updateHoraire(horaire.id, 'ferme', e.target.checked);
+                      updateHoraire(horaire.jour, 'ferme', e.target.checked);
                       if (e.target.checked) {
-                        updateHoraire(horaire.id, 'ouverture', '');
-                        updateHoraire(horaire.id, 'fermeture', '');
-                      } else {
-                        updateHoraire(horaire.id, 'ouverture', '09:00');
-                        updateHoraire(horaire.id, 'fermeture', '19:00');
+                        updateHoraire(horaire.jour, 'ouverture', '09:00');
+                        updateHoraire(horaire.jour, 'fermeture', '19:00');
                       }
                     }}
                     className="w-5 h-5 rounded focus:ring-2 focus:ring-[#C9A84C]"
@@ -281,15 +202,12 @@ const HorairesSection: React.FC = () => {
               <span className="text-gray-500">Fermé</span>
               <input
                 type="checkbox"
-                checked={horaire.ferme}
+                checked={horaire.ferme === true}
                 onChange={(e) => {
-                  updateHoraire(horaire.id, 'ferme', e.target.checked);
+                  updateHoraire(horaire.jour, 'ferme', e.target.checked);
                   if (e.target.checked) {
-                    updateHoraire(horaire.id, 'ouverture', '');
-                    updateHoraire(horaire.id, 'fermeture', '');
-                  } else {
-                    updateHoraire(horaire.id, 'ouverture', '09:00');
-                    updateHoraire(horaire.id, 'fermeture', '19:00');
+                    updateHoraire(horaire.jour, 'ouverture', '09:00');
+                    updateHoraire(horaire.jour, 'fermeture', '19:00');
                   }
                 }}
                 className="w-5 h-5 rounded"
@@ -305,9 +223,9 @@ const HorairesSection: React.FC = () => {
                 <input
                   type="time"
                   value={formatTimeForInput(horaire.ouverture)}
-                  onChange={(e) => updateHoraire(horaire.id, 'ouverture', e.target.value)}
+                  onChange={(e) => updateHoraire(horaire.jour, 'ouverture', e.target.value)}
                   className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-                  style={{ borderColor: "#E2E8F0", backgroundColor: modifiedIds.has(horaire.id) ? "#FEF3C7" : "white" }}
+                  style={{ borderColor: "#E2E8F0", backgroundColor: modifiedJour.has(horaire.jour) ? "#FEF3C7" : "white" }}
                 />
               </div>
               <div>
@@ -315,9 +233,9 @@ const HorairesSection: React.FC = () => {
                 <input
                   type="time"
                   value={formatTimeForInput(horaire.fermeture)}
-                  onChange={(e) => updateHoraire(horaire.id, 'fermeture', e.target.value)}
+                  onChange={(e) => updateHoraire(horaire.jour, 'fermeture', e.target.value)}
                   className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
-                  style={{ borderColor: "#E2E8F0", backgroundColor: modifiedIds.has(horaire.id) ? "#FEF3C7" : "white" }}
+                  style={{ borderColor: "#E2E8F0", backgroundColor: modifiedJour.has(horaire.jour) ? "#FEF3C7" : "white" }}
                 />
               </div>
             </div>
@@ -327,9 +245,9 @@ const HorairesSection: React.FC = () => {
             </div>
           )}
           
-          {modifiedIds.has(horaire.id) && (
+          {modifiedJour.has(horaire.jour) && (
             <div className="mt-2 text-right">
-              <span className="text-xs text-amber-600">⚠️ Non sauvegardé</span>
+              <span className="text-xs text-amber-600"> Non sauvegardé</span>
             </div>
           )}
         </div>
@@ -348,9 +266,9 @@ const HorairesSection: React.FC = () => {
           <div className="w-12 h-0.5 mt-2 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
           <p className="text-sm sm:text-base text-gray-500 mt-2">
             Modifiez les horaires d'ouverture du centre
-            {modifiedIds.size > 0 && (
+            {modifiedJour.size > 0 && (
               <span className="ml-2 text-xs text-amber-600">
-                ({modifiedIds.size} modification{modifiedIds.size > 1 ? 's' : ''} en attente)
+                ({modifiedJour.size} modification{modifiedJour.size > 1 ? 's' : ''} en attente)
               </span>
             )}
           </p>
@@ -368,7 +286,7 @@ const HorairesSection: React.FC = () => {
           </button>
           <button
             onClick={handleSave}
-            disabled={saving || modifiedIds.size === 0}
+            disabled={saving || modifiedJour.size === 0}
             className="flex items-center justify-center gap-2 px-4 py-2 text-sm rounded-lg transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ backgroundColor: "#C9A84C", color: "#0C2340" }}
           >
@@ -415,10 +333,10 @@ const HorairesSection: React.FC = () => {
       {!loading && horaires.length > 0 && <MobileCards />}
 
       {/* Indicateur de jours modifiés */}
-      {modifiedIds.size > 0 && !loading && (
+      {modifiedJour.size > 0 && !loading && (
         <div className="fixed bottom-4 right-4 lg:hidden">
           <div className="bg-amber-100 rounded-full px-3 py-1.5 shadow-lg">
-            <span className="text-xs text-amber-700">{modifiedIds.size} modification(s)</span>
+            <span className="text-xs text-amber-700">{modifiedJour.size} modification(s)</span>
           </div>
         </div>
       )}
