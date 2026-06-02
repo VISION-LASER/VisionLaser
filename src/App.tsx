@@ -37,6 +37,7 @@ import ActualiteSection from "./components/admin/Actualite/ActualiteSection";
 import HorairesSection from "./components/admin/Horaires/HorairesSection";
 import FAQSection from "./components/admin/FAQ/FAQSection";
 import AproposSection from "./components/admin/Apropos/AproposSection";
+import RendezvousSection from "./components/admin/Rendez-vous/RendezvousSection";
 import BlogPage from "./pages/user/BlogPage";
 
 const queryClient = new QueryClient();
@@ -80,6 +81,7 @@ function AppContent() {
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route path="dashboard" element={<TableauBordSection />} />
                   <Route path="demandes" element={<DemandesSection />} />
+                  <Route path="rendez-vous" element={<RendezvousSection />} />
                   <Route path="tarifs" element={<TarifsSection />} />
                   <Route path="equipements" element={<EquipementsSection />} />
                   <Route path="actualite" element={<ActualiteSection />} />
