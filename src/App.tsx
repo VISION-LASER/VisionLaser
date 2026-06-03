@@ -39,14 +39,17 @@ import FAQSection from "./components/admin/FAQ/FAQSection";
 import AproposSection from "./components/admin/Apropos/AproposSection";
 import RendezvousSection from "./components/admin/Rendez-vous/RendezvousSection";
 import BlogPage from "./pages/user/BlogPage";
+import { useAnalytics } from "./hooks/useAnalytics";
 
 const queryClient = new QueryClient();
 
-// ✅ Composant séparé — à l'INTÉRIEUR de LanguageProvider
-// pour pouvoir appeler useGoogleTranslate() qui lit le contexte lang
-function AppContent() {
-  useGoogleTranslate(); // ← accès au contexte garanti ici
+function AnalyticsTracker() {
+  useAnalytics();
+  return null;
+}
 
+function AppContent() {
+  useGoogleTranslate();
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
@@ -59,6 +62,7 @@ function AppContent() {
           <div id="google-translate-container" style={{ display: "none" }} />
 
           <BrowserRouter>
+            <AnalyticsTracker />
             <Routes>
               {/* ── Public ─────────────────────────────── */}
               <Route path="/" element={<HomePage />} />
@@ -106,7 +110,9 @@ function AppContent() {
 function App() {
   return (
     <LanguageProvider>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </LanguageProvider>
   );
 }
