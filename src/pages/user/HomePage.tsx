@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
       <TechniquesSection />
       <DoctorSection />
       <TprkEligibilitySection />
-      <DifferentesEtapes />
+      {/* <DifferentesEtapes /> */}
       <FaqSection />
 
       {/* Section lead principale — ancre #bilan-gratuit */}
