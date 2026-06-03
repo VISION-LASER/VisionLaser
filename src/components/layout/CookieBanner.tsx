@@ -1,7 +1,7 @@
 import React from "react";
 import { Cookie } from "lucide-react";
 import { useCookieConsent } from "../../hooks/UseCookieConsent";
-const CookieBanner: React.FC = () => {
+const CookieBanner: React.FC = () => { 
   const { showBanner, accept, refuse } = useCookieConsent();
 
   if (!showBanner) return null;
