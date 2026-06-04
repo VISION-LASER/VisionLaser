@@ -1,5 +1,6 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";import { PageHero } from "../../components/layout/PageHero";
+import { Helmet } from "react-helmet-async";
+import { PageHero } from "../../components/layout/PageHero";
 import FemtoLasikProcedureSection from "../../components/user/FemtoLasik/FemtoLasikProcedureSection";
 import FemtoLasikEligibilitySection from "../../components/user/FemtoLasik/FemtoLasikEligibilitySection";
 import { Header } from "../../components/layout/Header";
@@ -24,7 +25,9 @@ const FemtoLasikPage: React.FC = () => {
 
       <FemtoLasikProcedureSection />
       <FemtoLasikEligibilitySection />
-      <Footer />
+      <div className="-mt-12">
+        <Footer />
+      </div>
     </>
   );
 };

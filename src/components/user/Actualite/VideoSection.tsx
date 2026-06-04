@@ -46,7 +46,7 @@ const VideoSection: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="section">
+      <div className="py-8">
         <div className="container-page">
           <div className="flex justify-center items-center py-20">
             <Loader2 className="h-8 w-8 animate-spin text-gold" />
@@ -75,7 +75,7 @@ const VideoSection: React.FC = () => {
   }
 
   return (
-    <section className="section">
+    <section className="py-8">
       <div className="container-page">
         <Reveal>
           <ActualiteFilter active={filter} onChange={setFilter} />

@@ -477,7 +477,8 @@ const TestimonialsSection: React.FC = () => {
   };
 
   return (
-    <section id="temoignages" className="section overflow-hidden">
+    //reduire l'espace
+    <section id="temoignages" className="py-8 overflow-hidden">
       <div className="container-page">
         <Reveal>
           <div className="max-w-2xl">
@@ -537,7 +538,7 @@ const TestimonialsSection: React.FC = () => {
 
         {/* Avis écrits */}
         <Reveal delay={240}>
-          <div className="mt-20 pt-8 border-t border-border">
+          <div className="mt-8 pt-8 border-t border-border">
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/10">
                 <MessageSquare className="h-3.5 w-3.5 text-gold" />
@@ -603,7 +604,7 @@ const TestimonialsSection: React.FC = () => {
       <Reveal delay={200}>
         <div className="mt-8 flex justify-center">
           <a
-            href="https://www.youtube.com/channel/UC66A8rWMqg6S54Q0FMgg81Q"
+            href="https://www.youtube.com/@Centrevisionlaser"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105"

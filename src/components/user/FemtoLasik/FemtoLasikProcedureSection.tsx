@@ -6,7 +6,7 @@ import { FEMTO_BENEFITS } from "../../../data/data";
 
 const FemtoLasikProcedureSection: React.FC = () => {
   return (
-    <section className="section">
+    <section className="py-8">
       <div className="container-page grid gap-12 md:grid-cols-12">
         {/* Copy */}
         <div className="md:col-span-7">

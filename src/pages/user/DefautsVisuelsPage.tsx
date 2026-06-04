@@ -22,7 +22,9 @@ const DefautsVisuelsPage: React.FC = () => (
 
     <DefautsVisuelsGridSection />
 
-    <Footer />
+    <div className="-mt-18">
+      <Footer />
+    </div>
   </>
 );
 

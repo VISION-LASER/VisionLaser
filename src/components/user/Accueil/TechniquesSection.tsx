@@ -218,7 +218,8 @@ const TechCard: React.FC<{ tech: TechContent }> = ({ tech }) => {
 // ---------------------------------------------------------------------------
 const TechniquesSection: React.FC = () => {
   return (
-    <section className="m-5 p-5">
+    // Après - réduire ou supprimer le margin-top
+    <section className="m-5 p-5 -mt-8">
       <div className="container-page">
         <div className="grid gap-12 md:grid-cols-12 md:items-start">
           {/* Left – intro copy */}

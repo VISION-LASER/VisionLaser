@@ -37,7 +37,7 @@ const EquipementsTabsSection: React.FC = () => {
   }, [activeTab]);
 
   return (
-    <section className="section">
+    <section className="py-8">
       <div className="container-page">
 
         {/* Filters */}
