@@ -1,10 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import logo from "../../assets/vision-laser-logo.jpg";
+import { useState, useEffect } from "react";
 
 import {
   Eye, LayoutDashboard, Inbox, DollarSign,
-  Camera, Newspaper, Clock, HelpCircle, Info, LogOut,Calendar
+  Camera, Newspaper, Clock, HelpCircle, Info, LogOut, Calendar, Bell
 } from "lucide-react";
 
 const NAVY = "#0C2340";
@@ -28,7 +29,7 @@ const navGroups: NavGroup[] = [
     label: "Principal",
     items: [
       { to: "/admin/dashboard", label: "Tableau de bord", icon: LayoutDashboard, end: true },
-      // { to: "/admin/demandes", label: "Demandes de bilan", icon: Inbox, badge: 3 },
+      { to: "/admin/demandes", label: "Contact", icon: Inbox, badge: 0 },
       { to: "/admin/rendez-vous", label: "Rendez-vous", icon: Calendar },
     ],
   },
@@ -48,6 +49,12 @@ const navGroups: NavGroup[] = [
       //{ to: "/admin/apropos", label: "À propos", icon: Info },
     ],
   },
+  {
+    label: "Notifications",
+    items: [
+      { to: "/admin/notifications", label: "Notifications", icon: Bell, badge: 0 },
+    ],
+  },
 ];
 
 interface Props { isOpen: boolean; onClose: () => void; }
@@ -55,6 +62,52 @@ interface Props { isOpen: boolean; onClose: () => void; }
 const AdminSidebar = ({ isOpen, onClose }: Props) => {
   const navigate = useNavigate();
   const { logout, user } = useAuth();
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  const getToken = () => localStorage.getItem('accessToken');
+
+  // Récupérer le nombre de demandes non lues depuis l'API
+  const fetchUnreadCount = async () => {
+    try {
+      const token = getToken();
+      if (!token) return;
+      
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/contact-patient/unread/count`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setNotificationCount(data.count);
+      }
+    } catch (error) {
+      console.error('Erreur chargement compteur:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUnreadCount();
+    
+    // Rafraîchir toutes les 30 secondes
+    const interval = setInterval(fetchUnreadCount, 30000);
+    
+    // Écouter les événements de mise à jour
+    const handleUpdate = () => {
+      fetchUnreadCount();
+    };
+    
+    window.addEventListener('notifications-updated', handleUpdate);
+    window.addEventListener('contact-updated', handleUpdate);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('notifications-updated', handleUpdate);
+      window.removeEventListener('contact-updated', handleUpdate);
+    };
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -113,12 +166,29 @@ const AdminSidebar = ({ isOpen, onClose }: Props) => {
             </p>
             {group.items.map((item) => {
               const Icon = item.icon;
+              let badgeValue = item.badge;
+              
+              // Pour les notifications, utiliser le compteur dynamique
+              if (item.label === "Notifications") {
+                badgeValue = notificationCount > 0 ? notificationCount : undefined;
+              }
+              // Pour le contact aussi si vous voulez
+              if (item.label === "Contact") {
+                badgeValue = notificationCount > 0 ? notificationCount : undefined;
+              }
+              
               return (
                 <NavLink
                   key={item.to}
                   to={item.to}
                   end={item.end}
-                  onClick={onClose}
+                  onClick={() => {
+                    onClose();
+                    // Rafraîchir le compteur quand on clique
+                    if (item.label === "Notifications" || item.label === "Contact") {
+                      setTimeout(fetchUnreadCount, 100);
+                    }
+                  }}
                   className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all mb-0.5 w-full"
                   style={({ isActive }) => ({
                     color: isActive ? GOLD : "rgba(255,255,255,.55)",
@@ -127,10 +197,10 @@ const AdminSidebar = ({ isOpen, onClose }: Props) => {
                 >
                   <Icon size={17} />
                   <span className="flex-1">{item.label}</span>
-                  {item.badge && (
+                  {badgeValue !== undefined && badgeValue > 0 && (
                     <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full"
                       style={{ background: "rgba(201,168,76,.2)", color: GOLD }}>
-                      {item.badge}
+                      {badgeValue}
                     </span>
                   )}
                 </NavLink>

@@ -230,7 +230,7 @@ const AdminHeader = ({ onMenuClick }: Props) => {
 
           {/* Cloche */}
           <div className="relative" ref={dropdownRef}>
-            <button
+            {/* <button
               onClick={() => setOpen((v) => !v)}
               className="relative w-8 h-8 rounded-lg flex items-center justify-center border transition-colors hover:bg-black/5"
               style={{ border: "1px solid rgba(12,35,64,.1)", background: "white" }}
@@ -244,7 +244,7 @@ const AdminHeader = ({ onMenuClick }: Props) => {
                   {unreadCount}
                 </span>
               )}
-            </button>
+            </button> */}
 
             {/* Dropdown desktop md+ — ancré à droite, ne déborde pas */}
             {open && (

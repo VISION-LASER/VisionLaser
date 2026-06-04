@@ -38,7 +38,9 @@ import HorairesSection from "./components/admin/Horaires/HorairesSection";
 import FAQSection from "./components/admin/FAQ/FAQSection";
 import AproposSection from "./components/admin/Apropos/AproposSection";
 import RendezvousSection from "./components/admin/Rendez-vous/RendezvousSection";
+import NotificationSection from "./components/admin/Notification/NotificationSection";
 import BlogPage from "./pages/user/BlogPage";
+
 
 const queryClient = new QueryClient();
 
@@ -88,6 +90,7 @@ function AppContent() {
                   <Route path="horaires" element={<HorairesSection />} />
                   <Route path="faq" element={<FAQSection />} />
                   <Route path="apropos" element={<AproposSection />} />
+                  <Route path="notifications" element={<NotificationSection />} />
                 </Route>
               </Route>
 
