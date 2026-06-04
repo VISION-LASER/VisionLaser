@@ -12,9 +12,8 @@ const ExitIntentPopup: React.FC<Props> = ({ onOpenBooking }) => {
     if (sessionStorage.getItem("exit_popup_closed")) return;
 
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 5 && !fired.current) {
+      if (e.clientY <= 5 && !fired.current) { 
         fired.current = true;
-        // Délai pour éviter les faux positifs
         setTimeout(() => setShow(true), 200);
       }
     };
@@ -62,8 +61,8 @@ const ExitIntentPopup: React.FC<Props> = ({ onOpenBooking }) => {
         >
           <div className="flex items-center gap-2">
             <Gift size={16} style={{ color: "#C9A84C" }} />
-            <span className="text-[12px] font-semibold" style={{ color: "#C9A84C" }}>
-              Bilan visuel 
+            <span className="text-xs font-semibold" style={{ color: "#C9A84C" }}>
+              Bilan visuel
             </span>
           </div>
           <button
@@ -74,27 +73,27 @@ const ExitIntentPopup: React.FC<Props> = ({ onOpenBooking }) => {
           </button>
         </div>
 
-        {/* Contenu */}
+        {/* Contenu - UNIQUEMENT 2 TAILLES : text-base (16px) et text-xs (12px) */}
         <div className="px-6 py-7 text-center">
-          <h2 className="text-[22px] font-bold leading-snug" style={{ color: "#0C2340" }}>
-            Avant de partir —<br />
-            <span style={{ color: "#C9A84C" }}>évaluez votre éligibilité</span>
+          <h2 className="text-base font-bold leading-snug" style={{ color: "#0C2340" }}>
+            Avant de partir —{" "}
+            <span style={{ color: "#C9A84C" }}>Évaluez votre éligibilité</span>
           </h2>
-          <p className="mt-3 text-[13px] leading-relaxed" style={{ color: "rgba(12,35,64,.6)" }}>
-            Un bilan personnalisé vous dira en 48h si la chirurgie laser est
-            adaptée à votre vue. Sans engagement.
+          
+          <p className="mt-3 text-xs leading-relaxed" style={{ color: "rgba(12,35,64,.6)" }}>
+            Recevez sous 48h votre bilan personnalisé et découvrez si la chirurgie laser est adaptée à votre vue.
           </p>
 
           {/* Preuves sociales mini */}
           <div className="mt-5 flex justify-center gap-6">
             {[
-              { val: "+10k",   label: "patients" },
-              { val: "4.9/5",  label: "satisfaction" },
-              { val: "48h",    label: "réponse" },
+              { val: "+10k", label: "patients" },
+              { val: "4.9/5", label: "satisfaction" },
+              { val: "48h", label: "réponse" },
             ].map((s) => (
               <div key={s.val} className="text-center">
-                <p className="text-[18px] font-bold" style={{ color: "#0C2340" }}>{s.val}</p>
-                <p className="text-[10px]" style={{ color: "rgba(12,35,64,.45)" }}>{s.label}</p>
+                <p className="text-base font-bold" style={{ color: "#0C2340" }}>{s.val}</p>
+                <p className="text-xs" style={{ color: "rgba(12,35,64,.45)" }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -102,16 +101,16 @@ const ExitIntentPopup: React.FC<Props> = ({ onOpenBooking }) => {
           {/* CTA */}
           <button
             onClick={() => { close(); onOpenBooking?.(); }}
-            className="mt-6 w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-[14px] font-semibold transition-all hover:scale-[1.02]"
+            className="mt-6 w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-xs font-semibold transition-all hover:scale-[1.02]"
             style={{ background: "#C9A84C", color: "#0C2340" }}
           >
             Demander mon bilan
-            <ArrowRight size={16} />
+            <ArrowRight size={14} />
           </button>
 
           <button
             onClick={close}
-            className="mt-3 text-[12px] hover:underline"
+            className="mt-3 text-xs hover:underline"
             style={{ color: "rgba(12,35,64,.35)" }}
           >
             Non merci, je pars sans bilan
