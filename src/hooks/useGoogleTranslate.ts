@@ -1,14 +1,21 @@
 import { useEffect } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
+function clearGoogTransCookie() {
+  document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}`;
+  document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname}`;
+}
+
 export function useGoogleTranslate() {
   const { lang } = useLanguage();
 
-  // ── 1. Injecte le widget Google Translate une seule fois au montage ──
+  // ── 1. Injecte le widget + nettoie le cookie au montage ──
   useEffect(() => {
+    clearGoogTransCookie();
+
     if (document.getElementById("google-translate-script")) return;
 
-    // Callback appelé par Google quand le script est prêt
     (window as any).googleTranslateInit = () => {
       new (window as any).google.translate.TranslateElement(
         {
@@ -26,32 +33,23 @@ export function useGoogleTranslate() {
       "//translate.google.com/translate_a/element.js?cb=googleTranslateInit";
     script.async = true;
     document.body.appendChild(script);
-  }, []); // ← une seule fois
+  }, []);
 
-  // ── 2. Change la langue via le select caché de Google Translate ──
+  // ── 2. Uniquement EN et ES → Google Translate ──
+  // 🇫🇷 FR est géré directement dans le Header (reload)
   useEffect(() => {
-    // Attend que le widget soit prêt (il injecte un <select> dans le DOM)
-    const applyLanguage = () => {
-      const select = document.querySelector<HTMLSelectElement>(
-        ".goog-te-combo"
-      );
+    if (lang === "fr") return; // ← ne rien faire du tout
 
+    const applyViaSelect = () => {
+      const select = document.querySelector<HTMLSelectElement>(".goog-te-combo");
       if (!select) {
-        // Widget pas encore prêt → réessaie dans 300ms
-        setTimeout(applyLanguage, 300);
+        setTimeout(applyViaSelect, 300);
         return;
       }
-
-      if (lang === "fr") {
-        // Remet en français en sélectionnant la valeur vide
-        select.value = "";
-        select.dispatchEvent(new Event("change"));
-      } else {
-        select.value = lang; // "en" ou "es"
-        select.dispatchEvent(new Event("change"));
-      }
+      select.value = lang;
+      select.dispatchEvent(new Event("change"));
     };
 
-    applyLanguage();
-  }, [lang]); // ← se redéclenche à chaque changement de langue
+    applyViaSelect();
+  }, [lang]);
 }

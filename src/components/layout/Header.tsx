@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import logo from "../../assets/vision-laser-logo.jpg";
 import BookingModal from "../user/Booking/BookingModal";
 
 import spanishFlag from "../../assets/es.png";
 import englishFlag from "../../assets/gb.png";
+import frenchFlag  from "../../assets/fr.jpg";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 const NAV = [
@@ -18,17 +19,20 @@ const NAV = [
 ] as const;
 
 const LANGUAGES = [
-  { code: "es" as const, label: "ES", flag: spanishFlag },
+  { code: "fr" as const, label: "FR", flag: frenchFlag  },
   { code: "en" as const, label: "EN", flag: englishFlag },
+  { code: "es" as const, label: "ES", flag: spanishFlag },
 ];
 
 export function Header() {
   const [open, setOpen]               = useState(false);
   const [scrolled, setScrolled]       = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [langDropOpen, setLangDropOpen] = useState(false); // ← dropdown state
+  const dropdownRef = useRef<HTMLDivElement>(null);         // ← ref pour fermer au clic dehors
 
-  // ✅ REMPLACE useState("fr") — connecté au contexte global
   const { lang: currentLang, setLang } = useLanguage();
+  const activeLang = LANGUAGES.find((l) => l.code === currentLang) ?? LANGUAGES[0];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -37,9 +41,26 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Ferme le dropdown si clic en dehors
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setLangDropOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleLanguageChange = (langCode: "fr" | "en" | "es") => {
-    setLang(langCode); // ✅ déclenche useGoogleTranslate → cookie → reload
-  };
+  if (langCode === "fr") {
+    // 🇫🇷 Rafraîchit la page → revient à l'original français
+    window.location.reload();
+    return;
+  }
+  setLang(langCode); // 🇬🇧 🇪🇸 → déclenche Google Translate
+  setLangDropOpen(false);
+};
 
   return (
     <>
@@ -83,25 +104,58 @@ export function Header() {
                 </NavLink>
               ))}
 
-              {/* Sélecteur de langue */}
-              <div className="flex items-center gap-3 ml-2 border-l border-border/50 pl-4">
-                {LANGUAGES.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => handleLanguageChange(lang.code)} // ✅
-                    className={`flex items-center gap-1.5 rounded-md px-1.5 py-1 transition-all duration-200 ${
-                      currentLang === lang.code
-                        ? "bg-gold/10 ring-1 ring-gold/30"
-                        : "hover:bg-navy/5"
+              {/* ── Dropdown langue ── */}
+              <div
+                ref={dropdownRef}
+                className="relative ml-2 border-l border-border/50 pl-4"
+              >
+                {/* Bouton déclencheur */}
+                <button
+                  onClick={() => setLangDropOpen((o) => !o)}
+                  className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 transition-all duration-200 ${
+                    langDropOpen ? "bg-gold/10 ring-1 ring-gold/30" : "hover:bg-navy/5"
+                  }`}
+                  aria-label="Changer la langue"
+                  aria-expanded={langDropOpen}
+                >
+                  <img
+                    src={activeLang.flag}
+                    alt={`Drapeau ${activeLang.label}`}
+                    className="h-5 w-6 rounded-sm object-cover shadow-sm"
+                  />
+                  <span className="text-xs font-medium text-gold">{activeLang.label}</span>
+                  <ChevronDown
+                    className={`h-3.5 w-3.5 text-navy/50 transition-transform duration-200 ${
+                      langDropOpen ? "rotate-180" : ""
                     }`}
-                    aria-label={`Changer la langue en ${lang.label}`}
-                  >
-                    <img src={lang.flag} alt={`Drapeau ${lang.label}`} className="h-5 w-6 object-cover rounded-sm shadow-sm" />
-                    <span className={`text-xs font-medium ${currentLang === lang.code ? "text-gold" : "text-navy/70"}`}>
-                      {lang.label}
-                    </span>
-                  </button>
-                ))}
+                  />
+                </button>
+
+                {/* Menu déroulant */}
+                {langDropOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-32 origin-top-right rounded-xl border border-border bg-white shadow-lg ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-150">
+                    {LANGUAGES.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => handleLanguageChange(lang.code)}
+                        className={`flex w-full items-center gap-2.5 px-3 py-2.5 text-xs font-medium transition-colors first:rounded-t-xl last:rounded-b-xl ${
+                          currentLang === lang.code
+                            ? "bg-gold/10 text-gold"
+                            : "text-navy/70 hover:bg-navy/5 hover:text-navy"
+                        }`}
+                      >
+                        <img
+                          src={lang.flag}
+                          alt={`Drapeau ${lang.label}`}
+                          className="h-4 w-5 rounded-sm object-cover shadow-sm"
+                        />
+                        {lang.code === "fr" ? "Français"  :
+                         lang.code === "en" ? "English"   :
+                                              "Español"}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </nav>
 
@@ -141,20 +195,20 @@ export function Header() {
                 ))}
 
                 {/* Sélecteur de langue mobile */}
-                <div className="mt-4 flex items-center justify-start gap-3 border-t border-border/50 pt-4">
-                  <span className="text-xs font-medium text-navy/60">Langue :</span>
+                <div className="mt-4 flex items-center justify-start gap-2 border-t border-border/50 pt-4">
+                  <span className="text-xs font-medium text-navy/60 mr-1">Langue :</span>
                   {LANGUAGES.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => { handleLanguageChange(lang.code); setOpen(false); }} // ✅
-                      className={`flex items-center gap-2 rounded-md px-3 py-2 transition-all ${
+                      onClick={() => { handleLanguageChange(lang.code); setOpen(false); }}
+                      className={`flex items-center gap-2 rounded-md px-2.5 py-2 transition-all ${
                         currentLang === lang.code
                           ? "bg-gold text-white"
                           : "bg-navy/5 text-navy hover:bg-navy/10"
                       }`}
                     >
-                      <img src={lang.flag} alt={`Drapeau ${lang.label}`} className="h-5 w-6 object-cover rounded-sm" />
-                      <span className="text-sm font-medium">{lang.label}</span>
+                      <img src={lang.flag} alt={`Drapeau ${lang.label}`} className="h-4 w-5 rounded-sm object-cover" />
+                      <span className="text-xs font-medium">{lang.label}</span>
                     </button>
                   ))}
                 </div>
