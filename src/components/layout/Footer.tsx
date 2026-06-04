@@ -17,7 +17,7 @@ function Footer() {
 
   const contactInfo = {
     address: "Polyclinique du Val de Sambre, Rte de Mons 162, 59600 Maubeuge",
-    phone: "+33 3 27 62 12 34",
+    phone: "+33 7 59 59 63 69",
     email: "contact@vision-laser.fr",
     hours: "Lun – Ven · 9h – 18h",
   };
