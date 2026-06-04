@@ -232,7 +232,7 @@ function InfoRow({
   ) : (
     <div style={style}>
       {icon}
-      <span>{children}</span>
+      <span>{children}</span> 
     </div>
   );
 }
