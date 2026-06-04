@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock, ArrowRight, Calendar } from "lucide-react";
+import { FaYoutube, FaInstagram, FaTiktok, FaFacebook, FaLinkedin } from "react-icons/fa";
 import logo from "../../assets/vision-laser-logo.jpg";
 
 function Footer() {
@@ -20,6 +21,44 @@ function Footer() {
     email: "contact@vision-laser.fr",
     hours: "Lun – Ven · 9h – 18h",
   };
+
+  const socialLinks = [
+    { 
+      name: "Facebook", 
+      icon: FaFacebook, 
+      url: "https://www.facebook.com/profile.php?id=100057042439718",
+      username: "centre vision laser",
+      color: "#1877F2" 
+    },
+    { 
+      name: "Instagram", 
+      icon: FaInstagram, 
+      url: "https://instagram.com/centre_vision_laser",
+      username: "centre_vision_laser",
+      color: "#E4405F" 
+    },
+    { 
+      name: "TikTok", 
+      icon: FaTiktok, 
+      url: "https://tiktok.com/@CentreVisionLaser",
+      username: "@CentreVisionLaser",
+      color: "#000000" 
+    },
+    { 
+      name: "YouTube", 
+      icon: FaYoutube, 
+      url: "https://youtube.com/@visionlaser",
+      username: "Vision Laser",
+      color: "#FF0000" 
+    },
+    { 
+      name: "LinkedIn", 
+      icon: FaLinkedin, 
+      url: "https://linkedin.com/company/vision-laser-hauts-de-france",
+      username: "Vision Laser",
+      color: "#0A66C2" 
+    },
+  ];
 
   return (
     <footer className="relative mt-24 bg-gradient-to-b from-white to-gray-50 border-t border-gray-100">
@@ -128,6 +167,43 @@ function Footer() {
                 <p className="text-sm" style={{ color: "#0C2340", opacity: 0.7 }}>
                   {contactInfo.hours}
                 </p>
+              </div>
+            </div>
+
+            {/* Réseaux sociaux - Placés juste après les horaires */}
+            <div className="mt-6 pt-4 border-t border-gray-100">
+              <h4 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#0C2340", opacity: 0.6 }}>
+                Suivez-nous
+              </h4>
+              <div className="flex flex-wrap gap-3">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative transition-all duration-300 hover:scale-110"
+                    aria-label={`Suivez-nous sur ${social.name}`}
+                  >
+                    <div 
+                      className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 group-hover:shadow-md"
+                      style={{ 
+                        backgroundColor: `${social.color}15`,
+                        border: `1px solid ${social.color}30`
+                      }}
+                    >
+                      <social.icon 
+                        size={18} 
+                        className="transition-all duration-300"
+                        style={{ color: social.color }}
+                      />
+                    </div>
+                    {/* Tooltip avec le nom d'utilisateur */}
+                    <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                      {social.username}
+                    </span>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
