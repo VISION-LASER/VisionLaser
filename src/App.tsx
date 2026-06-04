@@ -52,6 +52,7 @@ function AnalyticsTracker() {
 }
 
 function AppContent() {
+  useGoogleTranslate();
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
@@ -60,6 +61,8 @@ function AppContent() {
           <Sonner />
           <HotToaster position="bottom-right" />
 
+          {/* Conteneur caché requis par Google Translate */}
+          <div id="google-translate-container" style={{ display: "none" }} />
 
           <BrowserRouter>
             <ScrollToTop />   
