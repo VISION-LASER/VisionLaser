@@ -1,5 +1,4 @@
-import { createContext, useContext, useState, useCallback } from "react";
-import type { ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 
 export type Lang = "fr" | "en" | "es";
 
@@ -11,6 +10,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
+  // ✅ Toujours "fr" au montage — le drapeau FR s'affiche après reload
   const [lang, setLangState] = useState<Lang>("fr");
 
   const setLang = useCallback((l: Lang) => {
