@@ -1,86 +1,18 @@
-// import React, { useState } from "react";
-// import { Plus, Trash2, Edit2, ChevronDown, ChevronUp } from "lucide-react";
-
-// const FAQSection: React.FC = () => {
-//   const [faqs, setFaqs] = useState([
-//     { question: "L'opération est-elle douloureuse ?", reponse: "Non, l'opération est totalement indolore grâce à des collyres anesthésiants." },
-//     { question: "Quelle est la durée de l'opération ?", reponse: "L'opération dure environ 5 minutes pour les deux yeux." },
-//     { question: "Quand puis-je reprendre le travail ?", reponse: "La plupart des patients reprennent le travail dès le lendemain." },
-//   ]);
-//   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-//   return (
-//     <div className="space-y-6">
-//       <div className="mb-6">
-//         <h2 className="text-2xl md:text-3xl font-bold" style={{ color: "#0C2340" }}>
-//           Gestion de la FAQ
-//         </h2>
-//         <div className="w-12 h-0.5 mt-2 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
-//         <p className="text-gray-500 mt-2">Ajoutez, modifiez ou supprimez les questions fréquentes</p>
-//       </div>
-
-//       <div className="space-y-4">
-//         {faqs.map((faq, index) => (
-//           <div key={index} className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
-//             <div 
-//               className="flex justify-between items-center p-5 cursor-pointer hover:bg-gray-50"
-//               onClick={() => setOpenIndex(openIndex === index ? null : index)}
-//             >
-//               <h3 className="font-semibold" style={{ color: "#0C2340" }}>{faq.question}</h3>
-//               <div className="flex items-center gap-3">
-//                 <button 
-//                   className="p-1 rounded hover:bg-gray-100"
-//                   onClick={(e) => e.stopPropagation()}
-//                 >
-//                   <Edit2 size={16} style={{ color: "#C9A84C" }} />
-//                 </button>
-//                 <button 
-//                   className="p-1 rounded hover:bg-gray-100"
-//                   onClick={(e) => e.stopPropagation()}
-//                 >
-//                   <Trash2 size={16} className="text-red-500" />
-//                 </button>
-//                 {openIndex === index ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-//               </div>
-//             </div>
-//             {openIndex === index && (
-//               <div className="p-5 pt-0 border-t border-gray-100">
-//                 <p className="text-gray-600">{faq.reponse}</p>
-//               </div>
-//             )}
-//           </div>
-//         ))}
-//       </div>
-
-//       <button 
-//         className="w-full py-4 rounded-xl border-2 border-dashed transition-all hover:scale-[1.01] flex items-center justify-center gap-2"
-//         style={{ borderColor: "#C9A84C", color: "#C9A84C" }}
-//       >
-//         <Plus size={20} />
-//         Ajouter une question
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default FAQSection;
-
 import React, { useState, useEffect } from "react";
 import { Plus, Trash2, Edit2, ChevronDown, ChevronUp, RefreshCw, X } from "lucide-react";
 import { faqService } from "../../../services/faqService";
 import type { FAQ, FAQFormData } from "../../../services/faqService";
-import type { FAQ as FAQType } from "../../../services/faqService";
 
 const FAQSection: React.FC = () => {
-  const [faqs, setFaqs] = useState<FAQType[]>([]);
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingFaq, setEditingFaq] = useState<FAQType | null>(null);
+  const [editingFaq, setEditingFaq] = useState<FAQ | null>(null);
   const [formData, setFormData] = useState<FAQFormData>({
     question: "",
-    reponse_faq: ""
+    reponse_faq: [""]  // ← Tableau de strings
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -106,18 +38,46 @@ const FAQSection: React.FC = () => {
   // Ouvrir le modal d'ajout
   const handleAdd = () => {
     setEditingFaq(null);
-    setFormData({ question: "", reponse_faq: "" });
+    setFormData({ question: "", reponse_faq: [""] });  // ← Tableau avec une string vide
     setIsModalOpen(true);
   };
 
   // Ouvrir le modal de modification
-  const handleEdit = (faq: FAQType) => {
+  const handleEdit = (faq: FAQ) => {
     setEditingFaq(faq);
     setFormData({
       question: faq.question,
-      reponse_faq: faq.reponse_faq
+      reponse_faq: faq.reponse_faq.length > 0 ? [...faq.reponse_faq] : [""]  // ← Tableau
     });
     setIsModalOpen(true);
+  };
+
+  // Ajouter une option de réponse
+  const addAnswerOption = () => {
+    setFormData(prev => ({
+      ...prev,
+      reponse_faq: [...prev.reponse_faq, ""]
+    }));
+  };
+
+  // Supprimer une option de réponse
+  const removeAnswerOption = (index: number) => {
+    if (formData.reponse_faq.length <= 1) {
+      setError("Il faut au moins une réponse");
+      return;
+    }
+    setFormData(prev => ({
+      ...prev,
+      reponse_faq: prev.reponse_faq.filter((_, i) => i !== index)
+    }));
+  };
+
+  // Mettre à jour une option de réponse
+  const updateAnswerOption = (index: number, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      reponse_faq: prev.reponse_faq.map((item, i) => i === index ? value : item)
+    }));
   };
 
   // Supprimer une FAQ
@@ -146,8 +106,10 @@ const FAQSection: React.FC = () => {
       setError("La question est requise");
       return;
     }
-    if (!formData.reponse_faq.trim()) {
-      setError("La réponse est requise");
+    
+    const validAnswers = formData.reponse_faq.filter(a => a && a.trim() !== "");
+    if (validAnswers.length === 0) {
+      setError("Au moins une réponse est requise");
       return;
     }
 
@@ -155,19 +117,45 @@ const FAQSection: React.FC = () => {
     setError(null);
 
     try {
+      const dataToSend = {
+        question: formData.question,
+        reponse_faq: validAnswers  // ← Envoyer le tableau de strings
+      };
+      
       if (editingFaq) {
-        await faqService.update(editingFaq.id, formData);
+        await faqService.update(editingFaq.id, dataToSend);
       } else {
-        await faqService.create(formData);
+        await faqService.create(dataToSend);
       }
       setIsModalOpen(false);
       await loadFaqs();
-    } catch (err) {
+    } catch (err: any) {
       console.error("Erreur:", err);
-      setError("Erreur lors de l'enregistrement");
+      setError(err.message || "Erreur lors de l'enregistrement");
     } finally {
       setSubmitting(false);
     }
+  };
+
+  // Afficher les réponses dans l'accordéon
+  const renderAnswers = (reponses: string[]) => {
+    if (!reponses || reponses.length === 0) {
+      return <p className="text-sm text-gray-500 italic">Aucune réponse</p>;
+    }
+    
+    return (
+      <div className="space-y-2">
+        <p className="text-sm font-medium text-gray-500">Réponses possibles :</p>
+        <ul className="space-y-1">
+          {reponses.map((reponse, idx) => (
+            <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+              <span className="text-[#C9A84C] mt-0.5">•</span>
+              <span>{reponse}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   };
 
   return (
@@ -288,9 +276,7 @@ const FAQSection: React.FC = () => {
               </div>
               {openIndex === index && (
                 <div className="p-4 sm:p-5 pt-0 border-t border-gray-100">
-                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                    {faq.reponse_faq}
-                  </p>
+                  {renderAnswers(faq.reponse_faq)}
                   <p className="text-xs text-gray-400 mt-3">
                     Dernière modification : {new Date(faq.updated_at).toLocaleDateString('fr-FR')}
                   </p>
@@ -318,6 +304,7 @@ const FAQSection: React.FC = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-5">
+              {/* Question */}
               <div>
                 <label className="block text-sm font-medium mb-2" style={{ color: "#0C2340" }}>
                   Question *
@@ -327,23 +314,57 @@ const FAQSection: React.FC = () => {
                   value={formData.question}
                   onChange={(e) => setFormData({ ...formData, question: e.target.value })}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-transparent"
-                  placeholder="Ex: L'opération est-elle douloureuse ?"
+                  placeholder="Ex: Quels sont les défauts visuels que vous traitez ?"
                   required
                 />
               </div>
 
+              {/* Réponses multiples */}
               <div>
                 <label className="block text-sm font-medium mb-2" style={{ color: "#0C2340" }}>
-                  Réponse *
+                  Réponses possibles *
                 </label>
-                <textarea
-                  value={formData.reponse_faq}
-                  onChange={(e) => setFormData({ ...formData, reponse_faq: e.target.value })}
-                  rows={5}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-transparent resize-none"
-                  placeholder="Réponse détaillée à la question..."
-                  required
-                />
+                <p className="text-xs text-gray-500 mb-3">
+                  Ajoutez plusieurs options que les patients pourront choisir
+                </p>
+                
+                <div className="space-y-3">
+                  {formData.reponse_faq.map((reponse, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          value={reponse}
+                          onChange={(e) => updateAnswerOption(idx, e.target.value)}
+                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-transparent"
+                          placeholder={`Option ${idx + 1}`}
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeAnswerOption(idx)}
+                        className="p-2 rounded-lg hover:bg-red-50 transition-colors"
+                        title="Supprimer cette option"
+                      >
+                        <Trash2 size={16} className="text-red-500" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                
+                <button
+                  type="button"
+                  onClick={addAnswerOption}
+                  className="mt-3 flex items-center gap-2 text-sm transition-colors hover:opacity-80"
+                  style={{ color: "#C9A84C" }}
+                >
+                  <Plus size={14} />
+                  Ajouter une option
+                </button>
+                
+                <p className="text-xs text-gray-400 mt-2">
+                  {formData.reponse_faq.filter(a => a && a.trim() !== "").length} option(s) valide(s)
+                </p>
               </div>
 
               <div className="flex gap-3 pt-4">
