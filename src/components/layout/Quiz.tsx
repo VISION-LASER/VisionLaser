@@ -112,13 +112,13 @@ export function Quiz() {
           >
             Contactez-nous
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={handleWatchAppClick}
             className="btn-watchapp"
           >
             WhatsApp
-          </button>
+          </button> */}
           <button
             type="button"
             className="btn-ghost"
