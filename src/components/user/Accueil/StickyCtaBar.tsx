@@ -42,12 +42,12 @@ const StickyCtaBar: React.FC<Props> = ({ onOpenBooking }) => {
                 {/* Actions */}
                 <div className="flex items-center gap-2 shrink-0">
                     <a
-                        href="tel:0327621234"
+                        href="tel:0759596369"
                         className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-lg text-[12px] font-medium border transition-colors hover:bg-white/10"
                         style={{ borderColor: "rgba(201,168,76,.3)", color: "#C9A84C" }}
                     >
                         <Phone size={13} />
-                        +33 3 27 62 12 34
+                        +33 7 59 59 63 69
                     </a>
                     <button
                         onClick={onOpenBooking}
