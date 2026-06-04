@@ -41,6 +41,7 @@ import RendezvousSection from "./components/admin/Rendez-vous/RendezvousSection"
 import NotificationSection from "./components/admin/Notification/NotificationSection";
 import BlogPage from "./pages/user/BlogPage";
 import { useAnalytics } from "./hooks/useAnalytics";
+import ScrollToTop from "./components/layout/ScrollToTop";
 
 
 const queryClient = new QueryClient();
@@ -64,6 +65,7 @@ function AppContent() {
           <div id="google-translate-container" style={{ display: "none" }} />
 
           <BrowserRouter>
+            <ScrollToTop />   
             <AnalyticsTracker />
             <Routes>
               {/* ── Public ─────────────────────────────── */}

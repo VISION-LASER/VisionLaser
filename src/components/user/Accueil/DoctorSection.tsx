@@ -2,42 +2,37 @@ import React from "react";
 import surgeon from "../../../assets/surgeon.png";
 import { Reveal } from "../../layout/Reveal";
 
-// ---------------------------------------------------------------------------
-// Credential item
-// ---------------------------------------------------------------------------
 interface CredentialProps {
   title: string;
   subtitle: string;
 }
 
 const Credential: React.FC<CredentialProps> = ({ title, subtitle }) => (
-  <div className="border-l-2 border-[color:var(--gold)] pl-4">
-    <p className="font-medium text-navy">{title}</p>
-    <p className="text-muted-foreground">{subtitle}</p>
+  <div className="border-l-2 border-[color:var(--gold)] pl-3">
+    <p className="font-medium text-navy text-xs leading-tight">{title}</p>
+    <p className="text-muted-foreground text-xs leading-tight">{subtitle}</p>
   </div>
 );
 
-// ---------------------------------------------------------------------------
-// DoctorSection
-// ---------------------------------------------------------------------------
 const DoctorSection: React.FC = () => {
   return (
-    <section className="bg-[color:var(--cream)] section">
-      <div className="container-page grid gap-12 md:grid-cols-2 md:items-center">
+    <section className="bg-[color:var(--cream)] py-10 md:py-14">
+      <div className="container-page grid gap-8 md:grid-cols-2 md:items-center">
         {/* Copy */}
         <Reveal>
           <div>
             <p className="eyebrow">L'équipe médicale</p>
-            <h2 className="mt-3">
+            <h2 className="mt-2 text-2xl md:text-3xl leading-snug">
               Une expertise dirigée par le Dr. Anthony Sion et son équipe.
             </h2>
-            <p className="mt-5 text-muted-foreground text-justify">
-              Le centre s’appuie sur une équipe médicale expérimentée et spécialisée en chirurgie réfractive, coordonnée par le Dr. Anthony Sion. Ensemble, ils assurent un accompagnement personnalisé à chaque étape du parcours patient, du bilan préopératoire jusqu’au suivi post-intervention.
-
-              <br />L’ensemble des consultations, examens et interventions est réalisé selon des protocoles rigoureux afin de garantir sécurité, précision et excellence des soins. Tous les contenus médicaux du site sont validés par le Dr. Anthony Sion.
+            <p className="mt-3 text-muted-foreground text-justify text-sm leading-relaxed">
+              Le centre s'appuie sur une équipe médicale expérimentée et
+              spécialisée en chirurgie réfractive, coordonnée par le Dr. Anthony
+              Sion. Ensemble, ils assurent un accompagnement personnalisé à
+              chaque étape du parcours patient.
             </p>
 
-            <div className="mt-8 grid grid-cols-2 gap-4 text-sm">
+            <div className="mt-5 grid grid-cols-2 gap-3 text-xs">
               <Credential
                 title="Diplômé en ophtalmologie"
                 subtitle="Faculté de Médecine"
@@ -47,11 +42,11 @@ const DoctorSection: React.FC = () => {
                 subtitle="Pratique exclusive"
               />
               <Credential
-                title="Expertise en chirurgie réfractive"
+                title="Expertise réfractive"
                 subtitle="Spécialisation et expérience"
               />
               <Credential
-                title="Équipe médicale spécialisée"
+                title="Équipe spécialisée"
                 subtitle="Professionnalisme et compétence"
               />
               <Credential
@@ -61,10 +56,6 @@ const DoctorSection: React.FC = () => {
               <Credential
                 title="Technologie de pointe"
                 subtitle="Innovations médicales"
-              />
-              <Credential
-                title="Pratique dédiée à la correction visuelle"
-                subtitle="Focus sur les résultats optimaux"
               />
             </div>
           </div>
@@ -78,7 +69,7 @@ const DoctorSection: React.FC = () => {
             width={1400}
             height={1000}
             loading="lazy"
-            className="aspect-[4/5] w-full rounded-3xl object-cover"
+            className="aspect-[4/5] w-full max-h-[70vh] rounded-3xl object-cover"
           />
         </Reveal>
       </div>
