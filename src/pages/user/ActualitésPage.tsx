@@ -21,7 +21,9 @@ const ActualitesPage: React.FC = () => (
       intro="Interventions filmées, conseils du Dr. Anthony Sion et témoignages patients sur TikTok, YouTube et Facebook."
     />
     <VideoSection />
-    <Footer />
+    <div className="-mt-15">
+      <Footer />
+    </div>
   </>
 );
 

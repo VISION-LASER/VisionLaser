@@ -22,8 +22,10 @@ const EquipementsPage: React.FC = () => {
         intro="Le centre s'appuie sur des technologies de référence en chirurgie réfractive et un plateau diagnostique complet, renouvelé régulièrement."
       />
 
-      <EquipementsTabsSection /> {/* Changé ici */}
-      <Footer />
+      <EquipementsTabsSection /> 
+      <div className="-mt-12">
+        <Footer />
+      </div>
     </>
   );
 };

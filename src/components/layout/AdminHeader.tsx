@@ -270,7 +270,7 @@ const AdminHeader = ({ onMenuClick }: Props) => {
             style={{ background: NAVY, color: GOLD }}
           >
             <CalendarDays size={14} />
-            {new Date().toLocaleDateString("fr-FR", { month: "short", year: "numeric" })}
+            {new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
           </div>
         </div>
       </header>

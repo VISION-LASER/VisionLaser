@@ -24,7 +24,9 @@ const TprkPage: React.FC = () => {
 
       <TprkProcedureSection />
       <TprkEligibilitySection />
-      <Footer />
+      <div className="-mt-12">
+        <Footer />
+      </div>
     </>
   );
 };

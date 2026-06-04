@@ -22,7 +22,9 @@ const TarifsPage: React.FC = () => {
       />
 
       <TarifsPricingSection />
-      <Footer />
+      <div className="-mt-15">
+        <Footer />
+      </div>
     </>
   );
 };

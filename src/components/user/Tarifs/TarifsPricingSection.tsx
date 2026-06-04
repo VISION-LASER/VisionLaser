@@ -48,7 +48,7 @@ const pricingData = [
 
 const TarifsPricingSection: React.FC = () => {
   return (
-    <section className="section bg-white">
+    <section className="py-8 bg-white">
       <div className="container-page">
 
         {/* Pricing Table */}
