@@ -218,7 +218,7 @@ const TechCard: React.FC<{ tech: TechContent }> = ({ tech }) => {
 // ---------------------------------------------------------------------------
 const TechniquesSection: React.FC = () => {
   return (
-    <section className="section">
+    <section className="m-5 p-5">
       <div className="container-page">
         <div className="grid gap-12 md:grid-cols-12 md:items-start">
           {/* Left – intro copy */}
