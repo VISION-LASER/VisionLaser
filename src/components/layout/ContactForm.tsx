@@ -297,15 +297,15 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       {faqAnswers && faqAnswers.length > 0 && (
         <div className="rounded-lg border border-gold/20 bg-gold/5 p-4">
           <h4 className="mb-2 text-sm font-semibold text-navy uppercase tracking-wide">
-            Vos réponses aux questions
+            Nous sommes là pour vous aider.
           </h4>
           <ul className="space-y-2 text-xs">
             {faqAnswers.map((item: any, idx: number) => (
               <li key={idx} className="border-b border-border/50 pb-2 last:border-0">
                 <span className="block font-medium text-navy">{item.question}</span>
-                <span className="text-muted-foreground">
+                {/* <span className="text-muted-foreground"> // Supprimer la response
                   {item.answer || "❌ Pas de réponse"}
-                </span>
+                </span> */}
               </li>
             ))}
           </ul>
