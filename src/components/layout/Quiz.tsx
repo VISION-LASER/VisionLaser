@@ -69,7 +69,7 @@ export function Quiz() {
     const formattedAnswers = buildFormattedAnswers(answers);
     localStorage.setItem("faq_answers", JSON.stringify(formattedAnswers));
 
-    navigate("/contact#contact-form");
+    navigate("#contact-form");
   };
 
   const handleWatchAppClick = () => {
@@ -162,7 +162,7 @@ export function Quiz() {
         <p className="eyebrow">Suis-je éligible ?</p>
         <h3 className="mt-3">Les questions ne sont pas disponibles.</h3>
         <p className="mt-3 text-sm text-muted-foreground">{error}</p>
-        <button type="button" className="btn-gold mt-5" onClick={loadQuestions}>
+        <button  type="button" className="btn-gold mt-5" onClick={loadQuestions}>
           Réessayer
         </button>
       </div>

@@ -181,6 +181,7 @@
 import { useState, useEffect } from "react";
 import { Check } from "lucide-react";
 import toast from 'react-hot-toast';
+import { useLocation } from "react-router-dom";
 
 export function ContactForm({ compact = false }: { compact?: boolean }) {
   const [sent, setSent] = useState(false);
@@ -209,18 +210,33 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     }
   }, []);
 
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+
+      if (element) {
+        const offset = 92; // pixels au-dessus de l'élément
+        const top = element.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    
+
     // Préparer les données FAQ correctement
     let faqToSend = null;
     if (faqAnswers && Array.isArray(faqAnswers) && faqAnswers.length > 0) {
       faqToSend = faqAnswers;
     }
-    
+
     const data = {
       firstName: formData.get('firstName'),
       lastName: formData.get('lastName'),
