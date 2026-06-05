@@ -12,6 +12,7 @@ export interface FaqItem {
 export interface Testimonial {
   name: string;
   age: string;
+  rating: number;
   text: string;
   videoUrl?: string;
 }
