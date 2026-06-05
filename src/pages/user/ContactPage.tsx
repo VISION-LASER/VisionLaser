@@ -15,10 +15,15 @@ const ContactPage: React.FC = () => (
       />
     </Helmet>
     <Header />
-    {/* Le hero est supprimé — le titre est intégré directement dans ContactFormSection */}
-    <ContactFormSection />
-    <ContactMap />
-    <Footer />
+    <div className="-mt-8">
+      <ContactFormSection />
+    </div>
+    <div className="-mt-8">
+      <ContactMap />
+    </div>
+    <div className="-mt-20">
+      <Footer />
+    </div>
   </>
 );
 
