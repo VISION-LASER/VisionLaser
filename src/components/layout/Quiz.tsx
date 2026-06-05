@@ -66,11 +66,10 @@ export function Quiz() {
   }, [answers, questions, buildFormattedAnswers]);
 
   const handleContactClick = () => {
-    // Sauvegarde finale avant navigation
     const formattedAnswers = buildFormattedAnswers(answers);
-    localStorage.setItem('faq_answers', JSON.stringify(formattedAnswers));
-    navigate("/contact");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    localStorage.setItem("faq_answers", JSON.stringify(formattedAnswers));
+
+    navigate("/contact#contact-form");
   };
 
   const handleWatchAppClick = () => {
@@ -89,9 +88,23 @@ export function Quiz() {
           Sur la base de vos réponses, une consultation de bilan visuel vous permettrait
           d'obtenir une réponse précise de notre équipe. Aucun diagnostic ne peut être posé en ligne.
         </p>
-        
-        {/* Affichage du résumé des réponses */}
+
+        {/* Affichage du résumé des réponses / supprimer les grader question seulments */}
         {answers.length > 0 && (
+          <div className="mt-4 rounded-lg bg-cream p-4">
+            <h4 className="text-sm font-semibold text-navy mb-2"> Nous sommes là pour vous aider.</h4>
+            <ul className="space-y-1 text-xs text-muted-foreground">
+              {questions.map((question, idx) => (
+                <li key={question.id}>
+                  <span className="font-medium">{question.q}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Affichage du résumé des réponses */}
+        {/* {answers.length > 0 && (
           <div className="mt-4 rounded-lg bg-cream p-4">
             <h4 className="text-sm font-semibold text-navy mb-2">Vos réponses :</h4>
             <ul className="space-y-1 text-xs text-muted-foreground">
@@ -102,8 +115,8 @@ export function Quiz() {
               ))}
             </ul>
           </div>
-        )}
-        
+        )} */}
+
         <div className="mt-6 flex flex-wrap gap-3">
           <button
             type="button"
@@ -119,13 +132,13 @@ export function Quiz() {
           >
             WhatsApp
           </button> */}
-          <button
+          {/* <button
             type="button"
             className="btn-ghost"
             onClick={() => { setStep(0); setDone(false); setAnswers([]); localStorage.removeItem('faq_answers'); }}
           >
             Recommencer
-          </button>
+          </button> */}
         </div>
       </div>
     );

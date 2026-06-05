@@ -72,7 +72,7 @@ const LeadCaptureSection: React.FC = () => {
           </Reveal>
 
           {/* Form */}
-          <div className="text-navy">
+          <div id="contact-form" className="text-navy">
             <ContactForm compact />
           </div>
           

@@ -61,9 +61,7 @@ function Footer() {
   ];
 
   return (
-    <footer className="pt-6 relative mt-24 bg-gradient-to-b from-white to-gray-50 border-t border-gray-100">
-      {/* Décorations subtiles */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#C9A84C] via-[#D4B86A] to-[#C9A84C]" />
+    <footer className="relative mt-20 bg-gradient-to-b from-white to-gray-50 border-t border-gray-100">
       
       <div className="container-page mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         {/* Grille principale */}
