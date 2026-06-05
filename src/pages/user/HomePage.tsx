@@ -29,7 +29,9 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Vision Laser Hauts-de-France · Chirurgie réfractive au laser</title>
+        <title>
+          Vision Laser Hauts-de-France · Chirurgie réfractive au laser
+        </title>
         <meta
           name="description"
           content="Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser (FemtoLASIK, TPRK). Bilan visuel dans les Hauts-de-France."
@@ -38,7 +40,6 @@ const HomePage: React.FC = () => {
 
       {/* ── Navigation ──────────────────────────────── */}
       <Header />
-
 
       <HeroSection />
       <SocialProofBar />
@@ -54,8 +55,9 @@ const HomePage: React.FC = () => {
       <LeadCaptureSection />
 
       {/*<CtaSection />*/}
-      <Footer />
-
+      <div className="-mt-20">
+        <Footer />
+      </div>
 
       <StickyWhatsApp />
       <StickyBooking onOpen={() => setBookingOpen(true)} />
