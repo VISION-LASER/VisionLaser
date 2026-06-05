@@ -12,7 +12,6 @@ interface TechContent {
   badge: string;
   title: string;
   subtitle: string;
-  principe: string;
   profil: string[];
   profilColor: "blue" | "teal";
   delai: string;
@@ -32,8 +31,6 @@ const TECHNIQUES: TechContent[] = [
     badge: "FemtoLASIK",
     title: "Deux lasers combinés",
     subtitle: "Volet cornéen + remodelage",
-    principe:
-      "Découpe d'un volet cornéen ultra-fin au laser femtoseconde, puis ablation de tissu au laser excimer pour corriger la vision.",
     profil: ["Cornée standard", "Myopie forte", "Mode de vie actif"],
     profilColor: "blue",
     delai: "24 à 48 heures",
@@ -48,8 +45,6 @@ const TECHNIQUES: TechContent[] = [
     badge: "TPRK",
     title: "Technique de surface",
     subtitle: "Sans découpe cornéenne",
-    principe:
-      "Ablation directe en surface après retrait de l'épithélium par le laser, sans création de volet. Préserve l'intégrité biomécanique.",
     profil: ["Cornée fine", "Contre-indication Femto", "Sports de contact"],
     profilColor: "teal",
     delai: "3 à 7 jours (progressive)",
@@ -94,13 +89,13 @@ const TechCard: React.FC<{ tech: TechContent }> = ({ tech }) => {
 
   return (
     <div
-      className={`flex flex-col gap-4 rounded-2xl bg-white p-6 ${
+      className={`flex h-full flex-col gap-4 rounded-2xl bg-white p-6 ${
         tech.featured
           ? "border-2 border-blue-400"
           : "border border-border"
       }`}
     >
-      {/* Header */}
+      {/* Header - plus de <hr /> en dessous */}
       <div>
         <span
           className={`inline-block rounded-md px-2.5 py-1 text-xs font-medium ${badgeStyle} mb-2`}
@@ -110,25 +105,6 @@ const TechCard: React.FC<{ tech: TechContent }> = ({ tech }) => {
         <h3 className="text-lg font-medium leading-tight">{tech.title}</h3>
         <p className="mt-0.5 text-sm text-muted-foreground">{tech.subtitle}</p>
       </div>
-
-      <hr className="border-border" />
-
-      {/* Principe */}
-      <div>
-        <p className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-          Principe
-        </p>
-        <div className="flex items-start gap-2.5">
-          {tech.featured ? (
-            <Scissors className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
-          ) : (
-            <Waves className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
-          )}
-          <p className="text-sm text-muted-foreground">{tech.principe}</p>
-        </div>
-      </div>
-
-      <hr className="border-border" />
 
       {/* Profil adapté */}
       <div>
@@ -218,43 +194,47 @@ const TechCard: React.FC<{ tech: TechContent }> = ({ tech }) => {
 // ---------------------------------------------------------------------------
 const TechniquesSection: React.FC = () => {
   return (
-    // Après - réduire ou supprimer le margin-top
     <section className="m-5 p-5 -mt-8">
       <div className="container-page">
-        <div className="grid gap-12 md:grid-cols-12 md:items-start">
+        {/* Grille avec items-stretch pour égaliser les hauteurs */}
+        <div className="grid gap-12 md:grid-cols-12 md:items-stretch">
+          
           {/* Left – intro copy */}
-          <Reveal as="div" className="md:col-span-5">
-            <p className="eyebrow">Nos techniques</p>
-            <h2 className="mt-3">
-              FemtoLASIK &amp; TPRK : deux approches, une même exigence.
-            </h2>
-            <p className="mt-5 text-muted-foreground">
-              Le choix de la technique dépend de votre profil oculaire
-              (épaisseur cornéenne, correction, mode de vie). Notre rôle est de
-              vous l'expliquer avec clarté.
-            </p>
+          <Reveal as="div" className="md:col-span-5 h-full">
+            <div className="flex h-full flex-col">
+              <p className="eyebrow">Nos techniques</p>
+              <h2 className="mt-3">
+                FemtoLASIK &amp; TPRK : deux approches, une même exigence.
+              </h2>
+              <p className="mt-5 text-muted-foreground">
+                Le choix de la technique dépend de votre profil oculaire
+                (épaisseur cornéenne, correction, mode de vie). Notre rôle est de
+                vous l'expliquer avec clarté.
+              </p>
 
-            {/* Image */}
-            <div className="relative mt-8">
-              <img
-                src={laser}
-                alt="Équipement laser AMARIS 1050 RS"
-                width={1600}
-                height={1100}
-                loading="lazy"
-                className="aspect-[5/4] w-full rounded-3xl object-cover"
-              />
+              {/* Image */}
+              <div className="relative mt-8">
+                <img
+                  src={laser}
+                  alt="Équipement laser AMARIS 1050 RS"
+                  width={1600}
+                  height={1100}
+                  loading="lazy"
+                  className="aspect-[5/4] w-full rounded-3xl object-cover"
+                />
+              </div>
             </div>
           </Reveal>
 
           {/* Right – comparison cards */}
-          <Reveal as="div" className="md:col-span-7" delay={100}>
-            <div className="grid gap-5 sm:grid-cols-2">
+          <Reveal as="div" className="md:col-span-7 h-full" delay={100}>
+            <div className="grid h-full gap-6 sm:grid-cols-2">
               {TECHNIQUES.map((tech) => (
                 <TechCard key={tech.label} tech={tech} />
               ))}
             </div>
           </Reveal>
+          
         </div>
       </div>
     </section>
