@@ -1,3 +1,6 @@
+/* Fonts — Lato uniquement : 400 (corps) + 700 (titres) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
 @import "tailwindcss" source(none);
 @source "../src";
 
@@ -9,8 +12,7 @@
 @import "swiper/css/scrollbar";
 @import "swiper/css/effect-coverflow";
 
-/* Fonts — Lato uniquement : 400 (corps) + 700 (titres) */
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
 
 @custom-variant dark (&:is(.dark *));
 
