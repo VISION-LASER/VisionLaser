@@ -52,6 +52,17 @@ export function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+    //  AJOUT ICI (OUVERTURE MODAL DEPUIS QUIZ)
+  useEffect(() => {
+    const openModal = () => setBookingOpen(true);
+
+    window.addEventListener("open-booking-modal", openModal);
+
+    return () => {
+      window.removeEventListener("open-booking-modal", openModal);
+    };
+  }, []);
+
   const handleLanguageChange = (langCode: "fr" | "en" | "es") => {
   if (langCode === "fr") {
     // 🇫🇷 Rafraîchit la page → revient à l'original français

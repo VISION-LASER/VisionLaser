@@ -47,6 +47,7 @@ const HomePage: React.FC = () => {
       <TestimonialsSection />
       <TechniquesSection />
       <DoctorSection />
+      <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <TprkEligibilitySection />
       {/* <DifferentesEtapes /> */}
       <FaqSection />
