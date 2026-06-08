@@ -13,7 +13,6 @@ import TechniquesSection from "../../components/user/Accueil/TechniquesSection";
 import DoctorSection from "../../components/user/Accueil/DoctorSection";
 import TestimonialsSection from "../../components/user/Accueil/TestimonialsSection";
 import TprkEligibilitySection from "../../components/user/Tprk/TprkEligibilitySection";
-import DifferentesEtapes from "../../components/user/DifferentesEtapes/DifferentesEtapesSection";
 import FaqSection from "../../components/user/Accueil/FaqSection";
 import LeadCaptureSection from "../../components/user/Accueil/LeadCaptureSection";
 

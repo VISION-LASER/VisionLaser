@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Phone, Send, CheckCircle, AlertCircle, X, ChevronRight, MessageCircle } from "lucide-react";
 
-const WHATSAPP_NUMBER = "33327621234"; // ← adapte
-const WHATSAPP_MSG = encodeURIComponent("Bonjour, je souhaite obtenir des informations sur un bilan visuel gratuit.");
+const WHATSAPP_NUMBER = "33759507184"; // ← adapte
+const WHATSAPP_MSG = encodeURIComponent("Bonjour, je souhaite obtenir des informations sur un bilan visuel.");
 const CALENDLY_URL = "https://calendly.com/votre-lien"; // ← adapte
 
 interface FormData { nomComplet: string; telephone: string; }
@@ -107,7 +107,7 @@ const StickyContactForm: React.FC = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <p className="font-bold text-[15px] leading-tight" style={{ color: "#0C2340" }}>
-                      Bilan visuel gratuit
+                      Bilan visuel
                     </p>
                     <p className="text-[11px] mt-0.5" style={{ color: "rgba(12,35,64,.5)" }}>
                       Rappel sous 24h · Sans engagement
@@ -218,7 +218,7 @@ const StickyContactForm: React.FC = () => {
                 <div className="px-5 pb-8 pt-2">
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <p className="font-bold text-[17px]" style={{ color: "#0C2340" }}>Bilan visuel gratuit</p>
+                      <p className="font-bold text-[17px]" style={{ color: "#0C2340" }}>Bilan visuel</p>
                       <p className="text-[12px] mt-0.5" style={{ color: "rgba(12,35,64,.5)" }}>
                         Rappel sous 24h · Sans engagement
                       </p>

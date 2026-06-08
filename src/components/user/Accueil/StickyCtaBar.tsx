@@ -32,7 +32,7 @@ const StickyCtaBar: React.FC<Props> = ({ onOpenBooking }) => {
                 {/* Texte */}
                 <div className="min-w-0">
                     <p className="text-[13px] font-semibold leading-tight" style={{ color: "white" }}>
-                        Bilan visuel gratuit · Sans engagement
+                        Bilan visuel · Sans engagement
                     </p>
                     <p className="text-[11px] mt-0.5 hidden sm:block" style={{ color: "rgba(255,255,255,.5)" }}>
                         Découvrez si la chirurgie laser est faite pour vous
@@ -42,12 +42,12 @@ const StickyCtaBar: React.FC<Props> = ({ onOpenBooking }) => {
                 {/* Actions */}
                 <div className="flex items-center gap-2 shrink-0">
                     <a
-                        href="tel:0759596369"
+                        href="tel:+33759507184"
                         className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-lg text-[12px] font-medium border transition-colors hover:bg-white/10"
                         style={{ borderColor: "rgba(201,168,76,.3)", color: "#C9A84C" }}
                     >
                         <Phone size={13} />
-                        +33 7 59 59 63 69
+                        +33 7 59 50 71 84
                     </a>
                     <button
                         onClick={onOpenBooking}

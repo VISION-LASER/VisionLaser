@@ -2,9 +2,9 @@
 import React from "react";
 import { MessageCircle } from "lucide-react";
 
-const WHATSAPP_NUMBER = "33327621234";
+const WHATSAPP_NUMBER = "33759507184";
 const WHATSAPP_MSG = encodeURIComponent(
-  "Bonjour, je souhaite obtenir des informations sur un bilan visuel gratuit."
+  "Bonjour, je souhaite obtenir des informations sur un bilan visuel."
 );
 
 const StickyWhatsApp: React.FC = () => (
