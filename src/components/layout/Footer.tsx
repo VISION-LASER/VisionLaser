@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock, ArrowRight, Calendar } from "lucide-react";
-import { FaYoutube, FaInstagram, FaTiktok, FaFacebook, FaLinkedin } from "react-icons/fa";
+import { FaYoutube, FaInstagram, FaTiktok } from "react-icons/fa";
 import logo from "../../assets/vision-laser-logo.jpg";
 
 function Footer() {
@@ -17,19 +17,12 @@ function Footer() {
 
   const contactInfo = {
     address: "Polyclinique du Val de Sambre, Rte de Mons 162, 59600 Maubeuge",
-    phone: "+33 7 59 59 63 69",
+    phone: "+33 7 59 50 71 84",
     email: "contact@vision-laser.fr",
     hours: "Lun – Ven · 9h – 18h",
   };
 
   const socialLinks = [
-    { 
-      name: "Facebook", 
-      icon: FaFacebook, 
-      url: "https://www.facebook.com/profile.php?id=100057042439718",
-      username: "centre vision laser",
-      color: "#1877F2" 
-    },
     { 
       name: "Instagram", 
       icon: FaInstagram, 
@@ -51,17 +44,10 @@ function Footer() {
       username: "Vision Laser",
       color: "#FF0000" 
     },
-    { 
-      name: "LinkedIn", 
-      icon: FaLinkedin, 
-      url: "https://linkedin.com/company/vision-laser-hauts-de-france",
-      username: "Vision Laser",
-      color: "#0A66C2" 
-    },
   ];
 
   return (
-    <footer className="relative mt-20 bg-gradient-to-b from-white to-gray-50 border-t border-gray-100">
+    <footer className="relative mt-20 bg-linear-to-b from-white to-gray-50 border-t border-gray-100">
       
       <div className="container-page mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         {/* Grille principale */}

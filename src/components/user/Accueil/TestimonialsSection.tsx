@@ -216,7 +216,7 @@ const TestimonialsSection: React.FC = () => {
         <Reveal delay={200}>
           <div className="mt-6 flex justify-center">
             <a 
-              href="https://www.youtube.com/channel/UC66A8rWMqg6S54Q0FMgg81Q"
+              href="https://www.youtube.com/@Centrevisionlaser"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105"

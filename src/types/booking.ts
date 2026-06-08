@@ -26,7 +26,7 @@ export type AppointmentMotif =
   | "autre";
 
 export const MOTIFS: { value: AppointmentMotif; label: string }[] = [
-  { value: "bilan-visuel",       label: "Bilan visuel gratuit (pré-opératoire)" },
+  { value: "bilan-visuel",       label: "Bilan visuel (pré-opératoire)" },
   { value: "consultation-postop",label: "Consultation post-opératoire" },
   { value: "autre",              label: "Autre motif" },
 ];

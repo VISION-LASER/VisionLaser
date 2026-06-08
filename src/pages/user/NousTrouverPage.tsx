@@ -97,8 +97,8 @@ const NousTrouver = () => {
                                         <Phone className="h-5 w-5 text-gold mt-0.5" />
                                         <div>
                                             <p className="font-medium text-navy">Téléphone</p>
-                                            <a href="tel:+33759596369" className="text-muted-foreground text-sm hover:text-gold transition-colors">
-                                                +33 7 59 59 63 69
+                                            <a href="tel:+33759507184" className="text-muted-foreground text-sm hover:text-gold transition-colors">
+                                                +33 7 59 50 71 84
                                             </a>
                                         </div>
                                     </div>

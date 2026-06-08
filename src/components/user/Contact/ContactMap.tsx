@@ -80,8 +80,8 @@ const ContactMap = () => {
 
                 {/* Coordonnées */}
                 <Card title="Coordonnées" icon={<Building2 size={14} />}>
-                  <InfoRow href="tel:+33759596369" icon={<Phone size={14} color={GOLD} />}>
-                    +33 7 59 59 63 69
+                  <InfoRow href="tel:+33759507184" icon={<Phone size={14} color={GOLD} />}>
+                    +33 7 59 50 71 84
                   </InfoRow>
                   <InfoRow href="mailto:contact@vision-laser.fr" icon={<Mail size={14} color={GOLD} />}>
                     contact@vision-laser.fr

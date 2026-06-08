@@ -6,7 +6,7 @@ import { ContactForm } from "../../layout/ContactForm";
 const TRUST = [
   { icon: Shield, text: "Données confidentielles" },
   { icon: Clock, text: "Réponse sous 48h" },
-  { icon: Star, text: "Bilan 100% gratuit" },
+  { icon: Star, text: "Bilan" },
 ];
 
 const LeadCaptureSection: React.FC = () => {
@@ -25,11 +25,11 @@ const LeadCaptureSection: React.FC = () => {
             <div>
               <p className="eyebrow" style={{ color: "#C9A84C" }}>Passez à l'action</p>
               <h2 className="mt-3 text-white">
-                Votre bilan visuel gratuit vous attend.
+                Votre bilan visuel vous attend.
               </h2>
               <p className="mt-5 text-white/70 leading-relaxed">
                 En moins de 2 minutes, dites-nous qui vous êtes. Nous vous
-                rappelons pour organiser un bilan complet et gratuit avec le
+                rappelons pour organiser un bilan complet avec le
                 Dr. Anthony Sion — sans engagement, sans frais.
               </p>
 
@@ -38,7 +38,7 @@ const LeadCaptureSection: React.FC = () => {
                 {[
                   { n: "01", title: "Vous remplissez ce formulaire", sub: "2 minutes" },
                   { n: "02", title: "Nous vous rappelons sous 48h", sub: "À l'heure qui vous convient" },
-                  { n: "03", title: "Bilan personnalisé au centre", sub: "1h, gratuit et sans engagement" },
+                  { n: "03", title: "Bilan personnalisé au centre", sub: "1h, sans engagement" },
                 ].map((s) => (
                   <li key={s.n} className="flex items-start gap-4">
                     <span
