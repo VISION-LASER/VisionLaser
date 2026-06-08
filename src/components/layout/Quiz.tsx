@@ -76,13 +76,33 @@ export function Quiz() {
 
   //   navigate("#contact-form");
   // };
+
   const handleContactClick = () => {
     const formattedAnswers = buildFormattedAnswers(answers);
+
+    // Sauvegarde définitive
     localStorage.setItem("faq_answers", JSON.stringify(formattedAnswers));
 
-    // OUVRIR LE MODAL HEADER
-    window.dispatchEvent(new Event("open-booking-modal"));
+    // Prévenir le formulaire que de nouvelles réponses existent
+    window.dispatchEvent(new Event("faq-answers-updated"));
+
+    // Scroll vers le formulaire
+    const form = document.getElementById("contact-form");
+
+    if (form) {
+      form.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
+  // const handleContactClick = () => {
+  //   const formattedAnswers = buildFormattedAnswers(answers);
+  //   localStorage.setItem("faq_answers", JSON.stringify(formattedAnswers));
+
+  //   // OUVRIR LE MODAL HEADER
+  //   window.dispatchEvent(new Event("open-booking-modal"));
+  // };
 
   const handleWatchAppClick = () => {
     const phoneNumber = "33612345678"; // À modifier
