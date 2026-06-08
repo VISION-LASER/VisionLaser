@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Check } from "lucide-react";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 
 export function ContactForm({ compact = false }: { compact?: boolean }) {
@@ -9,25 +9,53 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   const [faqAnswers, setFaqAnswers] = useState<any>(null);
 
   // Récupérer les réponses FAQ du localStorage au chargement du composant
+  // useEffect(() => {
+  //   const savedAnswers = localStorage.getItem('faq_answers');
+  //   if (savedAnswers) {
+  //     try {
+  //       const parsed = JSON.parse(savedAnswers);
+  //       // S'assurer que parsed est un tableau
+  //       if (Array.isArray(parsed)) {
+  //         setFaqAnswers(parsed);
+  //         if (parsed.length > 0) {
+  //           toast.success('Vos réponses aux questions ont été récupérées', {
+  //             position: 'bottom-right',
+  //             duration: 3000,
+  //           });
+  //         }
+  //       }
+  //     } catch (e) {
+  //       console.error('Erreur lors du parsing des réponses FAQ:', e);
+  //     }
+  //   }
+  // }, []);
+  
   useEffect(() => {
-    const savedAnswers = localStorage.getItem('faq_answers');
-    if (savedAnswers) {
+    const loadQuizAnswers = () => {
+      const savedAnswers = localStorage.getItem("faq_answers");
+
+      if (!savedAnswers) return;
+
       try {
         const parsed = JSON.parse(savedAnswers);
-        // S'assurer que parsed est un tableau
+
         if (Array.isArray(parsed)) {
           setFaqAnswers(parsed);
-          if (parsed.length > 0) {
-            toast.success('Vos réponses aux questions ont été récupérées', {
-              position: 'bottom-right',
-              duration: 3000,
-            });
-          }
         }
-      } catch (e) {
-        console.error('Erreur lors du parsing des réponses FAQ:', e);
+      } catch (error) {
+        console.error("Erreur lors du parsing des réponses FAQ:", error);
       }
-    }
+    };
+
+    // Chargement initial
+    loadQuizAnswers();
+
+    // Quand le quiz envoie de nouvelles réponses
+    window.addEventListener("faq-answers-updated", loadQuizAnswers);
+
+    return () => {
+      window.removeEventListener("faq-answers-updated", loadQuizAnswers);
+    };
   }, []);
 
   const location = useLocation();
@@ -38,12 +66,12 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
 
       if (element) {
         const offset = 92; // pixels au-dessus de l'élément
-        const top = element.getBoundingClientRect().top + window.scrollY - offset;
+        const top =
+          element.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: "smooth" });
       }
     }
   }, [location]);
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -58,42 +86,45 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     }
 
     const data = {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      phone: formData.get('phone'),
-      email: formData.get('email'),
-      message: formData.get('message'),
-      faq: faqToSend
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      phone: formData.get("phone"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+      faq: faqToSend,
     };
 
-    console.log('📤 Données envoyées:', data);
+    console.log("📤 Données envoyées:", data);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/contact-patient`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/contact-patient`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(data),
-      });
+      );
 
       const result = await response.json();
 
       if (response.ok && result.success) {
         setSent(true);
-        toast.success('Demande envoyée avec succès !', {
-          position: 'bottom-right',
+        toast.success("Demande envoyée avec succès !", {
+          position: "bottom-right",
           duration: 4000,
         });
         // Effacer le localStorage après envoi réussi
-        localStorage.removeItem('faq_answers');
+        localStorage.removeItem("faq_answers");
       } else {
-        throw new Error(result.message || 'Erreur lors de l\'envoi');
+        throw new Error(result.message || "Erreur lors de l'envoi");
       }
     } catch (error) {
-      console.error('Erreur:', error);
-      toast.error('Erreur lors de l\'envoi. Veuillez réessayer.', {
-        position: 'bottom-right',
+      console.error("Erreur:", error);
+      toast.error("Erreur lors de l'envoi. Veuillez réessayer.", {
+        position: "bottom-right",
         duration: 4000,
       });
     } finally {
@@ -109,17 +140,15 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         </div>
         <h3 className="mt-4 text-xl">Demande bien reçue</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Notre équipe vous recontacte sous 48 h ouvrées pour fixer votre bilan visuel.
+          Notre équipe vous recontacte sous 48 h ouvrées pour fixer votre bilan
+          visuel.
         </p>
       </div>
     );
   }
 
   return (
-    <form
-      className="card-soft space-y-4"
-      onSubmit={handleSubmit}
-    >
+    <form className="card-soft space-y-4" onSubmit={handleSubmit}>
       {!compact && (
         <div>
           <h3 className="text-xl">Contactez-nous</h3>
@@ -132,12 +161,16 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       {/* Affichage des réponses FAQ si elles existent */}
       {faqAnswers && faqAnswers.length > 0 && (
         <div className="rounded-lg border border-gold/20 bg-gold/5 p-4">
-          <h4 className="mb-2 text-sm font-semibold text-navy uppercase tracking-wide">
-          </h4>
+          <h4 className="mb-2 text-sm font-semibold text-navy uppercase tracking-wide"></h4>
           <ul className="space-y-2 text-xs">
             {faqAnswers.map((item: any, idx: number) => (
-              <li key={idx} className="border-b border-border/50 pb-2 last:border-0">
-                <span className="block font-medium text-navy">{item.question}</span>
+              <li
+                key={idx}
+                className="border-b border-border/50 pb-2 last:border-0"
+              >
+                <span className="block font-medium text-navy">
+                  {item.question}
+                </span>
                 {/* <span className="text-muted-foreground"> // Supprimer la response
                   {item.answer || "❌ Pas de réponse"}
                 </span> */}
@@ -154,7 +187,9 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         <Field label="Email" name="email" type="email" required />
       </div>
       <div>
-        <label className="mb-1.5 block text-sm font-medium text-navy">Message (optionnel)</label>
+        <label className="mb-1.5 block text-sm font-medium text-navy">
+          Message (optionnel)
+        </label>
         <textarea
           name="message"
           rows={4}
@@ -163,10 +198,14 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         />
       </div>
       <label className="flex items-start gap-3 text-xs text-muted-foreground">
-        <input type="checkbox" required className="mt-0.5 h-4 w-4 rounded border-input" />
+        <input
+          type="checkbox"
+          required
+          className="mt-0.5 h-4 w-4 rounded border-input"
+        />
         <span>
-          J'accepte que mes données soient utilisées pour traiter ma demande, conformément
-          au RGPD. Aucune donnée n'est transmise à des tiers.
+          J'accepte que mes données soient utilisées pour traiter ma demande,
+          conformément au RGPD. Aucune donnée n'est transmise à des tiers.
         </span>
       </label>
       <button type="submit" className="btn-gold w-full" disabled={isLoading}>
@@ -189,8 +228,12 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-1.5 block text-sm font-medium text-navy">
-        {label} {required && <span className="text-[color:var(--gold)]">*</span>}
+      <label
+        htmlFor={name}
+        className="mb-1.5 block text-sm font-medium text-navy"
+      >
+        {label}{" "}
+        {required && <span className="text-[color:var(--gold)]">*</span>}
       </label>
       <input
         id={name}
@@ -202,4 +245,3 @@ function Field({
     </div>
   );
 }
-
