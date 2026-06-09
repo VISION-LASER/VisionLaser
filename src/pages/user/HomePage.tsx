@@ -21,6 +21,7 @@ import ExitIntentPopup from "../../components/user/Accueil/ExitIntentPopup";
 import BookingModal from "../../components/user/Booking/BookingModal";
 import StickyWhatsApp from "../../components/user/Accueil/StickyWhatsApp";
 import StickyBooking from "../../components/user/Accueil/StickyBooking";
+import TikTokLandingPage from "../../components/user/Accueil/TikTokLandingPage";
 
 const HomePage: React.FC = () => {
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -45,10 +46,12 @@ const HomePage: React.FC = () => {
       <ProcessSection />
       <TestimonialsSection />
       <TechniquesSection />
+      
       <DoctorSection />
       <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <TprkEligibilitySection />
       {/* <DifferentesEtapes /> */}
+      <TikTokLandingPage />
       <FaqSection />
 
       {/* Section lead principale — ancre #bilan-gratuit */}
