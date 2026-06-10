@@ -127,14 +127,6 @@ const VideoCard: React.FC<VideoCardProps> = ({ testimonial, isCenter, onClick })
   );
 };
 
-// ── Helpers stats ────────────────────────────────────────────────
-const averageStars = (
-  parseFloat(
-    (TESTIMONIALS.reduce((sum, t) => sum + t.rating, 0) / TESTIMONIALS.length).toFixed(1)
-  )
-);
-const totalReviews = TESTIMONIALS.length;
-
 // ── Main ─────────────────────────────────────────────────────────
 const TestimonialsSection: React.FC = () => {
   const [active, setActive] = useState<Testimonial | null>(null);

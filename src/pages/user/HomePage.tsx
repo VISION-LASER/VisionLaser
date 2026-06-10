@@ -44,14 +44,17 @@ const HomePage: React.FC = () => {
       <HeroSection />
       <SocialProofBar />
       <ProcessSection />
+      <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <TestimonialsSection />
+      <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <TechniquesSection />
-      
+      <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <DoctorSection />
       <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <TprkEligibilitySection />
-      {/* <DifferentesEtapes /> */}
+      <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <TikTokLandingPage />
+      <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <FaqSection />
 
       {/* Section lead principale — ancre #bilan-gratuit */}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Scissors, Waves, Clock, Activity, Eye, CheckCircle, AlertTriangle } from "lucide-react";
+import { ArrowRight, Clock, Activity, Eye, CheckCircle, AlertTriangle } from "lucide-react";
 import laser from "../../../assets/Femto.png";
 import { Reveal } from "../../layout/Reveal";
 
@@ -194,7 +194,7 @@ const TechCard: React.FC<{ tech: TechContent }> = ({ tech }) => {
 // ---------------------------------------------------------------------------
 const TechniquesSection: React.FC = () => {
   return (
-    <section className="m-5 p-5 -mt-8">
+    <section className="p-5">
       <div className="container-page">
         {/* Grille avec items-stretch pour égaliser les hauteurs */}
         <div className="grid gap-12 md:grid-cols-12 md:items-stretch">

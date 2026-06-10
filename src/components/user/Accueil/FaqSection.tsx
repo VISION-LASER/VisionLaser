@@ -7,7 +7,7 @@ import { FAQ } from "../../../data/data";
 
 const FaqSection: React.FC = () => {
   return (
-    <section className="py-8 bg-cream m-5 p-5">
+    <section className="py-8 bg-cream">
       <div className="container-page grid gap-12 md:grid-cols-12">
         {/* Left – heading */}
         <Reveal as="div" className="md:col-span-5">
