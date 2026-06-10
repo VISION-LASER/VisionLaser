@@ -16,7 +16,7 @@ const Credential: React.FC<CredentialProps> = ({ title, subtitle }) => (
 
 const DoctorSection: React.FC = () => {
   return (
-    <section className="bg-[color:var(--cream)] mx-5 mt-5 px-5 py-3">
+    <section className="bg-[color:var(--cream)]px-5 py-3">
       <div className="container-page grid gap-8 md:grid-cols-2 md:items-center">
         {/* Copy */}
         <Reveal>

@@ -240,7 +240,7 @@ export default function ProcessSection() {
   const Slide = SLIDES[displayed];
 
   return (
-    <section className="bg-[color:var(--cream)] p-5 m-5">
+    <section className="bg-[color:var(--cream)] p-5">
       <div className="container-page">
         <Reveal>
           <div className="max-w-2xl">
