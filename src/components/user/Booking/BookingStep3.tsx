@@ -44,14 +44,12 @@ const BookingStep3: React.FC<Step3Props> = ({ patient, date, time, onBack, onDon
     try {
       await submitAppointment(patient, date, time);
       setDone(true);
-      // TOAST DE SUCCÈS
       toast.success('Rendez-vous confirmé avec succès !', {
         position: 'bottom-right',
         duration: 4000,
       });
     } catch (err) {
       setError("Une erreur est survenue. Veuillez réessayer ou nous contacter directement.");
-      // TOAST D'ERREUR
       toast.error('Erreur lors de la confirmation du rendez-vous', {
         position: 'bottom-right',
         duration: 4000,
@@ -94,29 +92,34 @@ const BookingStep3: React.FC<Step3Props> = ({ patient, date, time, onBack, onDon
         </p>
       </div>
 
-      {/* Summary card */}
-      <div className="rounded-2xl border border-border bg-[color:var(--cream)] p-6 space-y-4">
-        {/* Date/time highlight */}
-        <div className="rounded-xl border border-[color:var(--gold)]/30 bg-white px-5 py-4 text-center">
-          <p className="text-[11px] uppercase tracking-widest text-[color:var(--gold)]">
-            Votre rendez-vous
-          </p>
-          <p className="mt-1 text-lg font-semibold text-navy capitalize">{dateFormatted}</p>
-          <p className="text-2xl font-bold text-navy">{time}</p>
+      {/* Horizontal layout summary */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Left column - Date/Time */}
+        <div className="rounded-2xl border border-border bg-[color:var(--cream)] p-5">
+          <div className="rounded-xl border border-[color:var(--gold)]/30 bg-white px-5 py-4 text-center">
+            <p className="text-[11px] uppercase tracking-widest text-[color:var(--gold)]">
+              Votre rendez-vous
+            </p>
+            <p className="mt-1 text-sm font-semibold text-navy capitalize">{dateFormatted}</p>
+            <p className="text-2xl font-bold text-navy">{time}</p>
+          </div>
         </div>
 
-        <div className="h-px bg-border" />
-
-        <Row icon={User}     label="Nom complet"    value={`${patient.firstName} ${patient.lastName}`} />
-        <Row icon={Mail}     label="Email"          value={patient.email} />
-        <Row icon={Phone}    label="Téléphone"      value={patient.phone} />
-        {patient.birthDate && (
-          <Row icon={Calendar} label="Date de naissance" value={new Date(patient.birthDate).toLocaleDateString("fr-FR")} />
-        )}
-        <Row icon={Clock}    label="Motif"          value={motifLabel} />
-        {patient.notes && (
-          <Row icon={FileText} label="Notes"        value={patient.notes} />
-        )}
+        {/* Right column - Patient info */}
+        <div className="rounded-2xl border border-border bg-[color:var(--cream)] p-5">
+          <div className="space-y-3">
+            <Row icon={User} label="Nom complet" value={`${patient.firstName} ${patient.lastName}`} />
+            <Row icon={Mail} label="Email" value={patient.email} />
+            <Row icon={Phone} label="Téléphone" value={patient.phone} />
+            {patient.birthDate && (
+              <Row icon={Calendar} label="Date de naissance" value={new Date(patient.birthDate).toLocaleDateString("fr-FR")} />
+            )}
+            <Row icon={Clock} label="Motif" value={motifLabel} />
+            {patient.notes && (
+              <Row icon={FileText} label="Notes" value={patient.notes} />
+            )}
+          </div>
+        </div>
       </div>
 
       {error && (

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const pricingData = [
   {
-    name: "Consultation préopératoire",
-    price: "100 €",
+    name: "Bilan d'éligibilité",
+    price: "60 €",
     note:
       "Non remboursé par la Sécurité Sociale. Certaines mutuelles peuvent prendre en charge une partie.",
   },

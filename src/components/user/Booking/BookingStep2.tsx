@@ -33,8 +33,8 @@ const BookingStep2: React.FC<Step2Props> = ({
   const [localDate, setLocalDate] = useState<string | null>(selectedDate);
   const [localTime, setLocalTime] = useState<string | null>(selectedTime);
   const [slots, setSlots] = useState<{ time: string; available: boolean }[]>([]);
-  const [fullDays, setFullDays] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(false);
+  const [fullDays, setFullDays] = useState<Map<string, boolean>>(new Map());
 
   // Charger les créneaux quand la date change
   useEffect(() => {
@@ -48,6 +48,29 @@ const BookingStep2: React.FC<Step2Props> = ({
     };
     loadSlots();
   }, [localDate]);
+
+  // Vérifier les jours complets pour le mois actuel
+  useEffect(() => {
+    const checkFullDays = async () => {
+      const firstDay = new Date(viewYear, viewMonth, 1);
+      const lastDay = new Date(viewYear, viewMonth + 1, 0);
+      const newFullDays = new Map(fullDays);
+      
+      for (let d = 1; d <= lastDay.getDate(); d++) {
+        const iso = toIso(viewYear, viewMonth, d);
+        const isPast = new Date(iso) < new Date(toIso(today.getFullYear(), today.getMonth(), today.getDate()));
+        const isWeekend = isDayUnavailable(iso);
+        
+        if (!isPast && !isWeekend) {
+          const isFull = await isDayFull(iso);
+          newFullDays.set(iso, isFull);
+        }
+      }
+      setFullDays(newFullDays);
+    };
+    
+    checkFullDays();
+  }, [viewYear, viewMonth]);
 
   // Build calendar grid (Mon-first)
   const calDays = useMemo(() => {
@@ -75,10 +98,15 @@ const BookingStep2: React.FC<Step2Props> = ({
     const iso = toIso(viewYear, viewMonth, day);
     const isPast = new Date(iso) < new Date(toIso(today.getFullYear(), today.getMonth(), today.getDate()));
     const isWeekend = isDayUnavailable(iso);
-    const isFull = await isDayFull(iso);
+    const isFull = fullDays.get(iso) || false;
     
     if (isPast || isWeekend || isFull) return;
     setLocalDate(iso);
+    setLocalTime(null);
+  };
+
+  const handleBackToCalendar = () => {
+    setLocalDate(null);
     setLocalTime(null);
   };
 
@@ -94,110 +122,114 @@ const BookingStep2: React.FC<Step2Props> = ({
         <p className="eyebrow">Étape 2 sur 3</p>
         <h2 className="mt-2 text-2xl font-semibold text-navy">Choisir un créneau</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Sélectionnez une date puis un horaire disponible.
+          {!localDate 
+            ? "Sélectionnez une date puis un horaire disponible."
+            : `Sélectionnez un horaire pour le ${new Date(localDate + "T12:00:00").toLocaleDateString("fr-FR", {
+                weekday: "long", day: "numeric", month: "long",
+              })}`}
         </p>
       </div>
 
-      {/* Calendar */}
-      <div className="rounded-2xl border border-border bg-white p-5">
-        <div className="mb-4 flex items-center justify-between">
-          <button
-            type="button"
-            onClick={prevMonth}
-            className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-[color:var(--cream)] transition-colors"
-          >
-            <ChevronLeft className="h-4 w-4 text-navy" />
-          </button>
-          <span className="text-sm font-semibold text-navy">
-            {MONTHS_FR[viewMonth]} {viewYear}
-          </span>
-          <button
-            type="button"
-            onClick={nextMonth}
-            className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-[color:var(--cream)] transition-colors"
-          >
-            <ChevronRight className="h-4 w-4 text-navy" />
-          </button>
-        </div>
-
-        <div className="mb-2 grid grid-cols-7 text-center">
-          {DAYS_FR.map(d => (
-            <span key={d} className={`text-[11px] font-semibold uppercase tracking-wider ${d === "Sam" || d === "Dim" ? "text-navy/25" : "text-navy/40"}`}>
-              {d}
+      {/* Calendar or Time slots */}
+      {!localDate ? (
+        // Calendar view
+        <div className="rounded-2xl border border-border bg-white p-5">
+          <div className="mb-4 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={prevMonth}
+              className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-[color:var(--cream)] transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4 text-navy" />
+            </button>
+            <span className="text-sm font-semibold text-navy">
+              {MONTHS_FR[viewMonth]} {viewYear}
             </span>
-          ))}
+            <button
+              type="button"
+              onClick={nextMonth}
+              className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-[color:var(--cream)] transition-colors"
+            >
+              <ChevronRight className="h-4 w-4 text-navy" />
+            </button>
+          </div>
+
+          <div className="mb-2 grid grid-cols-7 text-center">
+            {DAYS_FR.map(d => (
+              <span key={d} className={`text-[11px] font-semibold uppercase tracking-wider ${d === "Sam" || d === "Dim" ? "text-navy/25" : "text-navy/40"}`}>
+                {d}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-7 gap-0.5">
+            {calDays.map((day, i) => {
+              if (!day) return <div key={`empty-${i}`} />;
+              const iso = toIso(viewYear, viewMonth, day);
+              const isPast = new Date(iso) < new Date(toIso(today.getFullYear(), today.getMonth(), today.getDate()));
+              const isWeekend = isDayUnavailable(iso);
+              const isFull = fullDays.get(iso) || false;
+              
+              const isToday = iso === toIso(today.getFullYear(), today.getMonth(), today.getDate());
+              const isDisabled = isPast || isWeekend;
+
+              return (
+                <button
+                  key={iso}
+                  type="button"
+                  onClick={() => handleDayClick(day)}
+                  disabled={isDisabled || isFull}
+                  title={isFull ? "Journée complète" : isWeekend ? "Fermé" : undefined}
+                  className={`
+                    relative flex h-9 w-full items-center justify-center rounded-lg text-sm transition-all
+                    ${!isDisabled && !isFull ? "text-navy hover:bg-[color:var(--cream)]" : ""}
+                    ${isDisabled ? "cursor-not-allowed text-navy/20" : ""}
+                    ${isFull && !isDisabled ? "cursor-not-allowed bg-red-50 text-red-400 line-through" : ""}
+                    ${isToday && !isDisabled && !isFull ? "font-semibold underline decoration-[color:var(--gold)] underline-offset-2" : ""}
+                  `}
+                >
+                  {day}
+                  {isFull && (
+                    <span className="absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-red-500" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-3 flex flex-wrap gap-3 border-t border-border pt-3 text-[11px] text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-red-500" /> Déjà prise / complète
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full border border-navy/30" /> Disponible
+            </span>
+          </div>
         </div>
+      ) : (
+        // Time slots view
+        <div className="rounded-2xl border border-border bg-white p-5">
+          <div className="mb-4 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={handleBackToCalendar}
+              className="flex items-center gap-2 text-sm text-navy/60 hover:text-navy transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Changer de date
+            </button>
+            <span className="text-sm font-semibold text-navy">
+              {new Date(localDate + "T12:00:00").toLocaleDateString("fr-FR", {
+                day: "numeric", month: "long",
+              })}
+            </span>
+            <div className="w-20" /> {/* Spacer for alignment */}
+          </div>
 
-        <div className="grid grid-cols-7 gap-0.5">
-          {calDays.map((day, i) => {
-            if (!day) return <div key={`empty-${i}`} />;
-            const iso = toIso(viewYear, viewMonth, day);
-            const isPast = new Date(iso) < new Date(toIso(today.getFullYear(), today.getMonth(), today.getDate()));
-            const isWeekend = isDayUnavailable(iso);
-            const [isFull, setIsFull] = React.useState(false);
-            
-            React.useEffect(() => {
-              const checkFull = async () => {
-                const full = await isDayFull(iso);
-                setIsFull(full);
-              };
-              if (!isPast && !isWeekend) {
-                checkFull();
-              }
-            }, [iso, isPast, isWeekend]);
-            
-            const isSelected = localDate === iso;
-            const isToday = iso === toIso(today.getFullYear(), today.getMonth(), today.getDate());
-            const isDisabled = isPast || isWeekend;
-
-            return (
-              <button
-                key={iso}
-                type="button"
-                onClick={() => handleDayClick(day)}
-                disabled={isDisabled}
-                title={isFull ? "Journée complète" : isWeekend ? "Fermé" : undefined}
-                className={`
-                  relative flex h-9 w-full items-center justify-center rounded-lg text-sm transition-all
-                  ${isSelected ? "bg-[color:var(--navy)] font-semibold text-white shadow-sm" : ""}
-                  ${!isSelected && !isDisabled && !isFull ? "text-navy hover:bg-[color:var(--cream)]" : ""}
-                  ${isDisabled ? "cursor-not-allowed text-navy/20" : ""}
-                  ${isFull && !isSelected ? "cursor-not-allowed bg-red-50 text-red-400 line-through" : ""}
-                  ${isToday && !isSelected ? "font-semibold underline decoration-[color:var(--gold)] underline-offset-2" : ""}
-                `}
-              >
-                {day}
-                {isFull && (
-                  <span className="absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-red-500" />
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="mt-3 flex flex-wrap gap-3 border-t border-border pt-3 text-[11px] text-muted-foreground">
-          <span className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-red-500" /> Déjà prise / complète
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full border border-navy/30" /> Disponible
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-navy" /> Sélectionné
-          </span>
-        </div>
-      </div>
-
-      {/* Time slots */}
-      {localDate && (
-        <div>
           <div className="mb-3 flex items-center gap-2">
             <Clock className="h-4 w-4 text-[color:var(--gold)]" />
             <p className="text-sm font-medium text-navy">
-              Créneaux disponibles —{" "}
-              {new Date(localDate + "T12:00:00").toLocaleDateString("fr-FR", {
-                weekday: "long", day: "numeric", month: "long",
-              })}
+              Créneaux disponibles
             </p>
           </div>
 
@@ -208,7 +240,13 @@ const BookingStep2: React.FC<Step2Props> = ({
           ) : available.length === 0 ? (
             <div className="flex items-center gap-2 rounded-xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-rose-600">
               <AlertCircle className="h-4 w-4 shrink-0" />
-              Aucun créneau disponible ce jour. Choisissez une autre date.
+              Aucun créneau disponible ce jour. 
+              <button
+                onClick={handleBackToCalendar}
+                className="ml-auto text-rose-700 underline underline-offset-2"
+              >
+                Choisir une autre date
+              </button>
             </div>
           ) : (
             <div className="grid grid-cols-4 gap-2 sm:grid-cols-5">
@@ -233,6 +271,18 @@ const BookingStep2: React.FC<Step2Props> = ({
               ))}
             </div>
           )}
+
+          <div className="mt-3 flex flex-wrap gap-3 border-t border-border pt-3 text-[11px] text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-navy" /> Créneau sélectionné
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full border border-navy/30 bg-white" /> Disponible
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-red-400" /> Déjà prise
+            </span>
+          </div>
         </div>
       )}
 
