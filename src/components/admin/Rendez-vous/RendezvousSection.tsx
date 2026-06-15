@@ -46,6 +46,26 @@ const RendezvousSection: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
+  // Fonction utilitaire pour normaliser les dates sans conversion UTC
+  const normalizeDate = (dateString: string): string => {
+    if (!dateString) return "";
+    // Extraire uniquement la partie YYYY-MM-DD
+    if (dateString.includes('T')) {
+      return dateString.split('T')[0];
+    }
+    if (dateString.includes(' ')) {
+      return dateString.split(' ')[0];
+    }
+    return dateString;
+  };
+
+  // Fonction pour afficher la date au format français
+  const displayFrenchDate = (dateString: string): string => {
+    const normalizedDate = normalizeDate(dateString);
+    const [year, month, day] = normalizedDate.split('-');
+    return `${day}/${month}/${year}`;
+  };
+
   // Charger les rendez-vous
   const loadAppointments = async () => {
     setLoading(true);
@@ -178,33 +198,50 @@ const getStatusColor = (status: string) => {
 
   // Filtrer les rendez-vous par date et statut
   const getAppointmentsForDate = (date: Date) => {
-    const dateStr = date.toISOString().split("T")[0];
+    // Créer une date locale sans heure
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const dateStr = `${year}-${month}-${day}`;
+    
     return appointments.filter((app) => {
-      const appDate = new Date(app.date_creneau).toISOString().split("T")[0];
-      const matchDate = appDate === dateStr;
+      const appDateNormalized = normalizeDate(app.date_creneau);
+      const matchDate = appDateNormalized === dateStr;
       const matchStatus = filterStatus === "all" || app.status === filterStatus;
       return matchDate && matchStatus;
     });
   };
 
-  // Obtenir les jours du mois
+  // Obtenir les jours du mois - CORRIGÉ pour que Lundi soit le premier jour
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
     const days = [];
     
-    const startDay = firstDay.getDay();
-    for (let i = startDay - 1; i >= 0; i--) {
+    // CORRECTION: getDay() retourne 0 pour Dimanche, 1 pour Lundi, etc.
+    // Pour avoir Lundi comme premier jour, on convertit: 
+    // Si getDay() = 0 (Dimanche) -> 6 (car Dimanche devient le dernier jour)
+    // Sinon on décale de 1 (Lundi=0, Mardi=1, etc.)
+    let startDayOffset = firstDayOfMonth.getDay();
+    if (startDayOffset === 0) {
+      startDayOffset = 7; // Dimanche devient le 7ème jour
+    }
+    startDayOffset = startDayOffset - 1; // Pour que Lundi soit l'index 0
+    
+    // Ajouter les jours du mois précédent
+    for (let i = startDayOffset - 1; i >= 0; i--) {
       const prevDate = new Date(year, month, -i);
       days.push({ date: prevDate, isCurrentMonth: false });
     }
     
-    for (let i = 1; i <= lastDay.getDate(); i++) {
+    // Ajouter les jours du mois courant
+    for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
       days.push({ date: new Date(year, month, i), isCurrentMonth: true });
     }
     
+    // Compléter pour avoir 6 lignes complètes (42 jours)
     const remainingDays = 42 - days.length;
     for (let i = 1; i <= remainingDays; i++) {
       const nextDate = new Date(year, month + 1, i);
@@ -272,7 +309,7 @@ const AppointmentModal = () => {
             <div className="flex items-center gap-2">
               <Calendar size={18} style={{ color: "#C9A84C" }} />
               <span className="text-gray-600">
-                {new Date(selectedAppointment.date_creneau).toLocaleDateString("fr-FR")} à {selectedAppointment.heure_creneau}
+                {displayFrenchDate(selectedAppointment.date_creneau)} à {selectedAppointment.heure_creneau}
               </span>
             </div>
           </div>
@@ -527,7 +564,7 @@ const AppointmentModal = () => {
                         {app.Prenom} {app.Nom}
                       </p>
                       <p className="text-xs text-gray-500">
-                        {new Date(app.date_creneau).toLocaleDateString("fr-FR")} à {app.heure_creneau}
+                        {displayFrenchDate(app.date_creneau)} à {app.heure_creneau}
                       </p>
                     </div>
                     <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(app.status)}`}>
