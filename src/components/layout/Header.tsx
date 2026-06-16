@@ -16,6 +16,7 @@ const NAV = [
   { to: "/tarifs",          label: "TARIFS" },
   { to: "/defauts-visuels", label: "DÉFAUTS VISUELS" },
   { to: "/actu",            label: "ACTUALITÉS" },
+  { to: "/offres",          label: "OFFRES EXCLUSIVE", badge: "NEW" },
 ] as const;
 
 const LANGUAGES = [
@@ -28,8 +29,8 @@ export function Header() {
   const [open, setOpen]               = useState(false);
   const [scrolled, setScrolled]       = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
-  const [langDropOpen, setLangDropOpen] = useState(false); // ← dropdown state
-  const dropdownRef = useRef<HTMLDivElement>(null);         // ← ref pour fermer au clic dehors
+  const [langDropOpen, setLangDropOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { lang: currentLang, setLang } = useLanguage();
   const activeLang = LANGUAGES.find((l) => l.code === currentLang) ?? LANGUAGES[0];
@@ -41,7 +42,6 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Ferme le dropdown si clic en dehors
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -52,26 +52,20 @@ export function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-    //  AJOUT ICI (OUVERTURE MODAL DEPUIS QUIZ)
   useEffect(() => {
     const openModal = () => setBookingOpen(true);
-
     window.addEventListener("open-booking-modal", openModal);
-
-    return () => {
-      window.removeEventListener("open-booking-modal", openModal);
-    };
+    return () => window.removeEventListener("open-booking-modal", openModal);
   }, []);
 
   const handleLanguageChange = (langCode: "fr" | "en" | "es") => {
-  if (langCode === "fr") {
-    // 🇫🇷 Rafraîchit la page → revient à l'original français
-    window.location.reload();
-    return;
-  }
-  setLang(langCode); // 🇬🇧 🇪🇸 → déclenche Google Translate
-  setLangDropOpen(false);
-};
+    if (langCode === "fr") {
+      window.location.reload();
+      return;
+    }
+    setLang(langCode);
+    setLangDropOpen(false);
+  };
 
   return (
     <>
@@ -106,12 +100,25 @@ export function Header() {
                   key={n.to}
                   to={n.to}
                   className={({ isActive }) =>
-                    `nav-link relative text-xs font-medium transition-colors duration-200 hover:text-navy ${
+                    `nav-link relative inline-flex items-center gap-1.5 text-xs font-medium transition-colors duration-200 hover:text-navy ${
                       isActive ? "is-active text-navy" : "text-navy/70 hover:text-navy"
                     }`
                   }
                 >
                   {n.label}
+                  {"badge" in n && n.badge && (
+                    <span
+                      className="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide leading-none"
+                      style={{
+                        background: "linear-gradient(135deg, #C9A84C, #e4c26a)",
+                        color: "#0C2340",
+                        /* subtle pulse to catch the eye */
+                        animation: "pulse 2.5s cubic-bezier(0.4,0,0.6,1) infinite",
+                      }}
+                    >
+                      {n.badge}
+                    </span>
+                  )}
                 </NavLink>
               ))}
 
@@ -120,7 +127,6 @@ export function Header() {
                 ref={dropdownRef}
                 className="relative ml-2 border-l border-border/50 pl-4"
               >
-                {/* Bouton déclencheur */}
                 <button
                   onClick={() => setLangDropOpen((o) => !o)}
                   className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 transition-all duration-200 ${
@@ -142,7 +148,6 @@ export function Header() {
                   />
                 </button>
 
-                {/* Menu déroulant */}
                 {langDropOpen && (
                   <div className="absolute right-0 top-full mt-2 w-32 origin-top-right rounded-xl border border-border bg-white shadow-lg ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-150">
                     {LANGUAGES.map((lang) => (
@@ -199,9 +204,20 @@ export function Header() {
                   <Link
                     key={n.to} to={n.to}
                     onClick={() => setOpen(false)}
-                    className="border-b border-border/50 py-3 text-sm font-medium text-navy transition-colors last:border-0 hover:text-gold"
+                    className="flex items-center gap-2 border-b border-border/50 py-3 text-sm font-medium text-navy transition-colors last:border-0 hover:text-gold"
                   >
                     {n.label}
+                    {"badge" in n && n.badge && (
+                      <span
+                        className="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide leading-none"
+                        style={{
+                          background: "linear-gradient(135deg, #C9A84C, #e4c26a)",
+                          color: "#0C2340",
+                        }}
+                      >
+                        {n.badge}
+                      </span>
+                    )}
                   </Link>
                 ))}
 
