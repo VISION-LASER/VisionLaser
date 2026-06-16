@@ -8,19 +8,39 @@ const DOCTOLIB_URL =
     "https://www.doctolib.fr/centre-d-ophtalmologie/maubeuge/laser-vision/booking?bookingFunnelSource=external_referral&profile_skipped=true";
 
 /* ── Bouton CTA réutilisable ── */
-function CtaButton({ label = "Prendre rendez-vous", size = "md" }: { label?: string; size?: "sm" | "md" | "lg" }) {
-    const pad = size === "lg" ? "px-10 py-4 text-sm" : size === "sm" ? "px-5 py-2.5 text-xs" : "px-7 py-3.5 text-xs";
+function CtaButton({ 
+    label = "Prendre rendez-vous", 
+    size = "md",
+    onClick,
+    className = ""
+}: { 
+    label?: string; 
+    size?: "sm" | "md" | "lg";
+    onClick?: () => void;
+    className?: string;
+}) {
+    const baseStyles = "inline-flex items-center justify-center gap-2 rounded-xl font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl";
+    
+    const sizeStyles = {
+        sm: "px-5 py-2.5 text-sm",
+        md: "px-6 py-3 text-base",
+        lg: "px-8 py-3.5 text-lg"
+    };
+
     return (
-        <a
-            href={DOCTOLIB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`group inline-flex items-center gap-2 rounded-full font-semibold tracking-wide transition-all duration-300 hover:shadow-[0_8px_30px_rgba(201,168,76,0.4)] hover:-translate-y-0.5 ${pad}`}
-            style={{ background: "linear-gradient(135deg, #C9A84C 0%, #e4c26a 50%, #C9A84C 100%)", backgroundSize: "200% auto", color: "#0C2340" }}
+        <button
+            type="button"
+            onClick={onClick}
+            className={`${baseStyles} ${sizeStyles[size]} ${className}`}
+            style={{ 
+                background: "linear-gradient(135deg, #C9A84C 0%, #e4c26a 50%, #C9A84C 100%)",
+                backgroundSize: "200% auto",
+                color: "#0C2340"
+            }}
         >
             {label}
-            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-        </a>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </button>
     );
 }
 
@@ -62,8 +82,6 @@ function AccordionItem({ question, answer }: { question: string; answer: string 
     );
 }
 
-
-
 /* ═══════════════════════════════════════════
    PAGE PRINCIPALE
 ═══════════════════════════════════════════ */
@@ -89,7 +107,6 @@ export default function OffresPage() {
                             style={{ background: "radial-gradient(circle, #C9A84C, transparent 70%)" }} />
                         <div className="absolute -left-20 bottom-0 h-[400px] w-[400px] rounded-full opacity-[0.03]"
                             style={{ background: "radial-gradient(circle, #C9A84C, transparent 70%)" }} />
-                        {/* Fine grid lines */}
                         <svg className="absolute inset-0 h-full w-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
@@ -132,13 +149,11 @@ export default function OffresPage() {
                         </div>
 
                         <div className="mt-10">
-                            <button
-                                type="button"
+                            <CtaButton 
+                                label="Prendre rendez-vous gratuitement"
+                                size="lg"
                                 onClick={() => setBookingOpen(true)}
-                                className="btn-gold py-2.5 px-6 text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-300"
-                            >
-                                Prendre rendez-vous gratuitement
-                            </button>
+                            />
                         </div>
 
                         <p className="mt-4 text-[11px]" style={{ color: "#ffffff50" }}>
@@ -205,7 +220,6 @@ export default function OffresPage() {
                                 <div key={item.title}
                                     className="group relative flex flex-col rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                                     style={{ borderColor: "#0C234010", background: "#fff" }}>
-                                    {/* Top accent line */}
                                     <div className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl transition-all duration-300 group-hover:h-1"
                                         style={{ background: "linear-gradient(90deg, #C9A84C, #e4c26a)" }} />
                                     <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl"
@@ -222,13 +236,11 @@ export default function OffresPage() {
                         </div>
 
                         <div className="mt-10 text-center">
-                            <button
-                                type="button"
+                            <CtaButton 
+                                label="Je profite de cette offre"
+                                size="md"
                                 onClick={() => setBookingOpen(true)}
-                                className="btn-gold py-2.5 px-6 text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-300"
-                            >
-                                Je profite de cette offre
-                            </button>
+                            />
                         </div>
                     </div>
                 </section>
@@ -239,7 +251,6 @@ export default function OffresPage() {
                 <section className="pb-20">
                     <div className="container-page">
                         <div className="flex flex-col items-start gap-10 lg:flex-row lg:items-center lg:gap-16">
-                            {/* Texte */}
                             <div className="flex-1">
                                 <Pill>Indications</Pill>
                                 <h2 className="mt-4 text-3xl font-bold leading-tight" style={{ color: "#0C2340" }}>
@@ -273,17 +284,14 @@ export default function OffresPage() {
                                 </ul>
 
                                 <div className="mt-8">
-                                    <button
-                                        type="button"
+                                    <CtaButton 
+                                        label="Vérifier mon éligibilité"
+                                        size="md"
                                         onClick={() => setBookingOpen(true)}
-                                        className="btn-gold py-2.5 px-6 text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-300"
-                                    >
-                                        Vérifier mon éligibilité
-                                    </button>
+                                    />
                                 </div>
                             </div>
 
-                            {/* Techniques card */}
                             <div className="w-full lg:w-80">
                                 <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "#0C234012" }}>
                                     <div className="px-6 py-4" style={{ background: "#0C2340" }}>
@@ -365,7 +373,6 @@ export default function OffresPage() {
                             ))}
                         </div>
 
-                        {/* Parrainage */}
                         <div className="mx-auto mt-10 max-w-lg rounded-2xl border p-6 text-center"
                             style={{ borderColor: "#C9A84C30", background: "#C9A84C08" }}>
                             <Gift className="mx-auto h-6 w-6 mb-3" style={{ color: "#C9A84C" }} />
@@ -377,13 +384,11 @@ export default function OffresPage() {
                         </div>
 
                         <div className="mt-10 text-center">
-                            <button
-                                type="button"
+                            <CtaButton 
+                                label="Réserver pour mon groupe"
+                                size="md"
                                 onClick={() => setBookingOpen(true)}
-                                className="btn-gold py-2.5 px-6 text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-300"
-                            >
-                                Réserver pour mon groupe
-                            </button>
+                            />
                         </div>
                     </div>
                 </section>
@@ -419,7 +424,6 @@ export default function OffresPage() {
                     <div className="container-page">
                         <div className="relative isolate overflow-hidden rounded-3xl px-8 py-16 text-center md:px-16"
                             style={{ background: "linear-gradient(135deg, #0C2340 0%, #0f2d54 100%)" }}>
-                            {/* Decorative ring */}
                             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                                 <div className="h-[600px] w-[600px] rounded-full border opacity-[0.06]"
                                     style={{ borderColor: "#C9A84C" }} />
@@ -436,17 +440,15 @@ export default function OffresPage() {
                             </p>
 
                             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                                <button
-                                    type="button"
+                                <CtaButton 
+                                    label="Prendre rendez-vous"
+                                    size="lg"
                                     onClick={() => setBookingOpen(true)}
-                                    className="btn-gold py-2.5 px-6 text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-300"
-                                >
-                                    Prendre rendez-vous
-                                </button>
+                                />
                                 <a href="tel:+33759507184"
-                                    className="inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-white/10"
+                                    className="inline-flex items-center gap-2 rounded-xl border px-6 py-3 text-base font-bold text-white transition-all hover:scale-[1.02] hover:bg-white/10"
                                     style={{ borderColor: "#ffffff25" }}>
-                                    <Phone className="h-3.5 w-3.5" style={{ color: "#C9A84C" }} />
+                                    <Phone className="h-4 w-4" style={{ color: "#C9A84C" }} />
                                     +33 7 59 50 71 84
                                 </a>
                             </div>
