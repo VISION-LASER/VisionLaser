@@ -45,6 +45,7 @@ import ScrollToTop from "./components/layout/ScrollToTop";
 import MentionLegalesPage from "./pages/user/MentionLegalesPage";
 import PolitiqueConfidentialitePage from "./pages/user/PolitiqueConfidentialitePage";
 import CGVPage from "./pages/user/CGVPage";
+import OffresPage from "./pages/user/OffrePage";
 
 
 const queryClient = new QueryClient();
@@ -85,6 +86,7 @@ function AppContent() {
               <Route path="/tarifs" element={<TarifsPage />} />
               <Route path="/tprk" element={<TprkPage />} />
               <Route path="/nous-trouver" element={<NousTrouver />} />
+              <Route path="/offres" element={<OffresPage />} />
 
               {/* ── Login ──────────────────────────────── */}
               <Route path="/admin" element={<LoginAdmin />} />
