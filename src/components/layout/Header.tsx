@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
-import logo from "../../assets/vision-laser-logo.jpg";
+import logo from "../../assets/vision-laser-logo.jpeg";
 import BookingModal from "../user/Booking/BookingModal";
 
 import spanishFlag from "../../assets/es.png";

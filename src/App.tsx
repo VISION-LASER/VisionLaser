@@ -42,6 +42,9 @@ import NotificationSection from "./components/admin/Notification/NotificationSec
 import BlogPage from "./pages/user/BlogPage";
 import { useAnalytics } from "./hooks/useAnalytics";
 import ScrollToTop from "./components/layout/ScrollToTop";
+import MentionLegalesPage from "./pages/user/MentionLegalesPage";
+import PolitiqueConfidentialitePage from "./pages/user/PolitiqueConfidentialitePage";
+import CGVPage from "./pages/user/CgvPage";
 
 
 const queryClient = new QueryClient();
@@ -70,6 +73,9 @@ function AppContent() {
             <Routes>
               {/* ── Public ─────────────────────────────── */}
               <Route path="/" element={<HomePage />} />
+              <Route path="/mentions-legales" element={<MentionLegalesPage />} />
+              <Route path="/politique-confidentialite" element={<PolitiqueConfidentialitePage />} />
+              <Route path="/cgv" element={<CGVPage />} />
               <Route path="/actu" element={<ActualitesPage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/contact" element={<ContactPage />} />

@@ -64,7 +64,7 @@ const HeroSection: React.FC = () => {
   }, []);
 
   const [bookingOpen, setBookingOpen] = useState(false);
-  
+
   return (
     <section className="relative overflow-hidden min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]">
       {/* Hauteur réduite */}
@@ -101,12 +101,6 @@ const HeroSection: React.FC = () => {
           {/* Left Content */}
           <div className="md:col-span-7">
 
-            <Reveal>
-              <p className="eyebrow text-white/70 text-base md:text-lg">
-                Centre ophtalmologique · Hauts-de-France
-              </p>
-            </Reveal>
-
             <Reveal delay={100}>
               <h1 className="mt-3 text-balance text-white leading-tight text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
                 {/* Tailles agrandies */}
@@ -120,18 +114,64 @@ const HeroSection: React.FC = () => {
               </h1>
             </Reveal>
 
-            <Reveal delay={180}>
-              <p className="mt-3 max-w-2xl text-base md:text-lg leading-relaxed text-white/80">
-                {/* Texte agrandi */}
-                Notre équipe spécialisée accompagne chaque patient
-                avec précision et rigueur afin d’évaluer si la chirurgie
-                laser est adaptée à sa vision et à son mode de vie.
-              </p>
+            {/* Stats */}
+            <Reveal delay={360}>
+              <dl className="mt-5 grid max-w-2xl grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+
+                <Stat
+                  label={
+                    <div className="flex flex-col items-center sm:items-start">
+                      <span className="text-3xl md:text-3xl lg:text-4xl font-bold text-white">
+                        +15
+                      </span>
+                      <div className="w-10 h-0.5 bg-gold/50 mt-2 mb-1.5" />
+                    </div>
+                  }
+                  value={
+                    <span className="text-xs md:text-sm uppercase tracking-wider text-white/75 font-medium">
+                      ans d'expertise
+                    </span>
+                  }
+                />
+
+                <Stat
+                  label={
+                    <div className="flex flex-col items-center sm:items-start">
+                      <span className="text-3xl md:text-3xl lg:text-4xl font-bold text-white">
+                        +<Counter to={10000} />
+                      </span>
+                      <div className="w-10 h-0.5 bg-gold/50 mt-2 mb-1.5" />
+                    </div>
+                  }
+                  value={
+                    <span className="text-xs md:text-sm uppercase tracking-wider text-white/75 font-medium">
+                      patients accompagnés
+                    </span>
+                  }
+                />
+
+                <Stat
+                  label={
+                    <div className="flex flex-col items-center sm:items-start">
+                      <span className="text-3xl md:text-3xl lg:text-4xl font-bold text-white">
+                        <Counter to={48} suffix=" h" />
+                      </span>
+                      <div className="w-10 h-0.5 bg-gold/50 mt-2 mb-1.5" />
+                    </div>
+                  }
+                  value={
+                    <span className="text-xs md:text-sm uppercase tracking-wider text-white/75 font-medium">
+                      réponse au bilan
+                    </span>
+                  }
+                />
+
+              </dl>
             </Reveal>
 
             {/* CTA */}
             <Reveal delay={260}>
-              <div className="mt-5 flex flex-wrap items-center gap-4">
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-4">
                 <button
                   type="button"
                   onClick={() => {
@@ -148,60 +188,6 @@ const HeroSection: React.FC = () => {
               </div>
             </Reveal>
 
-            {/* Stats */}
-            <Reveal delay={360}>
-              <dl className="mt-5 grid max-w-2xl grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-                
-                <Stat
-                  label={
-                    <div className="flex flex-col items-center sm:items-start">
-                      <span className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
-                        +15
-                      </span>
-                      <div className="w-10 h-0.5 bg-gold/50 mt-2 mb-1.5" />
-                    </div>
-                  }
-                  value={
-                    <span className="text-xs md:text-sm uppercase tracking-wider text-white/75 font-medium">
-                      ans d'expertise
-                    </span>
-                  }
-                />
-                
-                <Stat
-                  label={
-                    <div className="flex flex-col items-center sm:items-start">
-                      <span className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
-                        +<Counter to={10000} />
-                      </span>
-                      <div className="w-10 h-0.5 bg-gold/50 mt-2 mb-1.5" />
-                    </div>
-                  }
-                  value={
-                    <span className="text-xs md:text-sm uppercase tracking-wider text-white/75 font-medium">
-                      patients accompagnés
-                    </span>
-                  }
-                />
-                
-                <Stat
-                  label={
-                    <div className="flex flex-col items-center sm:items-start">
-                      <span className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
-                        <Counter to={48} suffix=" h" />
-                      </span>
-                      <div className="w-10 h-0.5 bg-gold/50 mt-2 mb-1.5" />
-                    </div>
-                  }
-                  value={
-                    <span className="text-xs md:text-sm uppercase tracking-wider text-white/75 font-medium">
-                      réponse au bilan
-                    </span>
-                  }
-                />
-                
-              </dl>
-            </Reveal>
           </div>
 
           {/* Right Card */}
@@ -279,19 +265,6 @@ const HeroSection: React.FC = () => {
                     </button>
                   </div>
 
-                  {/* Testimonial - agrandi */}
-                  <div className="mt-5 border-t border-border pt-4">
-
-                    <p className="text-sm md:text-base italic leading-relaxed text-muted-foreground">
-                      "Je ne porte plus de lunettes depuis mon intervention.
-                      L'équipe a été exceptionnelle du début à la fin."
-                    </p>
-
-                    <p className="mt-2 text-xs md:text-sm font-semibold uppercase tracking-wide text-navy">
-                      — Patient opéré en FemtoLASIK
-                    </p>
-
-                  </div>
                 </div>
               </div>
             </Reveal>
@@ -320,7 +293,7 @@ const HeroSection: React.FC = () => {
       </div>
       <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </section>
-    
+
   );
 };
 

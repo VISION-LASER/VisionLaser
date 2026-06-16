@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import logo from "../../assets/vision-laser-logo.jpg";
+import logo from "../../assets/vision-laser-logo.jpeg";
 import { useState, useEffect } from "react";
 
 import {
