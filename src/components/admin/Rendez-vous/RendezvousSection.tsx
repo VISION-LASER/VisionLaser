@@ -85,6 +85,7 @@ const RendezvousSection: React.FC = () => {
 
       const data = await response.json();
       const rdvs = data.data || data;
+      console.log("🗓️ date_creneau raw depuis API:", rdvs[0]?.date_creneau);
       setAppointments(rdvs);
     } catch (err) {
       setError("Impossible de charger les rendez-vous");
