@@ -7,28 +7,6 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   const [sent, setSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [faqAnswers, setFaqAnswers] = useState<any>(null);
-
-  // Récupérer les réponses FAQ du localStorage au chargement du composant
-  // useEffect(() => {
-  //   const savedAnswers = localStorage.getItem('faq_answers');
-  //   if (savedAnswers) {
-  //     try {
-  //       const parsed = JSON.parse(savedAnswers);
-  //       // S'assurer que parsed est un tableau
-  //       if (Array.isArray(parsed)) {
-  //         setFaqAnswers(parsed);
-  //         if (parsed.length > 0) {
-  //           toast.success('Vos réponses aux questions ont été récupérées', {
-  //             position: 'bottom-right',
-  //             duration: 3000,
-  //           });
-  //         }
-  //       }
-  //     } catch (e) {
-  //       console.error('Erreur lors du parsing des réponses FAQ:', e);
-  //     }
-  //   }
-  // }, []);
   
   useEffect(() => {
     const loadQuizAnswers = () => {
@@ -79,20 +57,35 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
 
     const formData = new FormData(e.currentTarget);
 
-    // Préparer les données FAQ correctement
+    // Préparer les données FAQ - seulement si elles existent
     let faqToSend = null;
     if (faqAnswers && Array.isArray(faqAnswers) && faqAnswers.length > 0) {
       faqToSend = faqAnswers;
     }
 
-    const data = {
-      firstName: formData.get("firstName"),
-      lastName: formData.get("lastName"),
+    // Récupérer le nom complet et le séparer en prénom et nom
+    const fullName = formData.get("fullName") as string;
+    const nameParts = fullName.trim().split(" ");
+    const firstName = nameParts[0] || "";
+    const lastName = nameParts.slice(1).join(" ") || "";
+
+    // Récupérer l'email - NE PAS envoyer si vide
+    const emailValue = formData.get("email") as string;
+    const email = emailValue && emailValue.trim() !== "" ? emailValue : null;
+
+    // Construire l'objet data - ne pas inclure faq si null
+    const data: any = {
+      firstName,
+      lastName,
       phone: formData.get("phone"),
-      email: formData.get("email"),
+      email: email,
       message: formData.get("message"),
-      faq: faqToSend,
     };
+
+    // Ajouter faq seulement s'il n'est pas null
+    if (faqToSend) {
+      data.faq = faqToSend;
+    }
 
     console.log("📤 Données envoyées:", data);
 
@@ -161,7 +154,9 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       {/* Affichage des réponses FAQ si elles existent */}
       {faqAnswers && faqAnswers.length > 0 && (
         <div className="rounded-lg border border-gold/20 bg-gold/5 p-4">
-          <h4 className="mb-2 text-sm font-semibold text-navy uppercase tracking-wide"></h4>
+          <h4 className="mb-2 text-sm font-semibold text-navy uppercase tracking-wide">
+            Vos réponses aux questions :
+          </h4>
           <ul className="space-y-2 text-xs">
             {faqAnswers.map((item: any, idx: number) => (
               <li
@@ -171,21 +166,24 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
                 <span className="block font-medium text-navy">
                   {item.question}
                 </span>
-                {/* <span className="text-muted-foreground"> // Supprimer la response
-                  {item.answer || "❌ Pas de réponse"}
-                </span> */}
+                <span className="text-muted-foreground">
+                  {item.answer || "Pas de réponse"}
+                </span>
               </li>
             ))}
           </ul>
         </div>
       )}
 
+      {/* Champ Nom et prénom - Pleine largeur */}
+      <Field label="Nom et prénom" name="fullName" required />
+
+      {/* Téléphone et Email - Côte à côte */}
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Prénom" name="firstName" required />
-        <Field label="Nom" name="lastName" required />
         <Field label="Téléphone" name="phone" type="tel" required />
-        <Field label="Email" name="email" type="email" required />
+        <Field label="Email" name="email" type="email" required={false} />
       </div>
+
       <div>
         <label className="mb-1.5 block text-sm font-medium text-navy">
           Message (optionnel)

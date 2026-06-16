@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock, ArrowRight, Calendar } from "lucide-react";
 import { FaYoutube, FaInstagram, FaTiktok } from "react-icons/fa";
-import logo from "../../assets/vision-laser-logo.jpg";
+import logo from "../../assets/vision-laser-logo.jpeg";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,7 +18,7 @@ function Footer() {
   const contactInfo = {
     address: "Polyclinique du Val de Sambre, Rte de Mons 162, 59600 Maubeuge",
     phone: "+33 7 59 50 71 84",
-    email: "contact@vision-laser.fr",
+    email: "contact@vision-laser.eu",
     hours: "Lun – Ven · 9h – 18h",
   };
 
@@ -235,9 +235,6 @@ function Footer() {
               CGV
             </Link>
           </div>
-          <p className="text-xs" style={{ color: "#0C2340", opacity: 0.4 }}>
-            Informations médicales validées par le Dr. Anthony Sion
-          </p>
         </div>
       </div>
     </footer>
