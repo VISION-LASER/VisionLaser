@@ -44,7 +44,7 @@ import { useAnalytics } from "./hooks/useAnalytics";
 import ScrollToTop from "./components/layout/ScrollToTop";
 import MentionLegalesPage from "./pages/user/MentionLegalesPage";
 import PolitiqueConfidentialitePage from "./pages/user/PolitiqueConfidentialitePage";
-import CGVPage from "./pages/user/CgvPage";
+import CGVPage from "./pages/user/CGVPage";
 
 
 const queryClient = new QueryClient();
