@@ -8,10 +8,10 @@ const MentionLegalesPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Mentions légales · Vision Laser Hauts-de-France</title>
+        <title>Mentions légales · Vision Laser  </title>
         <meta
           name="description"
-          content="Mentions légales du centre Vision Laser Hauts-de-France - Chirurgie réfractive au laser."
+          content="Mentions légales du centre Vision Laser   - Chirurgie réfractive au laser."
         />
       </Helmet>
 
@@ -40,7 +40,7 @@ const MentionLegalesPage: React.FC = () => {
                 <span className="w-1 h-6 bg-gold rounded-full" />
                 1. Éditeur du site
               </h2>
-              <p className="mb-1"><strong>Centre Vision Laser Hauts-de-France</strong></p>
+              <p className="mb-1"><strong>Centre Vision Laser  </strong></p>
               <p>Société par actions simplifiée à associé unique (SASU)  </p>
               <p>Capital social : 10 000 €  </p>
               <p>RCS : Valenciennes  </p>
@@ -89,7 +89,7 @@ const MentionLegalesPage: React.FC = () => {
               </h2>
               <p>
                 L'ensemble du contenu du site <strong>visionlaser.eu</strong> (textes, images, vidéos, logos, icônes, 
-                mise en page, base de données, etc.) est la propriété exclusive de <strong>Centre Vision Laser Hauts-de-France</strong>, 
+                mise en page, base de données, etc.) est la propriété exclusive de <strong>Centre Vision Laser  </strong>, 
                 sauf mention contraire explicite.
               </p>
               <p className="mt-2">
@@ -118,7 +118,7 @@ const MentionLegalesPage: React.FC = () => {
                 de rectification, de suppression et d'opposition aux données vous concernant.
               </p>
               <p className="mt-2">
-                <strong>Responsable du traitement :</strong> Centre Vision Laser Hauts-de-France<br />
+                <strong>Responsable du traitement :</strong> Centre Vision Laser  <br />
                 <strong>Finalités :</strong> Gestion des demandes de rendez-vous, informations médicales, 
                 statistiques internes.
               </p>
@@ -189,13 +189,13 @@ const MentionLegalesPage: React.FC = () => {
                 7. Limitation de responsabilité
               </h2>
               <p>
-                <strong>Centre Vision Laser Hauts-de-France</strong> met tout en œuvre pour assurer l'exactitude des 
+                <strong>Centre Vision Laser  </strong> met tout en œuvre pour assurer l'exactitude des 
                 informations diffusées sur ce site, mais ne saurait garantir l'exhaustivité ou l'absence 
                 d'erreurs.
               </p>
               <p className="mt-2">
                 Le site peut contenir des liens vers des sites tiers. La responsabilité de <strong>Centre Vision 
-                Laser Hauts-de-France</strong> ne saurait être engagée quant au contenu de ces sites.
+                Laser  </strong> ne saurait être engagée quant au contenu de ces sites.
               </p>
               <p className="mt-2">
                 <strong>Responsabilité technique :</strong> L'utilisateur est informé des risques liés à 

@@ -9,10 +9,10 @@ const CGVPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Conditions Générales de Vente · Vision Laser Hauts-de-France</title>
+        <title>Conditions Générales de Vente · Vision Laser  </title>
         <meta
           name="description"
-          content="Conditions Générales de Vente du centre Vision Laser Hauts-de-France pour la vente de prestations et de matériel d'optique."
+          content="Conditions Générales de Vente du centre Vision Laser   pour la vente de prestations et de matériel d'optique."
         />
       </Helmet>
 
@@ -42,14 +42,14 @@ const CGVPage: React.FC = () => {
                 Préambule
               </h2>
               <p>
-                Les présentes Conditions Générales de Vente (ci-après « CGV ») s'appliquent à l'ensemble des ventes de prestations de services (consultations, bilans, interventions chirurgicales) et de produits (matériel médical, optique) proposés par la société <strong>Centre Vision Laser Hauts-de-France</strong> à ses clients particuliers, que ce soit sur son site internet <strong>visionlaser.eu</strong> ou en son établissement.
+                Les présentes Conditions Générales de Vente (ci-après « CGV ») s'appliquent à l'ensemble des ventes de prestations de services (consultations, bilans, interventions chirurgicales) et de produits (matériel médical, optique) proposés par la société <strong>Centre Vision Laser  </strong> à ses clients particuliers, que ce soit sur son site internet <strong>visionlaser.eu</strong> ou en son établissement.
               </p>
               <p className="mt-2">
                 Toute commande ou réservation de prestation implique l'acceptation pleine et entière des présentes CGV par le client.
               </p>
               <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                 <p className="font-semibold text-navy">Éditeur et vendeur :</p>
-                <p><strong>Centre Vision Laser Hauts-de-France</strong></p>
+                <p><strong>Centre Vision Laser  </strong></p>
                 <p>SASU au capital de 10 000 €</p>
                 <p>RCS Valenciennes - SIREN : 930 010 871</p>
                 <p>Siège social : 162 Route de Mons, Polyclinique du Parc, 59600 Maubeuge [citation:1]</p>
@@ -67,7 +67,7 @@ const CGVPage: React.FC = () => {
                 Article 1 - Objet et champ d'application
               </h2>
               <p>
-                Les présentes CGV ont pour objet de définir les droits et obligations des parties dans le cadre de la vente en ligne et en magasin des prestations et produits proposés par <strong>Centre Vision Laser Hauts-de-France</strong>.
+                Les présentes CGV ont pour objet de définir les droits et obligations des parties dans le cadre de la vente en ligne et en magasin des prestations et produits proposés par <strong>Centre Vision Laser  </strong>.
               </p>
               <p className="mt-2">
                 Elles sont applicables à toute personne physique majeure, non commerçante, agissant pour ses besoins personnels (ci-après « le Client ») [citation:4][citation:7].
@@ -107,7 +107,7 @@ const CGVPage: React.FC = () => {
                 Les prix sont indiqués en euros, toutes taxes comprises (TTC), incluant la TVA au taux en vigueur [citation:9][citation:10]. Ils ne comprennent pas les frais de livraison, qui sont indiqués séparément avant la validation de la commande.
               </p>
               <p className="mt-2">
-                <strong>Centre Vision Laser Hauts-de-France</strong> se réserve le droit de modifier ses tarifs à tout moment. Les produits sont facturés sur la base du tarif en vigueur au moment de la validation de la commande [citation:4].
+                <strong>Centre Vision Laser  </strong> se réserve le droit de modifier ses tarifs à tout moment. Les produits sont facturés sur la base du tarif en vigueur au moment de la validation de la commande [citation:4].
               </p>
             </section>
 
@@ -126,7 +126,7 @@ const CGVPage: React.FC = () => {
                 <strong>Pour les produits :</strong> Le processus de commande en ligne comprend la sélection du produit, la validation du panier, le choix de la livraison, l'acceptation des CGV et le paiement. La commande est définitive après la confirmation de paiement [citation:7][citation:9].
               </p>
               <p className="mt-2">
-                <strong>Centre Vision Laser Hauts-de-France</strong> se réserve le droit de refuser ou d'annuler toute commande en cas de litige, d'incident de paiement ou de fraude présumée [citation:4][citation:9].
+                <strong>Centre Vision Laser  </strong> se réserve le droit de refuser ou d'annuler toute commande en cas de litige, d'incident de paiement ou de fraude présumée [citation:4][citation:9].
               </p>
             </section>
 
@@ -210,7 +210,7 @@ const CGVPage: React.FC = () => {
                 Article 9 - Responsabilité
               </h2>
               <p>
-                <strong>Centre Vision Laser Hauts-de-France</strong> met tout en œuvre pour assurer la conformité des informations et des produits, mais ne saurait être tenu responsable des dommages indirects (perte de données, perte de bénéfice, etc.) liés à l'utilisation du site ou des produits.
+                <strong>Centre Vision Laser  </strong> met tout en œuvre pour assurer la conformité des informations et des produits, mais ne saurait être tenu responsable des dommages indirects (perte de données, perte de bénéfice, etc.) liés à l'utilisation du site ou des produits.
               </p>
               <p className="mt-2">
                 La responsabilité médicale est celle du professionnel de santé exerçant au sein de la structure, conformément aux règles déontologiques et légales.
@@ -239,7 +239,7 @@ const CGVPage: React.FC = () => {
                 Article 11 - Propriété intellectuelle
               </h2>
               <p>
-                Tous les éléments du site <strong>visionlaser.eu</strong> (textes, logos, images, vidéos) sont la propriété exclusive de <strong>Centre Vision Laser Hauts-de-France</strong>. Toute reproduction est interdite sans autorisation préalable.
+                Tous les éléments du site <strong>visionlaser.eu</strong> (textes, logos, images, vidéos) sont la propriété exclusive de <strong>Centre Vision Laser  </strong>. Toute reproduction est interdite sans autorisation préalable.
               </p>
             </section>
 

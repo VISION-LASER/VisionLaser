@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Clock, ArrowRight, Calendar } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ArrowRight, Calendar, ExternalLink } from "lucide-react";
 import { FaYoutube, FaInstagram, FaTiktok } from "react-icons/fa";
+import { useState } from "react";
 import logo from "../../assets/vision-laser-logo.jpeg";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   const quickLinks = [
     { name: "FemtoLASIK", path: "/femtolasik" },
@@ -33,28 +35,32 @@ function Footer() {
     { 
       name: "TikTok", 
       icon: FaTiktok, 
-      url: "https://tiktok.com/@CentreVisionLaser",
+      url: "https://tiktok.com/@centre.vision.las",
       username: "@CentreVisionLaser",
       color: "#000000" 
     },
     { 
       name: "YouTube", 
       icon: FaYoutube, 
-      url: "https://youtube.com/@visionlaser",
+      url: "https://youtube.com/@Centrevisionlaser",
       username: "Vision Laser",
       color: "#FF0000" 
     },
   ];
 
+  // URL de la carte satellite Google Maps pour Maubeuge
+  const MAPS_EMBED_URL = 
+    "https://maps.google.com/maps?q=Polyclinique+du+Val+de+Sambre+162+Rte+de+Mons+59600+Maubeuge&output=embed&z=16&t=k";
+
   return (
     <footer className="relative mt-20 bg-linear-to-b from-white to-gray-50 border-t border-gray-100">
       
       <div className="container-page mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        {/* Grille principale */}
-        <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-12">
+        {/* Grille principale - 4 colonnes */}
+        <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-4">
           
-          {/* Colonne 1 - Logo & Description - 5 colonnes */}
-          <div className="lg:col-span-5 space-y-4">
+          {/* Colonne 1 - Logo & Description */}
+          <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative">
                 <img 
@@ -69,17 +75,15 @@ function Footer() {
                 <span className="text-lg font-bold block" style={{ color: "#0C2340" }}>
                   Vision Laser
                 </span>
-                <span className="text-xs" style={{ color: "#C9A84C" }}>
-                  Hauts-de-France
-                </span>
               </div>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: "#0C2340", opacity: 0.7 }}>
-              Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser. 
+              Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser. <br />
               Une approche médicale, sobre et personnalisée pour chaque patient.
             </p>
+            
             {/* Badge de confiance */}
-            <div className="flex items-center gap-2 pt-2">
+            <div className="flex flex-wrap items-center gap-2 pt-2">
               <div className="flex items-center gap-1 px-2 py-1 bg-[#C9A84C]/10 rounded-full">
                 <span className="text-xs font-medium" style={{ color: "#C9A84C" }}>✓</span>
                 <span className="text-xs" style={{ color: "#0C2340", opacity: 0.8 }}>Expertise reconnue</span>
@@ -89,10 +93,46 @@ function Footer() {
                 <span className="text-xs" style={{ color: "#0C2340", opacity: 0.8 }}>Équipements de pointe</span>
               </div>
             </div>
+
+            {/* Réseaux sociaux */}
+            <div className="pt-4">
+              <h4 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#0C2340", opacity: 0.6 }}>
+                Suivez-nous
+              </h4>
+              <div className="flex flex-wrap gap-3">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative transition-all duration-300 hover:scale-110"
+                    aria-label={`Suivez-nous sur ${social.name}`}
+                  >
+                    <div 
+                      className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 group-hover:shadow-md"
+                      style={{ 
+                        backgroundColor: `${social.color}15`,
+                        border: `1px solid ${social.color}30`
+                      }}
+                    >
+                      <social.icon 
+                        size={18} 
+                        className="transition-all duration-300"
+                        style={{ color: social.color }}
+                      />
+                    </div>
+                    <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                      {social.username}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Colonne 2 - Liens rapides - 3 colonnes */}
-          <div className="lg:col-span-3">
+          {/* Colonne 2 - Liens rapides */}
+          <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 flex items-center gap-2" style={{ color: "#0C2340" }}>
               <span className="w-1 h-4 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
               Liens rapides
@@ -113,18 +153,29 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Colonne 3 - Contact & Horaires - 4 colonnes */}
-          <div className="lg:col-span-4">
+          {/* Colonne 3 - Contact & Horaires */}
+          <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 flex items-center gap-2" style={{ color: "#0C2340" }}>
               <span className="w-1 h-4 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
-              Contact & Horaires
+              Contact
             </h3>
             <div className="space-y-3">
               <div className="flex items-start gap-3 group">
-                <MapPin size={16} className="mt-0.5 shrink-0 transition-colors" style={{ color: "#C9A84C" }} />
-                <p className="text-sm leading-relaxed" style={{ color: "#0C2340", opacity: 0.7 }}>
-                  {contactInfo.address}
-                </p>
+                <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "#C9A84C" }} />
+                <div>
+                  <p className="text-sm leading-relaxed" style={{ color: "#0C2340", opacity: 0.7 }}>
+                    {contactInfo.address}
+                  </p>
+                  <a
+                    href="https://www.google.com/maps/dir//Polyclinique+du+Val+de+Sambre,+162+Rte+de+Mons,+59600+Maubeuge"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs mt-1 transition-colors hover:opacity-100"
+                    style={{ color: "#C9A84C", opacity: 0.8 }}
+                  >
+                    Itinéraire <ExternalLink size={12} />
+                  </a>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <Phone size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
@@ -153,43 +204,66 @@ function Footer() {
                 </p>
               </div>
             </div>
+          </div>
 
-            {/* Réseaux sociaux - Placés juste après les horaires */}
-            <div className="mt-6 pt-4 border-t border-gray-100">
-              <h4 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#0C2340", opacity: 0.6 }}>
-                Suivez-nous
-              </h4>
-              <div className="flex flex-wrap gap-3">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative transition-all duration-300 hover:scale-110"
-                    aria-label={`Suivez-nous sur ${social.name}`}
-                  >
-                    <div 
-                      className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 group-hover:shadow-md"
-                      style={{ 
-                        backgroundColor: `${social.color}15`,
-                        border: `1px solid ${social.color}30`
-                      }}
-                    >
-                      <social.icon 
-                        size={18} 
-                        className="transition-all duration-300"
-                        style={{ color: social.color }}
-                      />
-                    </div>
-                    {/* Tooltip avec le nom d'utilisateur */}
-                    <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                      {social.username}
-                    </span>
-                  </a>
-                ))}
-              </div>
+          {/* Colonne 4 - Carte Satellite */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 flex items-center gap-2" style={{ color: "#0C2340" }}>
+              <span className="w-1 h-4 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
+              Nous trouver
+            </h3>
+
+            {/* Conteneur de la carte avec skeleton */}
+            <div className="relative w-full overflow-hidden rounded-xl shadow-md" style={{ aspectRatio: "4/3" }}>
+              {/* Skeleton affiché jusqu'au chargement de l'iframe */}
+              {!mapLoaded && (
+                <div className="absolute inset-0 bg-gray-100 flex flex-col items-center justify-center gap-3 border border-gray-200">
+                  <MapPin className="h-8 w-8" style={{ color: "#C9A84C", opacity: 0.3 }} />
+                  <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">
+                    Chargement…
+                  </span>
+                </div>
+              )}
+
+              <iframe
+                title="Localisation Vision Laser - Maubeuge"
+                src={MAPS_EMBED_URL}
+                className={[
+                  "absolute inset-0 w-full h-full border-0 transition-opacity duration-500",
+                  mapLoaded ? "opacity-100" : "opacity-0",
+                ].join(" ")}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                onLoad={() => setMapLoaded(true)}
+              />
+
+              {/* Coin doré décoratif */}
+              <div
+                className="absolute bottom-0 left-0 right-0 h-[3px] pointer-events-none"
+                style={{ background: "#C9A84C" }}
+              />
+
+              {/* Bouton Itinéraire overlay */}
+              <a
+                href="https://www.google.com/maps/dir//Polyclinique+du+Val+de+Sambre,+162+Rte+de+Mons,+59600+Maubeuge"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={[
+                  "absolute bottom-4 right-3 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg transition-all duration-500 hover:scale-105",
+                  "bg-white text-[#0C2340] hover:bg-[#C9A84C] hover:text-white shadow-md",
+                  mapLoaded ? "opacity-100" : "opacity-0",
+                ].join(" ")}
+              >
+                Itinéraire <ExternalLink className="h-3 w-3" />
+              </a>
             </div>
+
+            {/* Adresse sous la carte */}
+            <p className="text-xs mt-3 flex items-center gap-1.5" style={{ color: "#0C2340", opacity: 0.5 }}>
+              <MapPin className="h-3 w-3 flex-shrink-0" style={{ color: "#C9A84C" }} />
+              Maubeuge
+            </p>
           </div>
         </div>
 
@@ -222,7 +296,7 @@ function Footer() {
         {/* Copyright */}
         <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col items-center justify-between gap-3 text-center md:flex-row md:text-left">
           <p className="text-xs" style={{ color: "#0C2340", opacity: 0.5 }}>
-            © {currentYear} Centre Vision Laser des Hauts-de-France. Tous droits réservés.
+            © {currentYear} Centre Vision Laser. Tous droits réservés.
           </p>
           <div className="flex gap-6">
             <Link to="/mentions-legales" className="text-xs transition-colors hover:opacity-100" style={{ color: "#0C2340", opacity: 0.5 }}>

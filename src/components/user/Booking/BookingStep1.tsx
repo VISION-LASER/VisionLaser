@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User, Mail, Phone, Calendar, FileText, ChevronRight } from "lucide-react";
+import { User, Mail, Phone, Calendar, FileText, ChevronRight, Check } from "lucide-react";
 import { MOTIFS, type PatientInfo } from "../../../types/booking";
 
 interface Step1Props {
@@ -21,9 +21,12 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
     data.lastName ? `${data.firstName} ${data.lastName}` : data.firstName
   );
 
+  const [selectedMotifs, setSelectedMotifs] = useState<string[]>(data.motif ? [data.motif] : []);
+  const [acceptConditions, setAcceptConditions] = useState(false);
+
   const handleFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value;
-    setRawFullName(raw); // stocke la valeur brute TELLE QUELLE, espace inclus
+    setRawFullName(raw);
 
     const spaceIndex = raw.indexOf(" ");
     if (spaceIndex === -1) {
@@ -37,6 +40,24 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
     }
   };
 
+  const toggleMotif = (motifValue: string) => {
+    setSelectedMotifs(prev => {
+      const newMotifs = prev.includes(motifValue)
+        ? prev.filter(m => m !== motifValue)
+        : [...prev, motifValue];
+      
+      // Mettre à jour le data.motif avec le premier motif sélectionné ou vide
+      onChange({ ...data, motif: newMotifs.length > 0 ? newMotifs[0] : "" });
+      return newMotifs;
+    });
+  };
+
+  const handleSubmit = () => {
+    if (acceptConditions) {
+      onNext();
+    }
+  };
+
   return (
     <div className="space-y-5">
       <div>
@@ -47,23 +68,25 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
         </p>
       </div>
 
-      {/* Ligne 1 : Nom complet (large) + Téléphone */}
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="sm:col-span-2">
-          <label className="mb-1.5 block text-xs font-medium text-navy/70">
-            Nom et prénom <span className="text-rose-500">*</span>
-          </label>
-          <div className="relative">
-            <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
-            <input
-              type="text"
-              value={rawFullName}
-              onChange={handleFullName}
-              placeholder="Tonny Dupont"
-              className={`${inputClass} pl-10`}
-            />
-          </div>
+      {/* Ligne 1 : Nom complet seul */}
+      <div>
+        <label className="mb-1.5 block text-xs font-medium text-navy/70">
+          Nom et prénom <span className="text-rose-500">*</span>
+        </label>
+        <div className="relative">
+          <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
+          <input
+            type="text"
+            value={rawFullName}
+            onChange={handleFullName}
+            placeholder="Jean Dupont"
+            className={`${inputClass} pl-10`}
+          />
         </div>
+      </div>
+
+      {/* Ligne 2 : Téléphone et Email */}
+      <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1.5 block text-xs font-medium text-navy/70">
             Téléphone <span className="text-rose-500">*</span>
@@ -79,14 +102,9 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
             />
           </div>
         </div>
-      </div>
-
-      {/* Ligne 2 : Email (optionnel), Date de naissance, Motif */}
-      <div className="grid gap-4 sm:grid-cols-3">
         <div>
           <label className="mb-1.5 block text-xs font-medium text-navy/70">
-            Email{" "}
-            <span className="text-navy/40 font-normal">(optionnel)</span>
+            Email <span className="text-navy/40 font-normal">(optionnel)</span>
           </label>
           <div className="relative">
             <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
@@ -99,55 +117,87 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
             />
           </div>
         </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-navy/70">
-            Date de naissance
-          </label>
-          <div className="relative">
-            <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
-            <input
-              type="date"
-              value={data.birthDate}
-              onChange={set("birthDate")}
-              className={`${inputClass} pl-10`}
-            />
-          </div>
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-navy/70">
-            Motif de consultation{" "}
-            <span className="text-navy/40 font-normal">(optionnel)</span>
-          </label>
-          <select value={data.motif} onChange={set("motif")} className={inputClass}>
-            <option value="">Sélectionner un motif…</option>
-            {MOTIFS.map((m) => (
-              <option key={m.value} value={m.value}>
-                {m.label}
-              </option>
-            ))}
-          </select>
-        </div>
       </div>
 
-      {/* Notes */}
+      {/* Ligne 3 : Date de naissance seul */}
       <div>
         <label className="mb-1.5 block text-xs font-medium text-navy/70">
-          Informations complémentaires
+          Date de naissance
         </label>
         <div className="relative">
-          <FileText className="absolute left-3 top-3 h-4 w-4 text-navy/30" />
-          <textarea
-            value={data.notes}
-            onChange={set("notes")}
-            placeholder="Antécédents, correction actuelle, questions…"
-            rows={3}
-            className={`${inputClass} resize-none pl-10`}
+          <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
+          <input
+            type="date"
+            value={data.birthDate}
+            onChange={set("birthDate")}
+            className={`${inputClass} pl-10`}
           />
         </div>
       </div>
 
-      {/* Bouton toujours actif */}
-      <button type="button" onClick={onNext} className="btn-gold w-full">
+      {/* Ligne 4 : Motif de consultation en 3 boutons */}
+      <div>
+        <label className="mb-1.5 block text-xs font-medium text-navy/70">
+          Motif de consultation <span className="text-navy/40 font-normal">(optionnel)</span>
+        </label>
+        <div className="flex flex-wrap gap-3">
+          {MOTIFS.map((m) => (
+            <button
+              key={m.value}
+              type="button"
+              onClick={() => toggleMotif(m.value)}
+              className={`
+                px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200
+                ${selectedMotifs.includes(m.value)
+                  ? "bg-navy text-white shadow-md ring-2 ring-navy/20"
+                  : "bg-[color:var(--cream)] text-navy/70 border border-border hover:border-navy/30 hover:bg-white"
+                }
+              `}
+            >
+              <span className="flex items-center gap-2">
+                {selectedMotifs.includes(m.value) && <Check className="h-4 w-4" />}
+                {m.label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Ligne 5 : Checkbox conditions */}
+      <div className="flex items-start gap-3 pt-2">
+        <button
+          type="button"
+          onClick={() => setAcceptConditions(!acceptConditions)}
+          className={`
+            mt-0.5 h-5 w-5 rounded-md border-2 flex items-center justify-center transition-all duration-200 flex-shrink-0
+            ${acceptConditions
+              ? "bg-navy border-navy text-white"
+              : "border-border bg-white hover:border-navy/30"
+            }
+          `}
+        >
+          {acceptConditions && <Check className="h-3.5 w-3.5" />}
+        </button>
+        <div>
+          <label className="text-sm text-navy/80 cursor-pointer" onClick={() => setAcceptConditions(!acceptConditions)}>
+            J'accepte les conditions générales d'utilisation
+          </label>
+          <p className="text-xs text-navy/50 mt-0.5">
+            En cliquant sur ce bouton, vous acceptez que vos données soient traitées conformément à notre politique de confidentialité.
+          </p>
+        </div>
+      </div>
+
+      {/* Bouton avec condition */}
+      <button 
+        type="button" 
+        onClick={handleSubmit}
+        disabled={!acceptConditions}
+        className={`
+          btn-gold w-full transition-all duration-200
+          ${!acceptConditions && "opacity-50 cursor-not-allowed"}
+        `}
+      >
         Choisir un créneau
         <ChevronRight className="h-4 w-4" />
       </button>

@@ -8,7 +8,7 @@ import BlogSection from "../../components/user/Blog/BlogSection";
 const BlogPage: React.FC = () => (
   <>
     <Helmet>
-      <title>Blog · Vision Laser Hauts-de-France</title>
+      <title>Blog · Vision Laser  </title>
       <meta
         name="description"
         content="Articles médicaux du Dr. Anthony Sion : FemtoLASIK, TPRK, presbytie et conseils en chirurgie réfractive."

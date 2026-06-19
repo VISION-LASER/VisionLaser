@@ -7,7 +7,7 @@ import DefautsVisuelsGridSection from "../../components/user/DefautsVisuels/Defa
 const DefautsVisuelsPage: React.FC = () => (
   <>
     <Helmet>
-      <title>Défauts visuels · Vision Laser Hauts-de-France</title>
+      <title>Défauts visuels · Vision Laser  </title>
       <meta
         name="description"
         content="Myopie, hypermétropie, astigmatisme, presbytie : comprendre les défauts visuels qui peuvent être corrigés par chirurgie réfractive."

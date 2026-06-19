@@ -38,7 +38,7 @@
 //               Administration
 //             </h2>
 //             <p className="text-sm mt-2" style={{ color: "#0C2340", opacity: 0.6 }}>
-//               Centre Vision Laser des Hauts-de-France
+//               Centre Vision Laser des  
 //             </p>
 //           </div>
 
@@ -106,7 +106,7 @@
 
 //           <div className="text-center pt-4">
 //             <p className="text-xs" style={{ color: "#0C2340", opacity: 0.4 }}>
-//               © 2026 Centre Vision Laser des Hauts-de-France
+//               © 2026 Centre Vision Laser des  
 //             </p>
 //           </div>
 //         </div>
@@ -156,7 +156,7 @@ const LoginAdmin: React.FC = () => {
               Administration
             </h2>
             <p className="text-sm mt-2" style={{ color: "#0C2340", opacity: 0.6 }}>
-              Centre Vision Laser des Hauts-de-France
+              Centre Vision Laser des  
             </p>
           </div>
 
@@ -224,7 +224,7 @@ const LoginAdmin: React.FC = () => {
 
           <div className="text-center pt-4">
             <p className="text-xs" style={{ color: "#0C2340", opacity: 0.4 }}>
-              © 2026 Centre Vision Laser des Hauts-de-France
+              © 2026 Centre Vision Laser des  
             </p>
           </div>
         </div>

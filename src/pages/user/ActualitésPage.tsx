@@ -8,7 +8,7 @@ import VideoSection from "../../components/user/Actualite/VideoSection";
 const ActualitesPage: React.FC = () => (
   <>
     <Helmet>
-      <title>Actualités · Vision Laser Hauts-de-France</title>
+      <title>Actualités · Vision Laser  </title>
       <meta
         name="description"
         content="Retrouvez nos vidéos TikTok, YouTube et Facebook : interventions, conseils et témoignages."

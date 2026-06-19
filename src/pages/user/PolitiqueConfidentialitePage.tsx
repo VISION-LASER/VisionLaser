@@ -9,10 +9,10 @@ const PolitiqueConfidentialitePage: React.FC = () => {
     return (
         <>
             <Helmet>
-                <title>Politique de confidentialité · Vision Laser Hauts-de-France</title>
+                <title>Politique de confidentialité · Vision Laser  </title>
                 <meta
                     name="description"
-                    content="Politique de confidentialité et protection des données personnelles du centre Vision Laser Hauts-de-France."
+                    content="Politique de confidentialité et protection des données personnelles du centre Vision Laser  ."
                 />
             </Helmet>
 
@@ -38,7 +38,7 @@ const PolitiqueConfidentialitePage: React.FC = () => {
                         {/* Introduction */}
                         <section>
                             <p>
-                                <strong>Centre Vision Laser Hauts-de-France</strong> (ci-après « nous ») accorde une importance particulière à la protection de vos données personnelles. Cette politique a pour objectif de vous informer de manière simple, claire et transparente sur la manière dont nous collectons, utilisons et protégeons vos informations personnelles, conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés [citation:1][citation:7].
+                                <strong>Centre Vision Laser  </strong> (ci-après « nous ») accorde une importance particulière à la protection de vos données personnelles. Cette politique a pour objectif de vous informer de manière simple, claire et transparente sur la manière dont nous collectons, utilisons et protégeons vos informations personnelles, conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés [citation:1][citation:7].
                             </p>
                         </section>
 
@@ -54,7 +54,7 @@ const PolitiqueConfidentialitePage: React.FC = () => {
                                 Le responsable du traitement de vos données personnelles est la société :
                             </p>
                             <p className="mt-2">
-                                <strong>Centre Vision Laser Hauts-de-France</strong><br />
+                                <strong>Centre Vision Laser  </strong><br />
                                 SASU au capital de 10 000 €<br />
                                 RCS : Valenciennes<br />
                                 SIREN : 930 010 871<br />
@@ -134,7 +134,7 @@ const PolitiqueConfidentialitePage: React.FC = () => {
                                 Vos données personnelles sont accessibles uniquement :
                             </p>
                             <ul className="list-disc list-inside mt-2 space-y-1 text-gray-600">
-                                <li>Au personnel médical et administratif de <strong>Centre Vision Laser Hauts-de-France</strong>, habilité à les traiter dans le cadre de ses fonctions [citation:1].</li>
+                                <li>Au personnel médical et administratif de <strong>Centre Vision Laser  </strong>, habilité à les traiter dans le cadre de ses fonctions [citation:1].</li>
                                 <li>À nos éventuels sous-traitants techniques (hébergeur du site, prestataire de prise de rendez-vous, etc.) qui agissent selon nos instructions [citation:1].</li>
                             </ul>
                             <p className="mt-2">

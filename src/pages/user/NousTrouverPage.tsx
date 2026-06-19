@@ -63,7 +63,7 @@ const NousTrouver = () => {
             <PageHero
                 eyebrow="Transparence"
                 title="Nous trouver"
-                intro="Vision Laser - Hauts-de-France."
+                intro="Vision Laser -  ."
             />
 
 
@@ -193,7 +193,7 @@ const NousTrouver = () => {
                                                 <Popup>
                                                     <div className="text-center">
                                                         <p className="font-semibold text-navy">Vision Laser</p>
-                                                        <p className="text-xs text-muted-foreground">Hauts-de-France</p>
+                                                        <p className="text-xs text-muted-foreground"> </p>
                                                         <a
                                                             href={`https://www.google.com/maps/dir//${coordinates[0]},${coordinates[1]}`}
                                                             target="_blank"
