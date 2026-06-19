@@ -219,8 +219,7 @@ const HeroSection: React.FC = () => {
                   </p>
 
                   {/* Features - agrandies */}
-                  <div className="mt-6 space-y-3">
-
+                  <div className="mt-6 space-y-4">
                     {[
                       {
                         icon: Shield,
@@ -231,27 +230,33 @@ const HeroSection: React.FC = () => {
                         text: "Analyse complète et personnalisée",
                       },
                       {
-                        icon: Star,
-                        text: "Accompagnement médical spécialisé",
+                        icon: () => (
+                          <div className="relative flex h-5 w-7 overflow-hidden rounded-sm shadow-sm">
+                            <div className="h-full w-1/3 bg-[#0055A4]" />
+                            <div className="h-full w-1/3 bg-white" />
+                            <div className="h-full w-1/3 bg-[#EF4135]" />
+                          </div>
+                        ),
+                        text: "Made in France",
                       },
                     ].map((item, idx) => (
                       <div
                         key={idx}
-                        className="flex items-start gap-3"
+                        className="group flex items-start gap-4 rounded-xl p-3 transition-all duration-300 hover:bg-navy/5 hover:pl-4"
                       >
-                        <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-gold/10">
-                          <item.icon
-                            size={16}
-                            className="text-gold"
-                          />
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-gold/10 transition-all duration-300 group-hover:scale-105 group-hover:from-gold/30 group-hover:to-gold/20">
+                          {typeof item.icon === "function" && !item.icon.toString().includes("svg") ? (
+                            <item.icon size={18} className="text-gold" strokeWidth={1.8} />
+                          ) : (
+                            <item.icon />
+                          )}
                         </div>
 
-                        <span className="text-sm md:text-base text-navy">
+                        <span className="flex-1 self-center text-sm font-medium leading-relaxed text-navy/90 md:text-base">
                           {item.text}
                         </span>
                       </div>
                     ))}
-
                   </div>
 
                   {/* CTA - agrandi */}
@@ -281,8 +286,13 @@ const HeroSection: React.FC = () => {
                   className="flex shrink-0 items-center gap-10"
                 >
                   {MARQUEE_ITEMS.map((item) => (
-                    <span key={item} className="shrink-0">
-                      · {item}
+                    <span key={item} className="flex shrink-0 items-center gap-10">
+                      <span>{item}</span>
+                      <svg width="20" height="14" viewBox="0 0 60 40" className="shrink-0 rounded-sm shadow-sm">
+                        <rect x="0" y="0" width="20" height="40" fill="#0055A4" />
+                        <rect x="20" y="0" width="20" height="40" fill="#FFFFFF" />
+                        <rect x="40" y="0" width="20" height="40" fill="#EF4135" />
+                      </svg>
                     </span>
                   ))}
                 </div>
