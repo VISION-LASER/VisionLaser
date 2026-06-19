@@ -30,11 +30,11 @@ const HomePage: React.FC = () => {
     <>
       <Helmet>
         <title>
-          Vision Laser Hauts-de-France · Chirurgie réfractive au laser
+          Vision Laser   · Chirurgie réfractive au laser
         </title>
         <meta
           name="description"
-          content="Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser (FemtoLASIK, TPRK). Bilan visuel dans les Hauts-de-France."
+          content="Centre ophtalmologique spécialisé dans la chirurgie réfractive au laser (FemtoLASIK, TPRK). Bilan visuel dans les  ."
         />
       </Helmet>
 

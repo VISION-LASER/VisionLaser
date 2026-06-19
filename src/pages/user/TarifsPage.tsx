@@ -8,7 +8,7 @@ const TarifsPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Tarifs · Vision Laser Hauts-de-France</title>
+        <title>Tarifs · Vision Laser  </title>
         <meta
           name="description"
           content="Tarifs transparents pour la chirurgie réfractive au laser. Bilan visuel, devis personnalisé après examen médical."

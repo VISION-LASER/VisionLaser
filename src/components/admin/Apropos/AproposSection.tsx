@@ -13,7 +13,7 @@ const AproposSection: React.FC = () => {
 
       <div className="bg-white rounded-xl shadow-md p-6 md:p-8 border border-gray-100">
         <h3 className="text-xl font-semibold mb-4" style={{ color: "#0C2340" }}>
-          Centre Vision Laser des Hauts-de-France
+          Centre Vision Laser des  
         </h3>
         
         <div className="space-y-4 text-gray-600">

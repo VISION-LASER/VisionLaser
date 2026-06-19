@@ -83,13 +83,12 @@ export function Header() {
             <Link to="/" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
               <img
                 src={logo}
-                alt="Vision Laser Hauts-de-France"
+                alt="Vision Laser  "
                 width={64} height={64}
                 className="h-16 w-16 rounded-full object-cover ring-2 ring-gold/30 transition-all duration-300 group-hover:scale-[1.04] group-hover:ring-gold/50"
               />
               <span className="hidden text-xs font-semibold tracking-tight text-navy sm:block">
-                VISION-LASER <br />
-                <span className="font-normal text-muted-foreground text-[11px]">HAUTS-DE-FRANCE</span>
+                VISION LASER <br />
               </span>
             </Link>
 

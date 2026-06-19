@@ -10,7 +10,7 @@ const FemtoLasikPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>FemtoLASIK · Vision Laser Hauts-de-France</title>
+        <title>FemtoLASIK · Vision Laser  </title>
         <meta
           name="description"
           content="FemtoLASIK : technique de chirurgie réfractive au laser, indolore, à récupération rapide. Évaluation médicale personnalisée."

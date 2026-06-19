@@ -8,7 +8,7 @@ import ContactMap from "../../components/user/Contact/ContactMap";
 const ContactPage: React.FC = () => (
   <>
     <Helmet>
-      <title>Contact · Bilan visuel · Vision Laser Hauts-de-France</title>
+      <title>Contact · Bilan visuel · Vision Laser  </title>
       <meta
         name="description"
         content="Demandez votre bilan visuel. Un membre de notre équipe vous recontacte sous 48 h ouvrées."

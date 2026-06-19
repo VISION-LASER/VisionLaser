@@ -21,7 +21,7 @@ import { Counter } from "../../layout/Counter";
 import BookingModal from "../Booking/BookingModal";
 
 const SLIDES = [
-  { src: clinic1, alt: "Centre Vision Laser des Hauts-de-France" },
+  { src: clinic1, alt: "Centre Vision Laser des  " },
   { src: clinic2, alt: "Salle d'opération Centre Vision Laser" },
   { src: clinic3, alt: "Équipements Centre Vision Laser" },
 ];

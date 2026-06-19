@@ -9,7 +9,7 @@ const TprkPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>TPRK · Vision Laser Hauts-de-France</title>
+        <title>TPRK · Vision Laser  </title>
         <meta
           name="description"
           content="TPRK : photoablation de surface guidée, sans découpe cornéenne. Une alternative pour certaines cornées fines ou profils sportifs."

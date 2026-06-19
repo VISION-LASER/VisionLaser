@@ -129,7 +129,7 @@ export const MARQUEE_ITEMS = [
   "TPRK",
   "Bilan",
   "Suivi post-opératoire",
-  "Hauts-de-France",
+  " ",
 ];
 
 export const FEMTO_BENEFITS: string[] = [
@@ -234,7 +234,7 @@ export const CONTACT_INFOS: ContactInfo[] = [
   {
     icon: MapPin,
     title: "Centre Vision Laser",
-    lines: ["Hauts-de-France"],
+    lines: [" "],
   },
   {
     icon: Clock,

@@ -210,7 +210,7 @@ const TableauBordSection: React.FC = () => {
         doc.setFontSize(8);
         doc.setTextColor(150, 150, 150);
         doc.text(
-          "Vision Laser Hauts-de-France - Dashboard analytique",
+          "Vision Laser   - Dashboard analytique",
           pageWidth / 2,
           doc.internal.pageSize.getHeight() - 10,
           { align: "center" }

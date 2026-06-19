@@ -9,7 +9,7 @@ const EquipementsPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Équipements · Vision Laser Hauts-de-France</title>
+        <title>Équipements · Vision Laser  </title>
         <meta
           name="description"
           content="Plateau technique d'ophtalmologie : lasers femtoseconde et excimer, équipements de diagnostic de dernière génération."
