@@ -64,9 +64,6 @@ const HomePage: React.FC = () => {
       <div className="-mt-20">
         <Footer />
       </div>
-
-      <StickyWhatsApp />
-      <StickyBooking onOpen={() => setBookingOpen(true)} />
       {/* Barre CTA sticky bas de page — après 40% de scroll */}
       <StickyCtaBar onOpenBooking={() => setBookingOpen(true)} />
 
