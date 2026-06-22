@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User, Mail, Phone, Calendar, FileText, ChevronRight, Check } from "lucide-react";
+import { User, Mail, Phone, Calendar, ChevronRight, Check } from "lucide-react";
 import { MOTIFS, type PatientInfo } from "../../../types/booking";
 
 interface Step1Props {
@@ -16,13 +16,13 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => onChange({ ...data, [field]: e.target.value });
 
-  // State local qui garde exactement ce que l'utilisateur tape
   const [rawFullName, setRawFullName] = useState(
     data.lastName ? `${data.firstName} ${data.lastName}` : data.firstName
   );
 
   const [selectedMotifs, setSelectedMotifs] = useState<string[]>(data.motif ? [data.motif] : []);
-  const [acceptConditions, setAcceptConditions] = useState(false);
+  const [consentContact, setConsentContact] = useState(false);
+  const [consentSante, setConsentSante] = useState(false);
 
   const handleFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value;
@@ -45,17 +45,15 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
       const newMotifs = prev.includes(motifValue)
         ? prev.filter(m => m !== motifValue)
         : [...prev, motifValue];
-      
-      // Mettre à jour le data.motif avec le premier motif sélectionné ou vide
       onChange({ ...data, motif: newMotifs.length > 0 ? newMotifs[0] : "" });
       return newMotifs;
     });
   };
 
+  const canProceed = consentContact && consentSante;
+
   const handleSubmit = () => {
-    if (acceptConditions) {
-      onNext();
-    }
+    if (canProceed) onNext();
   };
 
   return (
@@ -68,7 +66,7 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
         </p>
       </div>
 
-      {/* Ligne 1 : Nom complet seul */}
+      {/* Nom complet */}
       <div>
         <label className="mb-1.5 block text-xs font-medium text-navy/70">
           Nom et prénom <span className="text-rose-500">*</span>
@@ -85,7 +83,7 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
         </div>
       </div>
 
-      {/* Ligne 2 : Téléphone et Email */}
+      {/* Téléphone et Email */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1.5 block text-xs font-medium text-navy/70">
@@ -119,7 +117,7 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
         </div>
       </div>
 
-      {/* Ligne 3 : Date de naissance seul */}
+      {/* Date de naissance */}
       <div>
         <label className="mb-1.5 block text-xs font-medium text-navy/70">
           Date de naissance
@@ -135,7 +133,7 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
         </div>
       </div>
 
-      {/* Ligne 4 : Motif de consultation en 3 boutons */}
+      {/* Motif de consultation */}
       <div>
         <label className="mb-1.5 block text-xs font-medium text-navy/70">
           Motif de consultation <span className="text-navy/40 font-normal">(optionnel)</span>
@@ -163,39 +161,70 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
         </div>
       </div>
 
-      {/* Ligne 5 : Checkbox conditions */}
-      <div className="flex items-start gap-3 pt-2">
-        <button
-          type="button"
-          onClick={() => setAcceptConditions(!acceptConditions)}
-          className={`
-            mt-0.5 h-5 w-5 rounded-md border-2 flex items-center justify-center transition-all duration-200 flex-shrink-0
-            ${acceptConditions
-              ? "bg-navy border-navy text-white"
-              : "border-border bg-white hover:border-navy/30"
-            }
-          `}
+      {/* Double opt-in RGPD */}
+      <div className="space-y-3 pt-1">
+        <p className="text-[11px] font-medium uppercase tracking-wide text-navy/50">
+          Consentements requis <span className="text-rose-500">*</span>
+        </p>
+
+        {/* Consentement 1 — recontact */}
+        <div
+          className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-4 py-3 transition-colors hover:bg-white"
+          onClick={() => setConsentContact(!consentContact)}
         >
-          {acceptConditions && <Check className="h-3.5 w-3.5" />}
-        </button>
-        <div>
-          <label className="text-sm text-navy/80 cursor-pointer" onClick={() => setAcceptConditions(!acceptConditions)}>
-            J'accepte les conditions générales d'utilisation
-          </label>
-          <p className="text-xs text-navy/50 mt-0.5">
-            En cliquant sur ce bouton, vous acceptez que vos données soient traitées conformément à notre politique de confidentialité.
-          </p>
+          <div
+            className={`
+              mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border-2 transition-all duration-200
+              ${consentContact ? "border-navy bg-navy text-white" : "border-border bg-white hover:border-navy/30"}
+            `}
+          >
+            {consentContact && <Check className="h-3.5 w-3.5" />}
+          </div>
+          <span className="text-xs text-navy/80 leading-relaxed">
+            J'accepte d'être recontacté(e) par{" "}
+            <strong className="font-semibold text-navy">Vision Laser SAS</strong>{" "}
+            dans le cadre de ma demande de bilan visuel.
+          </span>
+        </div>
+
+        {/* Consentement 2 — données de santé */}
+        <div
+          className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-4 py-3 transition-colors hover:bg-white"
+          onClick={() => setConsentSante(!consentSante)}
+        >
+          <div
+            className={`
+              mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border-2 transition-all duration-200
+              ${consentSante ? "border-navy bg-navy text-white" : "border-border bg-white hover:border-navy/30"}
+            `}
+          >
+            {consentSante && <Check className="h-3.5 w-3.5" />}
+          </div>
+          <span className="text-xs text-navy/80 leading-relaxed">
+            J'accepte le traitement de mes informations relatives à ma santé visuelle par{" "}
+            <strong className="font-semibold text-navy">Vision Laser SAS</strong>, conformément à sa{" "}
+            <a
+              href="/politique-confidentialite"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-[color:var(--gold)]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              politique de confidentialité
+            </a>
+            .
+          </span>
         </div>
       </div>
 
-      {/* Bouton avec condition */}
-      <button 
-        type="button" 
+      {/* Bouton suivant */}
+      <button
+        type="button"
         onClick={handleSubmit}
-        disabled={!acceptConditions}
+        disabled={!canProceed}
         className={`
           btn-gold w-full transition-all duration-200
-          ${!acceptConditions && "opacity-50 cursor-not-allowed"}
+          ${!canProceed && "opacity-50 cursor-not-allowed"}
         `}
       >
         Choisir un créneau
