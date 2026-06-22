@@ -53,9 +53,9 @@ function Footer() {
     "https://maps.google.com/maps?q=Polyclinique+du+Val+de+Sambre+162+Rte+de+Mons+59600+Maubeuge&output=embed&z=16&t=k";
 
   return (
-    <footer className="relative mt-20 bg-linear-to-b from-white to-gray-50 border-t border-gray-100">
+    <footer className="relative mt-2 bg-linear-to-b from-white to-gray-50 border-t border-gray-100">
       
-      <div className="container-page mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="container-page mx-auto pt-0 px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         {/* Grille principale - 4 colonnes */}
         <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-4">
           
@@ -268,9 +268,9 @@ function Footer() {
         </div>
 
         {/* CTA rapide */}
-        <div className="mt-10 pt-8 border-t border-gray-100">
+        <div className="mt-2 pt-2 border-t border-gray-100">
           <div 
-            className="rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4 transition-all duration-300 hover:shadow-lg"
+            className="rounded-2xl p-2 flex flex-col md:flex-row justify-between items-center gap-4 transition-all duration-300 hover:shadow-lg"
             style={{ backgroundColor: "#F9FAFB" }}
           >
             <div className="text-center md:text-left">

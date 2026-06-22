@@ -75,7 +75,7 @@ const TikTokLandingPage: React.FC = () => {
     const visibleVideos = VIDEOS.slice(scrollIndex, scrollIndex + itemsPerPage);
 
     return (
-        <section className="m-5 p-5">
+        <section className="m-2 p-2">
             <div className="container-page">
 
                 {/* En-tête */}
