@@ -14,7 +14,7 @@ const LeadCaptureSection: React.FC = () => {
   return (
     <section
       id="bilan-gratuit"
-      className="section"
+      className="section mt-2 pt-2"
       style={{ background: "linear-gradient(135deg, #0C2340 0%, #0f2d50 100%)" }}
     >
       <div className="container-page">

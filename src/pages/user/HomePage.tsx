@@ -51,11 +51,11 @@ const HomePage: React.FC = () => {
       <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <DoctorSection />
       <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
-      <TprkEligibilitySection />
+      {/*<TprkEligibilitySection />*/}
       <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
       <TikTokLandingPage />
       <div className="mx-5 h-[2px] bg-[color:var(--gold)]" />
-      <FaqSection />
+      <FaqSection /> 
 
       {/* Section lead principale — ancre #bilan-gratuit */}
       <LeadCaptureSection />
