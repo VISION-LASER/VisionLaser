@@ -182,7 +182,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ open, onClose, inline = fal
       onClick={handleClose}
     >
       <div
-        className="relative w-full max-w-2xl bg-white shadow-2xl overflow-hidden"
+        className="relative w-full max-w-3xl bg-white shadow-2xl overflow-hidden"
         style={{ borderRadius: "24px" }}
         onClick={e => e.stopPropagation()}
       >
