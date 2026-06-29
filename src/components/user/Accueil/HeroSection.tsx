@@ -237,7 +237,7 @@ const HeroSection: React.FC = () => {
                             <div className="h-full w-1/3 bg-[#EF4135]" />
                           </div>
                         ),
-                        text: "Made in France",
+                        text: " Consultation et laser à Maubeuge",
                       },
                     ].map((item, idx) => (
                       <div
