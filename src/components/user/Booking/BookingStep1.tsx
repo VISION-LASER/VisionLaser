@@ -9,7 +9,7 @@ interface Step1Props {
 }
 
 const inputClass =
-  "w-full rounded-xl border border-border bg-[color:var(--cream)] px-4 py-3 text-sm text-navy outline-none transition-all placeholder:text-navy/35 focus:border-navy focus:bg-white focus:ring-2 focus:ring-navy/10";
+  "w-full rounded-xl border border-border bg-[color:var(--cream)] px-3 py-2 text-sm text-navy outline-none transition-all placeholder:text-navy/35 focus:border-navy focus:bg-white focus:ring-2 focus:ring-navy/10";
 
 const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
   const set = (field: keyof PatientInfo) => (
@@ -57,63 +57,45 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       <div>
         <p className="eyebrow">Étape 1 sur 3</p>
         <h2 className="mt-2 text-2xl font-semibold text-navy">Vos informations</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Ces informations nous permettent de préparer votre dossier avant la consultation.
-        </p>
       </div>
 
       {/* Nom complet */}
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-navy/70">
-          Nom et prénom <span className="text-rose-500">*</span>
-        </label>
-        <div className="relative">
-          <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
-          <input
-            type="text"
-            value={rawFullName}
-            onChange={handleFullName}
-            placeholder="Jean Dupont"
-            className={`${inputClass} pl-10`}
-          />
-        </div>
+      <div className="relative">
+        <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
+        <input
+          type="text"
+          value={rawFullName}
+          onChange={handleFullName}
+          placeholder="Nom et prénom *"
+          className={`${inputClass} pl-10`}
+        />
       </div>
 
       {/* Téléphone et Email */}
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-navy/70">
-            Téléphone <span className="text-rose-500">*</span>
-          </label>
-          <div className="relative">
-            <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
-            <input
-              type="tel"
-              value={data.phone}
-              onChange={set("phone")}
-              placeholder="06 00 00 00 00"
-              className={`${inputClass} pl-10`}
-            />
-          </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="relative">
+          <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
+          <input
+            type="tel"
+            value={data.phone}
+            onChange={set("phone")}
+            placeholder="Téléphone *"
+            className={`${inputClass} pl-10`}
+          />
         </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-navy/70">
-            Email <span className="text-navy/40 font-normal">(optionnel)</span>
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
-            <input
-              type="email"
-              value={data.email}
-              onChange={set("email")}
-              placeholder="sophie@exemple.fr"
-              className={`${inputClass} pl-10`}
-            />
-          </div>
+        <div className="relative">
+          <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy/30" />
+          <input
+            type="email"
+            value={data.email}
+            onChange={set("email")}
+            placeholder="Email (optionnel)"
+            className={`${inputClass} pl-10`}
+          />
         </div>
       </div>
 
@@ -138,14 +120,14 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
         <label className="mb-1.5 block text-xs font-medium text-navy/70">
           Motif de consultation <span className="text-navy/40 font-normal">(optionnel)</span>
         </label>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {MOTIFS.map((m) => (
             <button
               key={m.value}
               type="button"
               onClick={() => toggleMotif(m.value)}
               className={`
-                px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200
+                flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200
                 ${selectedMotifs.includes(m.value)
                   ? "bg-navy text-white shadow-md ring-2 ring-navy/20"
                   : "bg-[color:var(--cream)] text-navy/70 border border-border hover:border-navy/30 hover:bg-white"
@@ -162,58 +144,56 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
       </div>
 
       {/* Double opt-in RGPD */}
-      <div className="space-y-3 pt-1">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-navy/50">
-          Consentements requis <span className="text-rose-500">*</span>
-        </p>
-
-        {/* Consentement 1 — recontact */}
-        <div
-          className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-4 py-3 transition-colors hover:bg-white"
-          onClick={() => setConsentContact(!consentContact)}
-        >
+      <div className="space-y-3">
+        <div className="flex gap-3">
+          {/* Consentement 1 — recontact */}
           <div
-            className={`
-              mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border-2 transition-all duration-200
-              ${consentContact ? "border-navy bg-navy text-white" : "border-border bg-white hover:border-navy/30"}
-            `}
+            className="flex cursor-pointer items-start gap-2 rounded-xl border border-border bg-[color:var(--cream)] px-3 py-2.5 transition-colors hover:bg-white flex-1"
+            onClick={() => setConsentContact(!consentContact)}
           >
-            {consentContact && <Check className="h-3.5 w-3.5" />}
-          </div>
-          <span className="text-xs text-navy/80 leading-relaxed">
-            J'accepte d'être recontacté(e) par{" "}
-            <strong className="font-semibold text-navy">Vision Laser SAS</strong>{" "}
-            dans le cadre de ma demande de bilan visuel.
-          </span>
-        </div>
-
-        {/* Consentement 2 — données de santé */}
-        <div
-          className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-4 py-3 transition-colors hover:bg-white"
-          onClick={() => setConsentSante(!consentSante)}
-        >
-          <div
-            className={`
-              mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border-2 transition-all duration-200
-              ${consentSante ? "border-navy bg-navy text-white" : "border-border bg-white hover:border-navy/30"}
-            `}
-          >
-            {consentSante && <Check className="h-3.5 w-3.5" />}
-          </div>
-          <span className="text-xs text-navy/80 leading-relaxed">
-            J'accepte le traitement de mes informations relatives à ma santé visuelle par{" "}
-            <strong className="font-semibold text-navy">Vision Laser SAS</strong>, conformément à sa{" "}
-            <a
-              href="/politique-confidentialite"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline text-[color:var(--gold)]"
-              onClick={(e) => e.stopPropagation()}
+            <div
+              className={`
+                mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border-2 transition-all duration-200
+                ${consentContact ? "border-navy bg-navy text-white" : "border-border bg-white hover:border-navy/30"}
+              `}
             >
-              politique de confidentialité
-            </a>
-            .
-          </span>
+              {consentContact && <Check className="h-3.5 w-3.5" />}
+            </div>
+            <span className="text-xs text-navy/80 leading-relaxed">
+              J'accepte d'être recontacté(e) par{" "}
+              <strong className="font-semibold text-navy">Vision Laser SAS</strong>{" "}
+              dans le cadre de ma demande de bilan visuel.
+            </span>
+          </div>
+
+          {/* Consentement 2 — données de santé */}
+          <div
+            className="flex cursor-pointer items-start gap-2 rounded-xl border border-border bg-[color:var(--cream)] px-3 py-2.5 transition-colors hover:bg-white flex-1"
+            onClick={() => setConsentSante(!consentSante)}
+          >
+            <div
+              className={`
+                mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border-2 transition-all duration-200
+                ${consentSante ? "border-navy bg-navy text-white" : "border-border bg-white hover:border-navy/30"}
+              `}
+            >
+              {consentSante && <Check className="h-3.5 w-3.5" />}
+            </div>
+            <span className="text-xs text-navy/80 leading-relaxed">
+              J'accepte le traitement de mes informations relatives à ma santé visuelle par{" "}
+              <strong className="font-semibold text-navy">Vision Laser SAS</strong>, conformément à sa{" "}
+              <a 
+                href="/politique-confidentialite"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-[color:var(--gold)]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                politique de confidentialité
+              </a>
+              .
+            </span>
+          </div>
         </div>
       </div>
 
