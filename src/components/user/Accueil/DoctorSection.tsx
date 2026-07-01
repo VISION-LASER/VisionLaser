@@ -23,13 +23,11 @@ const DoctorSection: React.FC = () => {
           <div>
             <p className="eyebrow">L'équipe médicale</p>
             <h2 className="mt-2 text-2xl md:text-3xl leading-snug">
-              Une expertise dirigée par le Dr. Anthony Sion et son équipe.
+              Une expertise portée par une équipe médicale spécialisée.
+
             </h2>
             <p className="mt-3 text-muted-foreground text-justify text-sm leading-relaxed">
-              Le centre s'appuie sur une équipe médicale expérimentée et
-              spécialisée en chirurgie réfractive, coordonnée par le Dr. Anthony
-              Sion. Ensemble, ils assurent un accompagnement personnalisé à
-              chaque étape du parcours patient.
+              Le centre s'appuie sur une équipe médicale expérimentée et spécialisée en chirurgie réfractive. Ensemble, ses praticiens assurent un accompagnement personnalisé à chaque étape du parcours patient pour assurer une prise en charge optimale.
             </p>
 
             <div className="mt-5 grid grid-cols-2 gap-3 text-xs">
