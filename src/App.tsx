@@ -46,6 +46,9 @@ import MentionLegalesPage from "./pages/user/MentionLegalesPage";
 import PolitiqueConfidentialitePage from "./pages/user/PolitiqueConfidentialitePage";
 import CGVPage from "./pages/user/CGVPage";
 import OffresPage from "./pages/user/OffrePage";
+import FloatingDevisButton from "./components/layout/FloatingDevisButton";
+import DevisPage from "./pages/user/DevisPage";
+import { DevisSection } from "./components/admin/Devis/DevisSection";
 
 
 const queryClient = new QueryClient();
@@ -71,6 +74,7 @@ function AppContent() {
           <BrowserRouter>
             <ScrollToTop />   
             <AnalyticsTracker />
+            <FloatingDevisButton />
             <Routes>
               {/* ── Public ─────────────────────────────── */}
               <Route path="/" element={<HomePage />} />
@@ -87,6 +91,7 @@ function AppContent() {
               <Route path="/tprk" element={<TprkPage />} />
               <Route path="/nous-trouver" element={<NousTrouver />} />
               <Route path="/offres" element={<OffresPage />} />
+              <Route path="/devis" element={<DevisPage />} />
 
               {/* ── Login ──────────────────────────────── */}
               <Route path="/admin" element={<LoginAdmin />} />
@@ -98,6 +103,7 @@ function AppContent() {
                   <Route path="dashboard" element={<TableauBordSection />} />
                   <Route path="demandes" element={<DemandesSection />} />
                   <Route path="rendez-vous" element={<RendezvousSection />} />
+                  <Route path="devis" element={<DevisSection />} />
                   <Route path="tarifs" element={<TarifsSection />} />
                   <Route path="equipements" element={<EquipementsSection />} />
                   <Route path="actualite" element={<ActualiteSection />} />
