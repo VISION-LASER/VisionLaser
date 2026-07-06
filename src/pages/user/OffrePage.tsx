@@ -204,9 +204,9 @@ export default function OffresPage() {
                                         },
                                         {
                                             icon: Star,
-                                            title: "Consultation personnalisée",
-                                            desc: "Le chirurgien analyse votre dossier et vous propose la technique la plus adaptée.",
-                                            tag: "Offerte",
+                                            title: "Dépistage gratuit",
+                                            desc: "Un assistant effectue un premier dépistage. Le chirurgien analyse ensuite votre dossier et vous recontacte sous 7 jours pour vous indiquer si vous êtes éligible. La technique définitive sera choisie après un examen au microscope.",
+                                            tag: "Gratuit",
                                         },
                                         {
                                             icon: CheckCircle,
