@@ -3,7 +3,7 @@ import { Quiz } from "../../layout/Quiz";
 
 const TprkEligibilitySection: React.FC = () => {
   return (
-    <section className="bg-[color:var(--cream)]">
+    <section className="py-6 mb-10 bg-[color:var(--cream)]">
       <div className="container-page grid gap-10 md:grid-cols-2 md:items-center p-5">
         {/* Copy */}
         <div>

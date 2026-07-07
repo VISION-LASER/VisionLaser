@@ -223,7 +223,7 @@ const HeroSection: React.FC = () => {
                     {[
                       {
                         icon: Shield,
-                        text: "Technologies laser de dernière génération",
+                        text: "Technologie laser de dernière génération",
                       },
                       {
                         icon: Clock,
