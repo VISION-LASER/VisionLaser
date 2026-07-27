@@ -46,6 +46,7 @@ import MentionLegalesPage from "./pages/user/MentionLegalesPage";
 import PolitiqueConfidentialitePage from "./pages/user/PolitiqueConfidentialitePage";
 import CGVPage from "./pages/user/CGVPage";
 import OffresPage from "./pages/user/OffrePage";
+import LandingPage from "./pages/user/LandingPage";
 
 
 const queryClient = new QueryClient();
@@ -87,6 +88,9 @@ function AppContent() {
               <Route path="/tprk" element={<TprkPage />} />
               <Route path="/nous-trouver" element={<NousTrouver />} />
               <Route path="/offres" element={<OffresPage />} />
+
+              {/* ── Landing page trafic externe (TikTok, Facebook Ads, ...) ── */}
+              <Route path="/landing" element={<LandingPage />} />
 
               {/* ── Login ──────────────────────────────── */}
               <Route path="/admin" element={<LoginAdmin />} />
