@@ -2,7 +2,21 @@ import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
-import { Shield, Clock, Star, Check, ChevronDown } from "lucide-react";
+import {
+  Shield,
+  Clock,
+  Star,
+  Check,
+  ChevronDown,
+  User,
+  Phone,
+  Mail,
+  MessageSquare,
+} from "lucide-react";
+
+// Palette reprise du back-office (RendezvousSection) pour rester cohérent
+const NAVY = "#0C2340";
+const GOLD = "#C9A84C";
 
 // Layout
 import { Header } from "../../components/layout/Header";
@@ -43,6 +57,14 @@ const TRUST = [
  *   message natif s'affiche dessus (le formulaire utilise `noValidate`
  *   + `reportValidity()` pour contrôler ce timing).
  * - Cases déjà cochées → envoi autorisé même collapse repliée.
+ *
+ * MAJ design :
+ * - Chaque champ a désormais un <label htmlFor> explicite et visible,
+ *   accompagné d'une icône, placé au-dessus du champ (jamais de
+ *   placeholder utilisé seul comme label, pour rester accessible).
+ * - Card du formulaire modernisée (ombre plus douce, coins arrondis,
+ *   séparation visuelle claire entre les groupes de champs).
+ * - Colonne de gauche retravaillée : eyebrow, titre, timeline, badges.
  */
 const LandingPage: React.FC = () => {
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -199,8 +221,12 @@ const LandingPage: React.FC = () => {
   // ── Contenu des 2 cases de consentement (réutilisé mobile + desktop) ──
   const consentCheckboxes = (
     <>
-      <label className="flex items-start gap-3 rounded-lg border border-input bg-gray-50 px-3.5 py-3 text-xs text-muted-foreground cursor-pointer transition-colors">
+      <label
+        htmlFor="consent1"
+        className="flex items-start gap-3 rounded-lg border border-input bg-gray-50 px-3.5 py-3 text-xs text-muted-foreground cursor-pointer transition-colors hover:bg-gray-100"
+      >
         <input
+          id="consent1"
           type="checkbox"
           required
           checked={consent1}
@@ -208,12 +234,18 @@ const LandingPage: React.FC = () => {
           className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-[color:var(--gold)]"
         />
         <span>
-          J'accepte d'être recontacté(e) par <strong className="text-navy">Vision Laser SAS</strong> dans le cadre de ma demande de bilan visuel.
+          J'accepte d'être recontacté(e) par{" "}
+          <strong className="text-navy">Vision Laser SAS</strong> dans le
+          cadre de ma demande de bilan visuel.
         </span>
       </label>
 
-      <label className="flex items-start gap-3 rounded-lg border border-input bg-gray-50 px-3.5 py-3 text-xs text-muted-foreground cursor-pointer transition-colors">
+      <label
+        htmlFor="consent2"
+        className="flex items-start gap-3 rounded-lg border border-input bg-gray-50 px-3.5 py-3 text-xs text-muted-foreground cursor-pointer transition-colors hover:bg-gray-100"
+      >
         <input
+          id="consent2"
           type="checkbox"
           required
           checked={consent2}
@@ -221,8 +253,10 @@ const LandingPage: React.FC = () => {
           className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-[color:var(--gold)]"
         />
         <span>
-          J'accepte le traitement de mes informations relatives à ma santé visuelle par{" "}
-          <strong className="text-navy">Vision Laser SAS</strong>, conformément à sa{" "}
+          J'accepte le traitement de mes informations relatives à ma santé
+          visuelle par{" "}
+          <strong className="text-navy">Vision Laser SAS</strong>,
+          conformément à sa{" "}
           <a
             href="/politique-confidentialite"
             target="_blank"
@@ -252,42 +286,76 @@ const LandingPage: React.FC = () => {
 
       <section
         id="bilan-gratuit"
-        className="section pt-2"
-        style={{ background: "linear-gradient(135deg, #0C2340 0%, #0f2d50 100%)" }}
+        className="relative overflow-hidden pb-30 pt-18"
+        style={{
+          background:
+            "radial-gradient(circle at 15% 0%, rgba(201,168,76,.10), transparent 45%), linear-gradient(135deg, #0C2340 0%, #0f2d50 100%)",
+        }}
       >
-        <div className="container-page">
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
+        {/* Grain / accent décoratif discret, purement visuel */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full blur-3xl"
+          style={{ background: "rgba(201,168,76,.10)" }}
+        />
 
+        <div className="container-page relative">
+          <div className="grid gap-8 md:grid-cols-2 md:items-center">
             {/* Gauche — argumentaire */}
             <Reveal>
               <div>
-                <p className="eyebrow" style={{ color: "#C9A84C" }}>Passez à l'action</p>
-                <h2 className="mt-3 text-white">
+                <p className="eyebrow" style={{ color: "#C9A84C" }}>
+                  Passez à l'action
+                </p>
+                <h2 className="mt-2 text-2xl md:text-3xl text-white font-semibold">
                   Votre bilan visuel vous attend.
                 </h2>
-                <p className="mt-5 text-white/70 leading-relaxed">
+                <p className="mt-3 text-sm text-white/70 leading-relaxed">
                   En moins de 2 minutes, dites-nous qui vous êtes. Nous vous
                   rappelons pour organiser un bilan complet avec le
                   Dr. Anthony Sion — sans engagement, sans frais.
                 </p>
 
                 {/* Étapes */}
-                <ol className="mt-8 space-y-4">
+                <ol className="mt-6 space-y-3">
                   {[
-                    { n: "01", title: "Vous remplissez ce formulaire", sub: "2 minutes" },
-                    { n: "02", title: "Nous vous rappelons sous 48h", sub: "À l'heure qui vous convient" },
-                    { n: "03", title: "Bilan personnalisé au centre", sub: "1h, sans engagement" },
+                    {
+                      n: "01",
+                      title: "Vous remplissez ce formulaire",
+                      sub: "2 minutes",
+                    },
+                    {
+                      n: "02",
+                      title: "Nous vous rappelons sous 48h",
+                      sub: "À l'heure qui vous convient",
+                    },
+                    {
+                      n: "03",
+                      title: "Bilan personnalisé au centre",
+                      sub: "1h, sans engagement",
+                    },
                   ].map((s) => (
                     <li key={s.n} className="flex items-start gap-4">
                       <span
                         className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0"
-                        style={{ background: "rgba(201,168,76,.2)", color: "#C9A84C", border: "1px solid rgba(201,168,76,.3)" }}
+                        style={{
+                          background: "rgba(201,168,76,.2)",
+                          color: "#C9A84C",
+                          border: "1px solid rgba(201,168,76,.3)",
+                        }}
                       >
                         {s.n}
                       </span>
                       <div>
-                        <p className="text-[14px] font-semibold text-white">{s.title}</p>
-                        <p className="text-[12px] mt-0.5" style={{ color: "rgba(255,255,255,.45)" }}>{s.sub}</p>
+                        <p className="text-[14px] font-semibold text-white">
+                          {s.title}
+                        </p>
+                        <p
+                          className="text-[12px] mt-0.5"
+                          style={{ color: "rgba(255,255,255,.45)" }}
+                        >
+                          {s.sub}
+                        </p>
                       </div>
                     </li>
                   ))}
@@ -299,7 +367,11 @@ const LandingPage: React.FC = () => {
                     <div
                       key={text}
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-medium"
-                      style={{ background: "rgba(201,168,76,.12)", color: "#C9A84C", border: "1px solid rgba(201,168,76,.2)" }}
+                      style={{
+                        background: "rgba(201,168,76,.12)",
+                        color: "#C9A84C",
+                        border: "1px solid rgba(201,168,76,.2)",
+                      }}
                     >
                       <Icon size={11} />
                       {text}
@@ -318,16 +390,37 @@ const LandingPage: React.FC = () => {
                   </div>
                   <h3 className="mt-4 text-xl">Demande bien reçue</h3>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Notre équipe vous recontacte sous 48 h ouvrées pour fixer votre bilan
-                    visuel.
+                    Notre équipe vous recontacte sous 48 h ouvrées pour fixer
+                    votre bilan visuel.
                   </p>
                 </div>
               ) : (
-                <form id="lead-form" ref={formRef} noValidate className="card-soft space-y-4" onSubmit={handleSubmit}>
+                <form
+                  id="lead-form"
+                  ref={formRef}
+                  noValidate
+                  className="space-y-3 rounded-xl bg-white p-5 shadow-md border border-gray-100"
+                  onSubmit={handleSubmit}
+                >
+                  <div>
+                    <p
+                      className="text-[10px] font-semibold uppercase tracking-wide"
+                      style={{ color: GOLD }}
+                    >
+                      Bilan visuel gratuit
+                    </p>
+                    <h3
+                      className="mt-0.5 text-base font-semibold"
+                      style={{ color: NAVY }}
+                    >
+                      Vos coordonnées
+                    </h3>
+                  </div>
+
                   {/* Affichage des réponses FAQ si elles existent */}
                   {faqAnswers && faqAnswers.length > 0 && (
-                    <div className="rounded-lg border border-gold/20 bg-gold/5 p-4">
-                      <h4 className="mb-2 text-sm font-semibold text-navy uppercase tracking-wide">
+                    <div className="rounded-lg border border-gold/20 bg-gold/5 p-3">
+                      <h4 className="mb-2 text-xs font-semibold text-navy uppercase tracking-wide">
                         Vos réponses aux questions :
                       </h4>
                       <ul className="space-y-2 text-xs">
@@ -348,79 +441,101 @@ const LandingPage: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Nom et prénom */}
-                  <div>
-                    <label htmlFor="fullName" className="mb-1.5 block text-sm font-medium text-navy">
-                      Nom et prénom <span className="text-[color:var(--gold)]">*</span>
+                  {/* Nom et prénom — icône intégrée, pas de label au-dessus */}
+                  <div className="relative">
+                    <label htmlFor="fullName" className="sr-only">
+                      Nom et prénom
                     </label>
+                    <User
+                      className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2"
+                      style={{ color: GOLD }}
+                    />
                     <input
                       id="fullName"
                       name="fullName"
                       type="text"
                       required
-                      className="w-full rounded-lg border border-input bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-[color:var(--gold)]"
+                      placeholder="Nom et prénom *"
+                      className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-3 text-sm outline-none transition focus:border-[color:var(--gold)] focus:bg-white focus:ring-2 focus:ring-[color:var(--gold)]/20"
                     />
                   </div>
 
                   {/* Téléphone et Email */}
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-navy">
-                        Téléphone <span className="text-[color:var(--gold)]">*</span>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="relative">
+                      <label htmlFor="phone" className="sr-only">
+                        Téléphone
                       </label>
+                      <Phone
+                        className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2"
+                        style={{ color: GOLD }}
+                      />
                       <input
                         id="phone"
                         name="phone"
                         type="tel"
                         required
-                        className="w-full rounded-lg border border-input bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-[color:var(--gold)]"
+                        placeholder="Téléphone *"
+                        className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-3 text-sm outline-none transition focus:border-[color:var(--gold)] focus:bg-white focus:ring-2 focus:ring-[color:var(--gold)]/20"
                       />
                     </div>
-                    <div>
-                      <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-navy">
+                    <div className="relative">
+                      <label htmlFor="email" className="sr-only">
                         Email
                       </label>
+                      <Mail
+                        className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2"
+                        style={{ color: GOLD }}
+                      />
                       <input
                         id="email"
                         name="email"
                         type="email"
-                        className="w-full rounded-lg border border-input bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-[color:var(--gold)]"
+                        placeholder="Email (optionnel)"
+                        className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-3 text-sm outline-none transition focus:border-[color:var(--gold)] focus:bg-white focus:ring-2 focus:ring-[color:var(--gold)]/20"
                       />
                     </div>
                   </div>
 
-                  <div>
-                    <label className="mb-1.5 block text-sm font-medium text-navy">
-                      Message (optionnel)
+                  <div className="relative">
+                    <label htmlFor="message" className="sr-only">
+                      Message
                     </label>
+                    <MessageSquare
+                      className="pointer-events-none absolute left-3 top-3 h-4 w-4"
+                      style={{ color: GOLD }}
+                    />
                     <textarea
+                      id="message"
                       name="message"
-                      rows={4}
-                      className="w-full rounded-lg border border-input bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-[color:var(--gold)]"
-                      placeholder="Précisez votre situation, vos questions…"
+                      rows={3}
+                      className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-3 text-sm outline-none transition focus:border-[color:var(--gold)] focus:bg-white focus:ring-2 focus:ring-[color:var(--gold)]/20"
+                      placeholder="Message (optionnel)"
                     />
                   </div>
 
                   {/* Consentements */}
                   <div>
                     {/* Mobile : toujours visibles, pas de collapse */}
-                    <div className="md:hidden space-y-3">
-                      <p className="text-[11px] text-muted-foreground uppercase tracking-wide font-medium">
-                        Consentements requis <span className="text-[color:var(--gold)]">*</span>
+                    <div className="md:hidden space-y-2">
+                      <p className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">
+                        Consentements requis{" "}
+                        <span style={{ color: GOLD }}>*</span>
                       </p>
                       {consentCheckboxes}
                     </div>
 
                     {/* Desktop : repliés par défaut dans une collapse */}
-                    <div className="hidden md:block rounded-lg border border-input overflow-hidden">
+                    <div className="hidden md:block rounded-lg border border-gray-200 overflow-hidden">
                       <button
                         type="button"
                         onClick={() => setConsentOpen((o) => !o)}
-                        className="flex w-full items-center justify-between px-3.5 py-3 text-[11px] uppercase tracking-wide font-medium text-muted-foreground bg-gray-50 hover:bg-gray-100 transition-colors"
+                        className="flex w-full items-center justify-between px-3 py-2.5 text-[10px] uppercase tracking-wide font-medium text-muted-foreground bg-gray-50 hover:bg-gray-100 transition-colors"
                         aria-expanded={consentOpen}
                       >
                         <span>
-                          Consentements requis <span className="text-[color:var(--gold)]">*</span>
+                          Consentements requis{" "}
+                          <span style={{ color: GOLD }}>*</span>
                         </span>
                         <ChevronDown
                           className={`h-4 w-4 shrink-0 transition-transform duration-200 ${
@@ -431,23 +546,35 @@ const LandingPage: React.FC = () => {
 
                       <div
                         className={`grid transition-all duration-300 ease-in-out ${
-                          consentOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                          consentOpen
+                            ? "grid-rows-[1fr] opacity-100"
+                            : "grid-rows-[0fr] opacity-0"
                         }`}
                       >
                         <div className="overflow-hidden">
-                          <div className="space-y-3 p-3.5 pt-3">{consentCheckboxes}</div>
+                          <div className="space-y-2 p-3 pt-2.5">
+                            {consentCheckboxes}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <button type="submit" className="btn-gold w-full" disabled={isLoading}>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full rounded-lg py-2.5 text-sm font-semibold tracking-wide text-white transition hover:brightness-105 active:scale-[0.99] disabled:opacity-60"
+                    style={{ backgroundColor: GOLD }}
+                  >
                     {isLoading ? "Envoi en cours..." : "Envoyer ma demande"}
                   </button>
+
+                  <p className="text-center text-[10px] text-muted-foreground">
+                    Réponse garantie sous 48h ouvrées.
+                  </p>
                 </form>
               )}
             </div>
-
           </div>
         </div>
       </section>
