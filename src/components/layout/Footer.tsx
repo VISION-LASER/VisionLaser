@@ -21,8 +21,17 @@ function Footer() {
     address: "Polyclinique du Val de Sambre, Rte de Mons 162, 59600 Maubeuge",
     phone: "+33 7 59 50 71 84",
     email: "contact@vision-laser.eu",
-    hours: "Lun – Ven · 9h – 18h",
   };
+
+  // Nouveaux horaires d'ouverture - Version améliorée
+  const openingHours = [
+    { day: "Lundi", hours: "09:00 – 13:00", hours2: "14:00 – 18:30", isClosed: false },
+    { day: "Mardi", hours: "09:30 – 16:30", hours2: null, isClosed: false },
+    { day: "Mercredi", hours: "09:30 – 16:15", hours2: null, isClosed: false },
+    { day: "Jeudi", hours: "09:00 – 16:30", hours2: null, isClosed: false },
+    { day: "Vendredi", hours: "Fermé", hours2: null, isClosed: true },
+    { day: "Samedi", hours: "Fermé", hours2: null, isClosed: true },
+  ];
 
   const socialLinks = [
     { 
@@ -48,7 +57,6 @@ function Footer() {
     },
   ];
 
-  // URL de la carte satellite Google Maps pour Maubeuge
   const MAPS_EMBED_URL = 
     "https://maps.google.com/maps?q=Polyclinique+du+Val+de+Sambre+162+Rte+de+Mons+59600+Maubeuge&output=embed&z=16&t=k";
 
@@ -56,7 +64,6 @@ function Footer() {
     <footer className="relative mt-2 bg-linear-to-b from-white to-gray-50 border-t border-gray-100">
       
       <div className="container-page mx-auto pt-0 px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        {/* Grille principale - 4 colonnes */}
         <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-4">
           
           {/* Colonne 1 - Logo & Description */}
@@ -82,7 +89,6 @@ function Footer() {
               Une approche médicale, sobre et personnalisée pour chaque patient.
             </p>
             
-            {/* Badge de confiance */}
             <div className="flex flex-wrap items-center gap-2 pt-2">
               <div className="flex items-center gap-1 px-2 py-1 bg-[#C9A84C]/10 rounded-full">
                 <span className="text-xs font-medium" style={{ color: "#C9A84C" }}>✓</span>
@@ -94,7 +100,6 @@ function Footer() {
               </div>
             </div>
 
-            {/* Réseaux sociaux */}
             <div className="pt-4">
               <h4 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#0C2340", opacity: 0.6 }}>
                 Suivez-nous
@@ -153,55 +158,116 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Colonne 3 - Contact & Horaires */}
+          {/* Colonne 3 - Contact & Horaires - AMÉLIORÉ */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 flex items-center gap-2" style={{ color: "#0C2340" }}>
               <span className="w-1 h-4 rounded-full" style={{ backgroundColor: "#C9A84C" }} />
-              Contact
+              Contact & Horaires
             </h3>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3 group">
-                <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "#C9A84C" }} />
-                <div>
-                  <p className="text-sm leading-relaxed" style={{ color: "#0C2340", opacity: 0.7 }}>
-                    {contactInfo.address}
-                  </p>
-                  <a
-                    href="https://www.google.com/maps/dir//Polyclinique+du+Val+de+Sambre,+162+Rte+de+Mons,+59600+Maubeuge"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs mt-1 transition-colors hover:opacity-100"
-                    style={{ color: "#C9A84C", opacity: 0.8 }}
+            
+            <div className="space-y-4">
+              {/* Contact */}
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 group">
+                  <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "#C9A84C" }} />
+                  <div>
+                    <p className="text-sm leading-relaxed" style={{ color: "#0C2340", opacity: 0.7 }}>
+                      {contactInfo.address}
+                    </p>
+                    <a
+                      href="https://www.google.com/maps/dir//Polyclinique+du+Val+de+Sambre,+162+Rte+de+Mons,+59600+Maubeuge"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs mt-1 transition-colors hover:opacity-100"
+                      style={{ color: "#C9A84C", opacity: 0.8 }}
+                    >
+                      Itinéraire <ExternalLink size={12} />
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Phone size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
+                  <a 
+                    href={`tel:${contactInfo.phone}`}
+                    className="text-sm transition-colors hover:opacity-100"
+                    style={{ color: "#0C2340", opacity: 0.7 }}
                   >
-                    Itinéraire <ExternalLink size={12} />
+                    {contactInfo.phone}
+                  </a>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Mail size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
+                  <a 
+                    href={`mailto:${contactInfo.email}`}
+                    className="text-sm transition-colors hover:opacity-100"
+                    style={{ color: "#0C2340", opacity: 0.7 }}
+                  >
+                    {contactInfo.email}
                   </a>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
-                <a 
-                  href={`tel:${contactInfo.phone}`}
-                  className="text-sm transition-colors hover:opacity-100"
-                  style={{ color: "#0C2340", opacity: 0.7 }}
-                >
-                  {contactInfo.phone}
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
-                <a 
-                  href={`mailto:${contactInfo.email}`}
-                  className="text-sm transition-colors hover:opacity-100"
-                  style={{ color: "#0C2340", opacity: 0.7 }}
-                >
-                  {contactInfo.email}
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <Clock size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
-                <p className="text-sm" style={{ color: "#0C2340", opacity: 0.7 }}>
-                  {contactInfo.hours}
-                </p>
+
+              {/* Horaires d'ouverture - NOUVELLE DISPOSITION */}
+              <div className="pt-3 border-t border-gray-100">
+                <div className="flex items-center gap-2 mb-3">
+                  <Clock size={16} className="shrink-0" style={{ color: "#C9A84C" }} />
+                  <span className="text-sm font-medium" style={{ color: "#0C2340" }}>
+                    Horaires d'ouverture
+                  </span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-green-100 text-green-700 font-medium ml-auto">
+                    En semaine
+                  </span>
+                </div>
+
+                <div className="space-y-2">
+                  {openingHours.map((item, index) => (
+                    <div 
+                      key={index} 
+                      className={`
+                        flex items-center justify-between p-1.5 rounded-lg transition-all duration-200
+                        ${item.isClosed ? 'hover:bg-red-50' : 'hover:bg-gray-50'}
+                      `}
+                    >
+                      <span 
+                        className="text-xs font-medium"
+                        style={{ 
+                          color: item.isClosed ? "#EF4444" : "#0C2340",
+                          opacity: item.isClosed ? 0.8 : 0.7
+                        }}
+                      >
+                        {item.day}
+                      </span>
+                      
+                      <div className="flex flex-col items-end gap-0.5">
+                        {item.isClosed ? (
+                          <span className="text-xs font-semibold text-red-500 flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                            Fermé
+                          </span>
+                        ) : (
+                          <>
+                            <span className="text-xs font-medium" style={{ color: "#0C2340", opacity: 0.8 }}>
+                              {item.hours}
+                            </span>
+                            {item.hours2 && (
+                              <span className="text-[10px]" style={{ color: "#0C2340", opacity: 0.5 }}>
+                                {item.hours2}
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Badge d'information */}
+                <div className="mt-3 flex items-center gap-1.5 p-2 bg-blue-50 rounded-lg border border-blue-100">
+                  <Clock size={12} className="text-blue-500 shrink-0" />
+                  <p className="text-[10px] leading-relaxed" style={{ color: "#0C2340", opacity: 0.6 }}>
+                    Consultation sur rendez-vous uniquement
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -213,9 +279,7 @@ function Footer() {
               Nous trouver
             </h3>
 
-            {/* Conteneur de la carte avec skeleton */}
             <div className="relative w-full overflow-hidden rounded-xl shadow-md" style={{ aspectRatio: "4/3" }}>
-              {/* Skeleton affiché jusqu'au chargement de l'iframe */}
               {!mapLoaded && (
                 <div className="absolute inset-0 bg-gray-100 flex flex-col items-center justify-center gap-3 border border-gray-200">
                   <MapPin className="h-8 w-8" style={{ color: "#C9A84C", opacity: 0.3 }} />
@@ -238,13 +302,11 @@ function Footer() {
                 onLoad={() => setMapLoaded(true)}
               />
 
-              {/* Coin doré décoratif */}
               <div
                 className="absolute bottom-0 left-0 right-0 h-[3px] pointer-events-none"
                 style={{ background: "#C9A84C" }}
               />
 
-              {/* Bouton Itinéraire overlay */}
               <a
                 href="https://www.google.com/maps/dir//Polyclinique+du+Val+de+Sambre,+162+Rte+de+Mons,+59600+Maubeuge"
                 target="_blank"
@@ -259,7 +321,6 @@ function Footer() {
               </a>
             </div>
 
-            {/* Adresse sous la carte */}
             <p className="text-xs mt-3 flex items-center gap-1.5" style={{ color: "#0C2340", opacity: 0.5 }}>
               <MapPin className="h-3 w-3 flex-shrink-0" style={{ color: "#C9A84C" }} />
               Maubeuge

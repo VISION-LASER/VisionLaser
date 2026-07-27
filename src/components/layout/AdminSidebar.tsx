@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 
 import {
   Eye, LayoutDashboard, Inbox, DollarSign,
-  Camera, Newspaper, Clock, HelpCircle, Info, LogOut, Calendar, Bell
+  Camera, Newspaper, Clock, HelpCircle, Info, LogOut, Calendar, Bell,
+  PrinterCheck
 } from "lucide-react";
 
 const NAVY = "#0C2340";
@@ -31,6 +32,7 @@ const navGroups: NavGroup[] = [
       { to: "/admin/dashboard", label: "Tableau de bord", icon: LayoutDashboard, end: true },
       { to: "/admin/demandes", label: "Contact", icon: Inbox, badge: 0 },
       { to: "/admin/rendez-vous", label: "Rendez-vous", icon: Calendar },
+      { to: "/admin/devis", label: "Devis", icon: PrinterCheck },
     ],
   },
   {

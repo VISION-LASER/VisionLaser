@@ -310,7 +310,7 @@ const TestimonialsSection: React.FC = () => {
               </p>
 
               <a
-                href="https://www.google.com/search?q=centre+vision+laser+paris+ouest"
+                href="https://www.google.com/search?q=centre+vision+laser+haut+de+France+à+Maubeuge"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 rounded-xl border border-border bg-white px-3 py-1.5 transition-opacity hover:opacity-80"

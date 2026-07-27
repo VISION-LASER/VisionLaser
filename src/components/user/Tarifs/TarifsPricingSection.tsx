@@ -179,7 +179,7 @@ const TarifsPricingSection: React.FC = () => {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 flex flex-col items-center justify-center gap-5 text-center">
+        <div className="mt-12 mb-12 flex flex-col items-center justify-center gap-5 text-center">
           <h3 className="text-2xl font-bold text-navy">
             Besoin d’un devis personnalisé ?
           </h3>

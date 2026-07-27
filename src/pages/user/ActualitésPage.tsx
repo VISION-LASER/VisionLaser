@@ -18,7 +18,7 @@ const ActualitesPage: React.FC = () => (
     <PageHero
       eyebrow="Actualités"
       title="Nos vidéos"
-      intro="Interventions filmées, conseils du Dr. Anthony Sion et témoignages patients sur TikTok, YouTube et Facebook."
+      intro="Découvrez des interventions filmées, des conseils d'experts et des témoignages de patients sur TikTok, YouTube et Facebook."
     />
     <VideoSection />
     <div className="-mt-15">

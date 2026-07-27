@@ -197,42 +197,44 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       </div>
 
       <div className="space-y-3">
-        <p className="text-[11px] text-muted-foreground uppercase tracking-wide font-medium">
-          Consentements requis <span className="text-[color:var(--gold)]">*</span>
-        </p>
+  <p className="text-[11px] text-muted-foreground uppercase tracking-wide font-medium">
+    Consentements requis <span className="text-[color:var(--gold)]">*</span>
+  </p>
 
-        <label className="flex items-start gap-3 rounded-lg border border-input bg-gray-50 px-3.5 py-3 text-xs text-muted-foreground cursor-pointer">
-          <input
-            type="checkbox"
-            required
-            className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-[color:var(--gold)]"
-          />
-          <span>
-            J'accepte d'être recontacté(e) par <strong className="text-navy">Vision Laser SAS</strong> dans le cadre de ma demande de bilan visuel.
-          </span>
-        </label>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <label className="flex items-start gap-3 rounded-lg border border-input bg-gray-50 px-3.5 py-3 text-xs text-muted-foreground cursor-pointer">
+      <input
+        type="checkbox"
+        required
+        className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-[color:var(--gold)]"
+      />
+      <span>
+        J'accepte d'être recontacté(e) par <strong className="text-navy">Vision Laser SAS</strong> dans le cadre de ma demande de bilan visuel.
+      </span>
+    </label>
 
-        <label className="flex items-start gap-3 rounded-lg border border-input bg-gray-50 px-3.5 py-3 text-xs text-muted-foreground cursor-pointer">
-          <input
-            type="checkbox"
-            required
-            className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-[color:var(--gold)]"
-          />
-          <span>
-            J'accepte le traitement de mes informations relatives à ma santé visuelle par{" "}
-            <strong className="text-navy">Vision Laser SAS</strong>, conformément à sa{" "}
-            <a
-              href="/politique-confidentialite"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline text-[color:var(--gold)]"
-            >
-              politique de confidentialité
-            </a>
-            .
-          </span>
-        </label>
-      </div>
+    <label className="flex items-start gap-3 rounded-lg border border-input bg-gray-50 px-3.5 py-3 text-xs text-muted-foreground cursor-pointer">
+      <input
+        type="checkbox"
+        required
+        className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-[color:var(--gold)]"
+      />
+      <span>
+        J'accepte le traitement de mes informations relatives à ma santé visuelle par{" "}
+        <strong className="text-navy">Vision Laser SAS</strong>, conformément à sa{" "}
+        <a
+          href="/politique-confidentialite"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline text-[color:var(--gold)]"
+        >
+          politique de confidentialité
+        </a>
+        .
+      </span>
+    </label>
+  </div>
+</div>
 
       <button type="submit" className="btn-gold w-full" disabled={isLoading}>
         {isLoading ? "Envoi en cours..." : "Envoyer ma demande"}

@@ -3,7 +3,7 @@ import { Quiz } from "../../layout/Quiz";
 
 const FemtoLasikEligibilitySection: React.FC = () => {
   return (
-    <section className="py-6 bg-[color:var(--cream)] section">
+    <section className="py-6 mb-10 bg-[color:var(--cream)] section">
       <div className="container-page grid gap-10 md:grid-cols-2 md:items-center">
         {/* Copy */}
         <div>
