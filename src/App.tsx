@@ -46,6 +46,7 @@ import MentionLegalesPage from "./pages/user/MentionLegalesPage";
 import PolitiqueConfidentialitePage from "./pages/user/PolitiqueConfidentialitePage";
 import CGVPage from "./pages/user/CGVPage";
 import OffresPage from "./pages/user/OffrePage";
+import LandingPage from "./pages/user/LandingPage";
 import FloatingDevisButton from "./components/layout/FloatingDevisButton";
 import DevisPage from "./pages/user/DevisPage";
 import { DevisSection } from "./components/admin/Devis/DevisSection";
@@ -92,6 +93,9 @@ function AppContent() {
               <Route path="/nous-trouver" element={<NousTrouver />} />
               <Route path="/offres" element={<OffresPage />} />
               <Route path="/devis" element={<DevisPage />} />
+
+              {/* ── Landing page trafic externe (TikTok, Facebook Ads, ...) ── */}
+              <Route path="/landing" element={<LandingPage />} />
 
               {/* ── Login ──────────────────────────────── */}
               <Route path="/admin" element={<LoginAdmin />} />

@@ -25,7 +25,17 @@ const LANGUAGES = [
   { code: "es" as const, label: "ES", flag: spanishFlag },
 ];
 
-export function Header() {
+type HeaderProps = {
+  /**
+   * Mode "minimal" : utilisé sur les landing pages (trafic externe TikTok, Facebook, etc.)
+   * - Masque le menu de navigation
+   * - Masque le bouton "PRENDRE RENDEZ-VOUS"
+   * - Conserve uniquement le sélecteur de langue
+   */
+  minimal?: boolean;
+};
+
+export function Header({ minimal = false }: HeaderProps) {
   const [open, setOpen]               = useState(false);
   const [scrolled, setScrolled]       = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -92,40 +102,93 @@ export function Header() {
               </span>
             </Link>
 
-            {/* Desktop nav */}
-            <nav className="hidden items-center gap-8 md:flex">
-              {NAV.map((n) => (
-                <NavLink
-                  key={n.to}
-                  to={n.to}
-                  className={({ isActive }) =>
-                    `nav-link relative inline-flex items-center gap-1.5 text-xs font-medium transition-colors duration-200 hover:text-navy ${
-                      isActive ? "is-active text-navy" : "text-navy/70 hover:text-navy"
-                    }`
-                  }
-                >
-                  {n.label}
-                  {"badge" in n && n.badge && (
-                    <span
-                      className="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide leading-none"
-                      style={{
-                        background: "linear-gradient(135deg, #C9A84C, #e4c26a)",
-                        color: "#0C2340",
-                        /* subtle pulse to catch the eye */
-                        animation: "pulse 2.5s cubic-bezier(0.4,0,0.6,1) infinite",
-                      }}
-                    >
-                      {n.badge}
-                    </span>
-                  )}
-                </NavLink>
-              ))}
+            {/* Desktop nav — masqué en mode minimal (landing pages) */}
+            {!minimal && (
+              <nav className="hidden items-center gap-8 md:flex">
+                {NAV.map((n) => (
+                  <NavLink
+                    key={n.to}
+                    to={n.to}
+                    className={({ isActive }) =>
+                      `nav-link relative inline-flex items-center gap-1.5 text-xs font-medium transition-colors duration-200 hover:text-navy ${
+                        isActive ? "is-active text-navy" : "text-navy/70 hover:text-navy"
+                      }`
+                    }
+                  >
+                    {n.label}
+                    {"badge" in n && n.badge && (
+                      <span
+                        className="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide leading-none"
+                        style={{
+                          background: "linear-gradient(135deg, #C9A84C, #e4c26a)",
+                          color: "#0C2340",
+                          /* subtle pulse to catch the eye */
+                          animation: "pulse 2.5s cubic-bezier(0.4,0,0.6,1) infinite",
+                        }}
+                      >
+                        {n.badge}
+                      </span>
+                    )}
+                  </NavLink>
+                ))}
 
-              {/* ── Dropdown langue ── */}
-              <div
-                ref={dropdownRef}
-                className="relative ml-2 border-l border-border/50 pl-4"
-              >
+                {/* ── Dropdown langue (desktop, mode normal) ── */}
+                <div
+                  ref={dropdownRef}
+                  className="relative ml-2 border-l border-border/50 pl-4"
+                >
+                  <button
+                    onClick={() => setLangDropOpen((o) => !o)}
+                    className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 transition-all duration-200 ${
+                      langDropOpen ? "bg-gold/10 ring-1 ring-gold/30" : "hover:bg-navy/5"
+                    }`}
+                    aria-label="Changer la langue"
+                    aria-expanded={langDropOpen}
+                  >
+                    <img
+                      src={activeLang.flag}
+                      alt={`Drapeau ${activeLang.label}`}
+                      className="h-5 w-6 rounded-sm object-cover shadow-sm"
+                    />
+                    <span className="text-xs font-medium text-gold">{activeLang.label}</span>
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 text-navy/50 transition-transform duration-200 ${
+                        langDropOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {langDropOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-32 origin-top-right rounded-xl border border-border bg-white shadow-lg ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-150">
+                      {LANGUAGES.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => handleLanguageChange(lang.code)}
+                          className={`flex w-full items-center gap-2.5 px-3 py-2.5 text-xs font-medium transition-colors first:rounded-t-xl last:rounded-b-xl ${
+                            currentLang === lang.code
+                              ? "bg-gold/10 text-gold"
+                              : "text-navy/70 hover:bg-navy/5 hover:text-navy"
+                          }`}
+                        >
+                          <img
+                            src={lang.flag}
+                            alt={`Drapeau ${lang.label}`}
+                            className="h-4 w-5 rounded-sm object-cover shadow-sm"
+                          />
+                          {lang.code === "fr" ? "Français"  :
+                           lang.code === "en" ? "English"   :
+                                                "Español"}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </nav>
+            )}
+
+            {/* Mode minimal : uniquement le sélecteur de langue, visible desktop + mobile */}
+            {minimal && (
+              <div ref={dropdownRef} className="relative">
                 <button
                   onClick={() => setLangDropOpen((o) => !o)}
                   className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 transition-all duration-200 ${
@@ -172,31 +235,35 @@ export function Header() {
                   </div>
                 )}
               </div>
-            </nav>
+            )}
 
-            {/* Desktop CTA */}
-            <div className="hidden md:block">
+            {/* Desktop CTA — masqué en mode minimal */}
+            {!minimal && (
+              <div className="hidden md:block">
+                <button
+                  type="button"
+                  onClick={() => setBookingOpen(true)}
+                  className="btn-gold py-2.5 px-6 text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  PRENDRE RENDEZ-VOUS
+                </button>
+              </div>
+            )}
+
+            {/* Mobile burger — masqué en mode minimal (pas de menu à ouvrir) */}
+            {!minimal && (
               <button
-                type="button"
-                onClick={() => setBookingOpen(true)}
-                className="btn-gold py-2.5 px-6 text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-300"
+                className="md:hidden rounded-full border border-border bg-white/50 p-2 text-navy backdrop-blur-sm transition-all hover:bg-white hover:shadow-md"
+                onClick={() => setOpen((o) => !o)}
+                aria-label="Menu"
               >
-                PRENDRE RENDEZ-VOUS
+                {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
-            </div>
-
-            {/* Mobile burger */}
-            <button
-              className="md:hidden rounded-full border border-border bg-white/50 p-2 text-navy backdrop-blur-sm transition-all hover:bg-white hover:shadow-md"
-              onClick={() => setOpen((o) => !o)}
-              aria-label="Menu"
-            >
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            )}
           </div>
 
           {/* Mobile menu */}
-          {open && (
+          {!minimal && open && (
             <div className="border-t border-border bg-white md:hidden">
               <div className="container-page flex flex-col py-4">
                 {NAV.map((n) => (
