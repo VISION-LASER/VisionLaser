@@ -181,8 +181,6 @@ const LandingPage: React.FC = () => {
       data.faq = faqToSend;
     }
 
-    console.log("📤 Données envoyées (landing page):", data);
-
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/contact-patient`,
