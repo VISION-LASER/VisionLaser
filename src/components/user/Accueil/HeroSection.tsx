@@ -19,6 +19,7 @@ import clinic3 from "../../../assets/clinic-interior.jpg";
 import { Reveal } from "../../layout/Reveal";
 import { Counter } from "../../layout/Counter";
 import BookingModal from "../Booking/BookingModal";
+import { trackBoutonRdv } from "../../../lib/tracking";
 
 const SLIDES = [
   { src: clinic1, alt: "Centre Vision Laser des  " },
@@ -262,7 +263,7 @@ const HeroSection: React.FC = () => {
                   {/* CTA - agrandi */}
                   <div className="mt-5">
                     <button
-                      onClick={() => setBookingOpen(true)}
+                      onClick={() => { trackBoutonRdv("head"); setBookingOpen(true); }}
                       className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3 text-base font-bold text-navy transition-all hover:scale-[1.02] hover:shadow-xl"
                     >
                       <Calendar size={18} />

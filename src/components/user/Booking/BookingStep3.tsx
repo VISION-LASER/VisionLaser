@@ -3,6 +3,7 @@ import { CheckCircle2, ChevronLeft, User, Mail, Phone, Calendar, Clock, FileText
 import type { PatientInfo } from "../../../types/booking";
 import { MOTIFS } from "../../../types/booking";
 import { submitAppointment } from "../../../services/BookingService";
+import { trackConfirmationRdv } from "../../../lib/tracking";
 import toast from 'react-hot-toast';
 
 interface Step3Props {
@@ -44,6 +45,7 @@ const BookingStep3: React.FC<Step3Props> = ({ patient, date, time, onBack, onDon
     try {
       await submitAppointment(patient, date, time);
       setDone(true);
+      trackConfirmationRdv(patient.motif, date, time);
       toast.success('Rendez-vous confirmé avec succès !', {
         position: 'bottom-right',
         duration: 4000,
