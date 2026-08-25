@@ -8,6 +8,7 @@ import spanishFlag from "../../assets/es.png";
 import englishFlag from "../../assets/gb.png";
 import frenchFlag  from "../../assets/fr.jpg";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { trackBoutonRdv } from "../../lib/tracking";
 
 const NAV = [
   { to: "/femtolasik",      label: "FEMTOLASIK" },
@@ -242,7 +243,7 @@ export function Header({ minimal = false }: HeaderProps) {
               <div className="hidden md:block">
                 <button
                   type="button"
-                  onClick={() => setBookingOpen(true)}
+                  onClick={() => { trackBoutonRdv("header"); setBookingOpen(true); }}
                   className="btn-gold py-2.5 px-6 text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   PRENDRE RENDEZ-VOUS
@@ -308,7 +309,7 @@ export function Header({ minimal = false }: HeaderProps) {
 
                 <button
                   type="button"
-                  onClick={() => { setOpen(false); setBookingOpen(true); }}
+                  onClick={() => { trackBoutonRdv("menu-mobile"); setOpen(false); setBookingOpen(true); }}
                   className="btn-gold mt-4 text-center text-sm"
                 >
                   PRENDRE RENDEZ-VOUS

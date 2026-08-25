@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail, Clock, ArrowRight, Calendar, ExternalLink } from "
 import { FaYoutube, FaInstagram, FaTiktok } from "react-icons/fa";
 import { useState } from "react";
 import logo from "../../assets/vision-laser-logo.jpeg";
+import { trackBoutonRdv } from "../../lib/tracking";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -344,6 +345,7 @@ function Footer() {
             </div>
             <Link
               to="/contact"
+              onClick={() => trackBoutonRdv("footer")}
               className="group flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 hover:scale-105 hover:shadow-md"
               style={{ backgroundColor: "#C9A84C", color: "#0C2340" }}
             >

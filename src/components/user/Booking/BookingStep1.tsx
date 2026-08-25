@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { User, Mail, Phone, Calendar, ChevronRight, Check } from "lucide-react";
 import { MOTIFS, type PatientInfo } from "../../../types/booking";
+import { trackChoisirCreneau } from "../../../lib/tracking";
 
 interface Step1Props {
   data: PatientInfo;
@@ -53,7 +54,9 @@ const BookingStep1: React.FC<Step1Props> = ({ data, onChange, onNext }) => {
   const canProceed = consentContact && consentSante;
 
   const handleSubmit = () => {
-    if (canProceed) onNext();
+    if (!canProceed) return;
+    trackChoisirCreneau(data.motif);
+    onNext();
   };
 
   return (
