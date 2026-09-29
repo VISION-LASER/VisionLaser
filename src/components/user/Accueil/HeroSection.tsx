@@ -11,7 +11,7 @@ import {
   Users,
 } from "lucide-react";
 
-import doctolibBtn from "../../../assets/bouton-doctolib-rdv.webp";
+import doctolibBtn from "../../../assets/bouton-doctolib-rdv.png";
 
 import { MARQUEE_ITEMS } from "../../../data/data";
 import clinic1 from "../../../assets/Acceuil-vision-laser.png";

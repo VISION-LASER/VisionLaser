@@ -1,7 +1,7 @@
 import React from "react";
 import surgeon from "../../../assets/surgeon.png";
 import { Reveal } from "../../layout/Reveal";
-import doctolibBtn from "../../../assets/bouton-doctolib-rdv.webp";
+import doctolibBtn from "../../../assets/bouton-doctolib-rdv.png";
 
 interface CredentialProps {
   title: string;

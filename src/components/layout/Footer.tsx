@@ -4,7 +4,7 @@ import { FaYoutube, FaInstagram, FaTiktok } from "react-icons/fa";
 import { useState } from "react";
 import logo from "../../assets/vision-laser-logo.jpeg";
 import { trackBoutonRdv } from "../../lib/tracking";
-import doctolibBtn from "../../assets/bouton-doctolib-rdv.webp";
+import doctolibBtn from "../../assets/bouton-doctolib-rdv.png";
 function Footer() {
   const currentYear = new Date().getFullYear();
   const [mapLoaded, setMapLoaded] = useState(false);
