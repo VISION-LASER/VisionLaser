@@ -4,7 +4,7 @@ import { Menu, Bell, Settings, CalendarDays, Inbox, Eye, Trash2 } from "lucide-r
 
 const NAVY = "#0C2340";
 const GOLD = "#C9A84C";
-
+ 
 const labels: Record<string, string> = {
   "/admin/dashboard":   "Tableau de bord",
   "/admin/demandes":    "Demandes de bilan",

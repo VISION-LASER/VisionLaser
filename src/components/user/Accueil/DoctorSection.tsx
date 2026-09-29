@@ -1,6 +1,7 @@
 import React from "react";
 import surgeon from "../../../assets/surgeon.png";
 import { Reveal } from "../../layout/Reveal";
+import doctolibBtn from "../../../assets/bouton-doctolib-rdv.webp";
 
 interface CredentialProps {
   title: string;
@@ -57,6 +58,23 @@ const DoctorSection: React.FC = () => {
               />
             </div>
           </div>
+
+          {/* Bouton Doctolib */}
+            <div className="mt-5 flex justify-center">
+              <a
+                href="https://www.doctolib.fr/centre-d-ophtalmologie/maubeuge/laser-vision/booking/availabilities?specialityId=4&telehealth=false&placeId=practice-610316&motiveIds%5B%5D=17084285&source=profile"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Prendre rendez-vous sur Doctolib"
+                className="inline-block rounded-lg transition-transform duration-200 hover:scale-[1.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+              >
+                <img
+                  src={doctolibBtn}
+                  alt="Prendre rendez-vous sur Doctolib"
+                  className="block h-auto w-full max-w-[260px]"
+                />
+              </a>
+            </div>
         </Reveal>
 
         {/* Image */}

@@ -11,6 +11,8 @@ import {
   Users,
 } from "lucide-react";
 
+import doctolibBtn from "../../../assets/bouton-doctolib-rdv.webp";
+
 import { MARQUEE_ITEMS } from "../../../data/data";
 import clinic1 from "../../../assets/Acceuil-vision-laser.png";
 import clinic2 from "../../../assets/Amaris.png";
@@ -212,15 +214,25 @@ const HeroSection: React.FC = () => {
                     </span>
                   </h3>
 
-                  {/* Description - agrandie */}
-                  <p className="mt-3 text-sm md:text-base leading-relaxed text-muted-foreground">
-                    Un bilan visuel complet réalisé par notre équipe
-                    afin d’évaluer si la chirurgie laser est adaptée
-                    à votre vision.
-                  </p>
+                  {/* Bouton Doctolib */}
+                  <div className="mt-0 mb-0 flex justify-center">
+                    <a
+                      href="https://www.doctolib.fr/centre-d-ophtalmologie/maubeuge/laser-vision/booking/availabilities?specialityId=4&telehealth=false&placeId=practice-610316&motiveIds%5B%5D=17084285&source=profile"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Prendre rendez-vous sur Doctolib"
+                      className="inline-block rounded-lg transition-transform duration-200 hover:scale-[1.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                    >
+                      <img
+                        src={doctolibBtn}
+                        alt="Prendre rendez-vous sur Doctolib"
+                        className="block h-auto w-full max-w-[260px]"
+                      />
+                    </a>
+                  </div>
 
                   {/* Features - agrandies */}
-                  <div className="mt-6 space-y-4">
+                  <div className="mt-1 space-y-0.5">
                     {[
                       {
                         icon: Shield,
@@ -243,7 +255,7 @@ const HeroSection: React.FC = () => {
                     ].map((item, idx) => (
                       <div
                         key={idx}
-                        className="group flex items-start gap-4 rounded-xl p-3 transition-all duration-300 hover:bg-navy/5 hover:pl-4"
+                        className="group flex items-start gap-4 rounded-xl px-3 py-1.5 transition-all duration-300 hover:bg-navy/5 hover:pl-4"
                       >
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-gold/10 transition-all duration-300 group-hover:scale-105 group-hover:from-gold/30 group-hover:to-gold/20">
                           {typeof item.icon === "function" && !item.icon.toString().includes("svg") ? (
