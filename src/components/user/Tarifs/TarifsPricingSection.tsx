@@ -61,7 +61,7 @@ const TarifsPricingSection: React.FC = () => {
                 </th>
 
                 <th className="px-6 py-5 text-left text-xs font-bold uppercase tracking-wider text-navy">
-                  Tarif
+                  Tarif à partir de
                 </th>
 
                 <th className="hidden px-6 py-5 text-left text-xs font-bold uppercase tracking-wider text-navy lg:table-cell">
