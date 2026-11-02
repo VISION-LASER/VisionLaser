@@ -48,13 +48,22 @@ export default function DevisPage() {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Erreur lors de l'envoi");
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.errors?.[0] || data?.message || "Erreur lors de l'envoi");
+      }
 
       setIsSuccess(true);
       toast.success("Votre demande de devis a été envoyée !");
     } catch (error) {
       console.error(error);
-      toast.error("Une erreur est survenue. Veuillez réessayer.");
+      toast.error(
+        error instanceof TypeError
+          ? "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez."
+          : error instanceof Error
+            ? error.message
+            : "Une erreur est survenue. Veuillez réessayer."
+      );
     } finally {
       setIsSubmitting(false);
     }
